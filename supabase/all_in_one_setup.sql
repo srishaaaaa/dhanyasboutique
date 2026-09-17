@@ -1,7 +1,7 @@
 -- FILE: 20260716_0001_store_schema.sql
 -- ═══════════════════════════════════════════════════════════
--- Rice n' Rooster billing schema.
--- Safe to run against a fresh project or the existing Rice n' Rooster project.
+-- Sri Sakthi Pugazh Tex billing schema.
+-- Safe to run against a fresh project or the existing Sri Sakthi Pugazh Tex project.
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -183,10 +183,10 @@ ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS public.store_settings (
   id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  name TEXT NOT NULL DEFAULT 'Rice n'' Rooster',
+  name TEXT NOT NULL DEFAULT 'Sri Sakthi Pugazh Tex',
   owner_name TEXT NOT NULL DEFAULT 'Sankaranarayanan. S',
   phone TEXT NOT NULL DEFAULT '+91 93634 00210',
-  email TEXT NOT NULL DEFAULT 'ricenrooster@gmail.com',
+  email TEXT NOT NULL DEFAULT '',
   address TEXT NOT NULL DEFAULT '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106',
   gst_enabled BOOLEAN NOT NULL DEFAULT FALSE,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -195,10 +195,10 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET
@@ -557,7 +557,7 @@ $$;
 
 -- FILE: 20260716_0002_store_catalog.sql
 -- ═══════════════════════════════════════════════════════════
--- Rice n' Rooster initial catalog. Existing matching products are preserved.
+-- Sri Sakthi Pugazh Tex initial catalog. Existing matching products are preserved.
 
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
@@ -1799,16 +1799,16 @@ CREATE POLICY "Enable all access for all authenticated users" ON public.attendan
 
 -- FILE: 20260904_0001_tailoring_catalog_retired.sql
 -- ═══════════════════════════════════════════════════════════
--- Rebrand store settings and replace the tailoring catalog for Rice n' Rooster.
+-- Rebrand store settings and replace the tailoring catalog for Sri Sakthi Pugazh Tex.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET
@@ -1837,7 +1837,7 @@ WHERE p.category_id = c.id
     'silk fabric per mtr', 'readymade blouse'
   );
 
--- 3. Retire categories not on the Rice n' Rooster list — only Tailoring, Saree, Salwar,
+-- 3. Retire categories not on the Sri Sakthi Pugazh Tex list — only Tailoring, Saree, Salwar,
 -- and Nighty should remain. Jewellery & Accessories and Posstore came from the old
 -- placeholder catalog and are not part of this business.
 UPDATE public.products p
@@ -1871,7 +1871,7 @@ WHERE c.name_en IN ('Saree', 'Salwar', 'Nighty')
   AND LOWER(BTRIM(p.name)) = LOWER(c.name_en)
   AND p.category_id IS DISTINCT FROM c.id;
 
--- 5. Rice n' Rooster tailoring price list, split across Tailoring / Saree / Salwar /
+-- 5. Sri Sakthi Pugazh Tex tailoring price list, split across Tailoring / Saree / Salwar /
 -- Nighty per the confirmed category mapping.
 WITH catalog(category_name, product_name, price, unit, unit_label, allow_decimal, sort_order) AS (
   VALUES
@@ -2410,16 +2410,16 @@ NOTIFY pgrst, 'reload schema';
 -- FILE: 20260914_0001_rice_n_rooster_rebrand.sql
 -- ═══════════════════════════════════════════════════════════
 -- Rebrand store settings and replace the tailoring catalog with the
--- Rice n' Rooster fried rice / specialty chicken combo menu.
+-- Sri Sakthi Pugazh Tex fried rice / specialty chicken combo menu.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET
@@ -2442,7 +2442,7 @@ UPDATE public.categories
 SET is_active = FALSE, updated_at = NOW()
 WHERE name_en IN ('Tailoring', 'Saree', 'Salwar', 'Nighty');
 
--- 3. New categories for the Rice n' Rooster menu.
+-- 3. New categories for the Sri Sakthi Pugazh Tex menu.
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
   ('Fried Rice', '', TRUE, 1),

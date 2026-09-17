@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { CheckCircle, LogIn, LogOut, ChevronLeft } from 'lucide-react'
+import { BRAND_EN } from '../lib/brand'
 
 interface Staff {
   id: string
@@ -267,7 +268,7 @@ export default function StaffPunch({ embedded = false }: StaffPunchProps) {
         <div className="flex items-center gap-3">
           <img src="/logo.png" alt="Logo" className="h-9 w-9 rounded-xl object-cover bg-white" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
           <div>
-            <p className="text-white font-black text-base leading-tight">Rice n' Rooster</p>
+            <p className="text-white font-black text-base leading-tight">{BRAND_EN}</p>
             <p className="text-white/70 text-[11px] font-bold">Staff Attendance</p>
           </div>
         </div>
@@ -277,7 +278,7 @@ export default function StaffPunch({ embedded = false }: StaffPunchProps) {
         </div>
       </div>
       {inner}
-      <div className="text-center py-3"><p className="text-[10px] text-[#9BAB9A]">Powered by Rice n' Rooster Billing System</p></div>
+      <div className="text-center py-3"><p className="text-[10px] text-[#9BAB9A]">Powered by {BRAND_EN} Billing System</p></div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { formatInvoiceNo } from './retail'
+import { BRAND_EN, BRAND_INSTAGRAM } from './brand'
 
 export type WhatsAppLineItem = {
   name: string
@@ -41,7 +42,7 @@ export const publicInvoiceUrl = (invoiceNumber: string) => {
   const origin =
     typeof window !== 'undefined' && window.location?.origin && !window.location.origin.includes('localhost')
       ? window.location.origin
-      : 'https://ricenrooster.vercel.app'
+      : 'https://srisakthipugazhtex.vercel.app'
   return `${origin}/invoice/${encodeURIComponent(formatted)}`
 }
 
@@ -86,12 +87,12 @@ export const buildProfessionalWhatsAppMessage = (input: BuildWhatsAppMessageInpu
 
   const totalsText = totalsLines.join('\n')
 
-  return `✨ *RICE N' ROOSTER* ✨
-🍗 *Official Purchase Invoice & Receipt* 🍗
+  return `✨ *${BRAND_EN}* ✨
+🧾 *Official Purchase Invoice & Receipt* 🧾
 
 Dear ${customerName},
 
-Thank you for shopping with Rice n' Rooster! We truly appreciate your order.
+Thank you for shopping with ${BRAND_EN}! We truly appreciate your order.
 
 🧾 *INVOICE DETAILS*
 📌 *Invoice No:* #${formattedNo}
@@ -103,7 +104,7 @@ ${itemsText ? `📦 *ITEMS ORDERED:*\n${itemsText}\n\n${totalsText}\n` : input.t
 🙏 Thank you, and we hope to see you again soon!
 
 Follow us on Instagram:
-https://www.instagram.com/ricenrooster`
+https://www.instagram.com/${BRAND_INSTAGRAM}`
 }
 
 export const buildAdvanceDepositWhatsAppMessage = (input: AdvanceDepositWhatsAppInput) => {
@@ -122,15 +123,15 @@ export const buildAdvanceDepositWhatsAppMessage = (input: AdvanceDepositWhatsApp
       })()
     : '-'
 
-  return `🍗 Thank You for Your Advance Order with Rice n' Rooster! 🍗
+  return `🧵 Thank You for Your Advance Order with ${BRAND_EN}! 🧵
 
 Dear ${customerName},
 
-✨ Thank you for choosing Rice n' Rooster. We have successfully received your initial advance payment!
+✨ Thank you for choosing ${BRAND_EN}. We have successfully received your initial advance payment!
 
 🧾 Advance Deposit Details 👇
 📦 Deposit ID: ${input.depositId}
-🍽️ Product: ${input.productName}
+🛍️ Product: ${input.productName}
 💵 Total Order Amount: ₹${input.totalAmount}
 💰 Advance Paid: ₹${input.depositAmount}${input.paymentMethod ? ` (${input.paymentMethod.toLowerCase() === 'upi' ? 'QR' : input.paymentMethod.toUpperCase()})` : ''}
 🔴 Balance to Pay on Delivery: ₹${input.remainingBalance}
@@ -138,7 +139,7 @@ Dear ${customerName},
 
 .
 
-🍳 Preparation for your order is now underway. We will have everything ready on or before ${deliveryDateFormatted} for final payment and delivery/pickup!
+🧵 Preparation of your order is now underway. We will have everything ready on or before ${deliveryDateFormatted} for final payment and delivery/pickup!
 
 .
 

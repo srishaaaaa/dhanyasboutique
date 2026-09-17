@@ -1,13 +1,13 @@
--- Rebrand store settings and replace the tailoring catalog for Rice n' Rooster.
+-- Rebrand store settings and replace the tailoring catalog for Sri Sakthi Pugazh Tex.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET
@@ -36,7 +36,7 @@ WHERE p.category_id = c.id
     'silk fabric per mtr', 'readymade blouse'
   );
 
--- 3. Retire categories not on the Rice n' Rooster list — only Tailoring, Saree, Salwar,
+-- 3. Retire categories not on the Sri Sakthi Pugazh Tex list — only Tailoring, Saree, Salwar,
 -- and Nighty should remain. Jewellery & Accessories and Posstore came from the old
 -- placeholder catalog and are not part of this business.
 UPDATE public.products p
@@ -70,7 +70,7 @@ WHERE c.name_en IN ('Saree', 'Salwar', 'Nighty')
   AND LOWER(BTRIM(p.name)) = LOWER(c.name_en)
   AND p.category_id IS DISTINCT FROM c.id;
 
--- 5. Rice n' Rooster tailoring price list, split across Tailoring / Saree / Salwar /
+-- 5. Sri Sakthi Pugazh Tex tailoring price list, split across Tailoring / Saree / Salwar /
 -- Nighty per the confirmed category mapping.
 WITH catalog(category_name, product_name, price, unit, unit_label, allow_decimal, sort_order) AS (
   VALUES

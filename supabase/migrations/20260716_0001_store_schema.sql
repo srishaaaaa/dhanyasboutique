@@ -1,5 +1,5 @@
--- Rice n' Rooster billing schema.
--- Safe to run against a fresh project or the existing Rice n' Rooster project.
+-- Sri Sakthi Pugazh Tex billing schema.
+-- Safe to run against a fresh project or the existing Sri Sakthi Pugazh Tex project.
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -181,10 +181,10 @@ ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS public.store_settings (
   id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  name TEXT NOT NULL DEFAULT 'Rice n'' Rooster',
+  name TEXT NOT NULL DEFAULT 'Sri Sakthi Pugazh Tex',
   owner_name TEXT NOT NULL DEFAULT 'Sankaranarayanan. S',
   phone TEXT NOT NULL DEFAULT '+91 93634 00210',
-  email TEXT NOT NULL DEFAULT 'ricenrooster@gmail.com',
+  email TEXT NOT NULL DEFAULT '',
   address TEXT NOT NULL DEFAULT '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106',
   gst_enabled BOOLEAN NOT NULL DEFAULT FALSE,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -193,10 +193,10 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET

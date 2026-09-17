@@ -21,4 +21,4 @@ The app keeps the established dashboard, POS billing, catalog, category, coupon,
 - `VITE_STAFF_ID` (optional; defaults to `VITE_ADMIN_ID`)
 - `VITE_STAFF_PASSWORD`
 
-The site logo lives at `public/logo.png` and `public/rice-n-rooster-logo.jpeg` (used for social/OG previews and the invoice PDF). Replace both with the final Sri Sakthi Pugazh Tex logo artwork when supplied, then run `node gen_logo.cjs` to regenerate `src/lib/logoBase64.ts` for the PDF invoice.
+The site logo lives at `public/logo.png` (used for the favicon, social/OG previews, and structured data). Replace it with new logo artwork when supplied, then run `node gen_logo.cjs` to regenerate `src/lib/logoBase64.ts` for the invoice PDF and thermal receipts.

@@ -1,14 +1,14 @@
 -- Rebrand store settings and replace the tailoring catalog with the
--- Rice n' Rooster fried rice / specialty chicken combo menu.
+-- Sri Sakthi Pugazh Tex fried rice / specialty chicken combo menu.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Rice n'' Rooster',
+  'Sri Sakthi Pugazh Tex',
   'Sankaranarayanan. S',
   '+91 93634 00210',
-  'ricenrooster@gmail.com',
+  '',
   '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
 )
 ON CONFLICT (id) DO UPDATE SET
@@ -31,7 +31,7 @@ UPDATE public.categories
 SET is_active = FALSE, updated_at = NOW()
 WHERE name_en IN ('Tailoring', 'Saree', 'Salwar', 'Nighty');
 
--- 3. New categories for the Rice n' Rooster menu.
+-- 3. New categories for the Sri Sakthi Pugazh Tex menu.
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
   ('Fried Rice', '', TRUE, 1),

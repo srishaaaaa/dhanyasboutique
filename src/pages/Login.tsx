@@ -46,6 +46,7 @@ import { Invoice } from '../components/Invoice'
 import { printThermalReceipt } from '../lib/thermalPrint'
 import { buildProfessionalWhatsAppMessage } from '../lib/whatsappMessage'
 import { invoicePdfFile } from '../lib/invoicePdf'
+import { BRAND_EN } from '../lib/brand'
 // toWhatsAppUrl removed - using direct link building in handlers
 import { createVariant, updateVariant, deleteVariant, setDefaultVariant, type ProductVariant } from '../services/variantService'
 import { useVariantStore } from '../store/store'
@@ -1438,10 +1439,10 @@ export default function Dashboard() {
         <div className={`hidden lg:flex items-center relative transition-all duration-300 ${sidebarCollapsed ? 'flex-col items-center pt-5 pb-4 px-2 gap-3' : 'px-5 py-5 justify-between'}`}>
           <Link to="/pos" title="Go to Billing Panel" className={`flex items-center gap-3 min-w-0 transition-all duration-300 ${sidebarCollapsed ? 'justify-center' : 'flex-1'}`}>
             <div className="flex items-center justify-center shrink-0 w-11 h-11 rounded-xl bg-white border border-emerald-900/40 shadow-sm overflow-hidden p-1 hover:scale-105 transition-transform">
-              <img src="/logo.png" alt="Rice n' Rooster logo" className="w-full h-full object-contain" />
+              <img src="/logo.png" alt={`${BRAND_EN} logo`} className="w-full h-full object-contain" />
             </div>
             {!sidebarCollapsed && (
-              <h1 className="text-[20px] font-black text-white truncate tracking-tight">Rice n' Rooster</h1>
+              <h1 className="text-[20px] font-black text-white truncate tracking-tight">{BRAND_EN}</h1>
             )}
           </Link>
           <button
@@ -1458,9 +1459,9 @@ export default function Dashboard() {
         <div className="flex lg:hidden items-center justify-between px-4 py-4 border-b border-white/10">
           <Link to="/pos" title="Go to Billing Panel" className="flex items-center gap-3 min-w-0">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-emerald-900/40 shrink-0 overflow-hidden shadow-sm p-1 hover:scale-105 transition-transform">
-              <img src="/logo.png" alt="Rice n' Rooster logo" className="w-full h-full object-contain" />
+              <img src="/logo.png" alt={`${BRAND_EN} logo`} className="w-full h-full object-contain" />
             </div>
-            <span className="text-[16px] font-black text-white truncate">Rice n' Rooster</span>
+            <span className="text-[16px] font-black text-white truncate">{BRAND_EN}</span>
           </Link>
         </div>
         {/* Nav */}

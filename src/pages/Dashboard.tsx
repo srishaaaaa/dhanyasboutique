@@ -230,8 +230,8 @@ export default function Dashboard() {
   const [isFreshLogin, setIsFreshLogin] = useState(false)
   useEffect(() => {
     try {
-      if (sessionStorage.getItem('rice_n_rooster_fresh_login')) {
-        sessionStorage.removeItem('rice_n_rooster_fresh_login')
+      if (sessionStorage.getItem('ssp_tex_fresh_login')) {
+        sessionStorage.removeItem('ssp_tex_fresh_login')
         setIsFreshLogin(true)
       }
     } catch { /* ignore */ }

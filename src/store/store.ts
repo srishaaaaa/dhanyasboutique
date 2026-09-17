@@ -7,8 +7,6 @@ import { fetchAllVariants, type ProductVariant } from '../services/variantServic
 import { applyShopProfile, DEFAULT_SHOP_PROFILE, type ShopProfile } from '../lib/brand'
 import { applyShopTheme, DEFAULT_CARD_COLOR, normalizeHex, readCachedCardColor } from '../lib/shopTheme'
 import {
-  calculateLineTotal,
-  normalizeSelectedQuantity,
   normalizeUnitType,
   toNumber,
   type QuantityOption,
@@ -67,23 +65,6 @@ export interface Product {
   color?: string
 }
 
-export interface CartItem extends Product {
-  qty: number
-  selectedUnit: string
-  basePrice: number
-  lineTotal: number
-  variantId?: string      // UUID of the selected variant row
-  variantName?: string    // display name e.g. "Cycle Brand"
-  parentProductId?: string // original products.id when item was created from a variant
-
-  // POS billing fields
-  cartItemId: string
-  discountType: 'amount' | 'percent'
-  discountValue: number
-  gstRate: number
-  gstAmount: number
-}
-
 interface AuthUser {
   id: string
   name: string
@@ -109,30 +90,6 @@ interface ProductState {
   error: string | null
   lastFetch: number
   fetchProducts: (force?: boolean) => Promise<void>
-}
-
-interface CartState {
-  items: CartItem[]
-  addItem: (product: Product, quantity: number, unit: string, variantId?: string, variantName?: string, parentProductId?: string) => void
-  removeItem: (productId: string | number) => void
-  updateQuantity: (productId: string | number, quantity: number) => void
-  clearCart: () => void
-  totalItems: () => number
-  cartSubtotal: () => number
-  // Backward-compatible aliases used by existing UI
-  add: (product: Product) => void
-  remove: (productId: string | number) => void
-  updateQty: (productId: string | number, quantity: number) => void
-  clear: () => void
-  count: () => number
-  total: () => number
-}
-
-interface FavState {
-  items: Product[]
-  toggle: (product: Product) => void
-  isFav: (productId: string | number) => boolean
-  clear: () => void
 }
 
 interface ProductModalState {
@@ -340,7 +297,7 @@ export const useAuthStore = create<AuthState>()(
         }
       }
     }),
-    { name: 'rice-n-rooster-auth' }
+    { name: 'ssp-tex-auth' }
   )
 )
 
@@ -386,106 +343,6 @@ export const useProductStore = create<ProductState>((set, get) => ({
     }
   }
 }))
-
-// --- Cart Store ---
-export const useCartStore = create<CartState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      addItem: (product, qty, unit, variantId, variantName, parentProductId) => {
-        const items = [...get().items]
-        const existing = items.find(i => i.id === product.id)
-
-        const basePrice = product.offerPrice || product.price
-        const lineTotal = calculateLineTotal(qty, product.unitType, product.baseQuantity, basePrice)
-
-        if (existing) {
-          existing.selectedUnit = unit
-          const mergedQty = normalizeSelectedQuantity(
-            existing.qty + qty,
-            existing.unitType,
-            existing.allowDecimalQuantity,
-            1,
-          )
-          existing.qty = mergedQty
-          existing.lineTotal = calculateLineTotal(mergedQty, existing.unitType, existing.baseQuantity, basePrice)
-        } else {
-          items.push({
-            ...product,
-            qty,
-            selectedUnit: unit,
-            basePrice,
-            lineTotal,
-            // Variant identity — only set for variant items
-            variantId:       variantId       ?? undefined,
-            variantName:     variantName     ?? undefined,
-            parentProductId: parentProductId ?? undefined,
-
-            // POS defaults
-            cartItemId: Date.now().toString() + Math.random().toString(36).substr(2, 5),
-            discountType: 'amount',
-            discountValue: 0,
-            gstRate: product.gstPercent || 0,
-            gstAmount: ((product.gstPercent || 0) > 0) ? (lineTotal * (product.gstPercent || 0) / 100) : 0,
-          })
-        }
-        set({ items })
-      },
-      removeItem: (id) => set({ items: get().items.filter(i => i.id !== id) }),
-      updateQuantity: (id, qty) => {
-        const items = get().items.map(item => {
-          if (item.id === id) {
-            const newQty = normalizeSelectedQuantity(
-              qty,
-              item.unitType,
-              item.allowDecimalQuantity,
-              1,
-            )
-            return {
-              ...item,
-              qty: newQty,
-              lineTotal: calculateLineTotal(newQty, item.unitType, item.baseQuantity, item.basePrice)
-            }
-          }
-          return item
-        })
-        set({ items })
-      },
-      clearCart: () => set({ items: [] }),
-      totalItems: () => get().items.length,
-      cartSubtotal: () => get().items.reduce((sum, item) => sum + item.lineTotal, 0),
-      add: (product) => {
-        const packLabel = product.predefinedOptions[0]?.label ?? product.unitLabel
-        get().addItem(product, 1, packLabel)
-      },
-      remove: (productId) => get().removeItem(productId),
-      updateQty: (productId, quantity) => get().updateQuantity(productId, quantity),
-      clear: () => get().clearCart(),
-      count: () => get().totalItems(),
-      total: () => get().cartSubtotal(),
-    }),
-    { name: 'rice-n-rooster-cart' }
-  )
-)
-
-export const useFavStore = create<FavState>()(
-  persist(
-    (set, get) => ({
-      items: [],
-      toggle: (product) => {
-        const exists = get().items.some((p) => p.id === product.id)
-        if (exists) {
-          set({ items: get().items.filter((p) => p.id !== product.id) })
-          return
-        }
-        set({ items: [...get().items, product] })
-      },
-      isFav: (productId) => get().items.some((p) => p.id === productId),
-      clear: () => set({ items: [] }),
-    }),
-    { name: 'rice-n-rooster-favorites' },
-  ),
-)
 
 export const useProductModalStore = create<ProductModalState>()((set) => ({
   product: null,
@@ -658,12 +515,12 @@ export const useAdminAuthStore = create<AdminAuthState>()(
         const id = portalId.trim()
         const pwd = password.trim()
         if (ADMIN_PORTAL_ID && ADMIN_PORTAL_PASSWORD && id === ADMIN_PORTAL_ID && pwd === ADMIN_PORTAL_PASSWORD) {
-          try { sessionStorage.setItem('rice_n_rooster_fresh_login', '1') } catch { /* ignore */ }
+          try { sessionStorage.setItem('ssp_tex_fresh_login', '1') } catch { /* ignore */ }
           set({ isLoggedIn: true, role: 'admin' })
           return 'admin'
         }
         if (STAFF_PORTAL_ID && STAFF_PORTAL_PASSWORD && id === STAFF_PORTAL_ID && pwd === STAFF_PORTAL_PASSWORD) {
-          try { sessionStorage.setItem('rice_n_rooster_fresh_login', '1') } catch { /* ignore */ }
+          try { sessionStorage.setItem('ssp_tex_fresh_login', '1') } catch { /* ignore */ }
           set({ isLoggedIn: true, role: 'staff' })
           return 'staff'
         }
@@ -672,7 +529,7 @@ export const useAdminAuthStore = create<AdminAuthState>()(
       logout: () => set({ isLoggedIn: false, role: null }),
     }),
     {
-      name: 'rice-n-rooster-admin-session',
+      name: 'ssp-tex-admin-session',
       // Using sessionStorage so the session is cleared when the tab is closed
       storage: {
         getItem: (name) => {
