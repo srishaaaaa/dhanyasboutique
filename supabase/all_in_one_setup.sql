@@ -2715,3 +2715,48 @@ ON CONFLICT (name_en) DO UPDATE SET
 
 -- 4. Logo storage reuses the existing public 'product-images' bucket
 --    (see src/lib/storage.ts) under a branding/ prefix — no new bucket.
+
+-- ============================================================
+-- FINAL CLEANUP — remove every old-business catalog this file itself
+-- seeded further up (the Rice n' Rooster fried-rice/chicken menu, and
+-- before that the Sankaranarayanan tailoring/saree/salwar/nighty price
+-- list), so a fresh run of this single file ends with ONLY the current
+-- business's data: Sri Sakthi Pugazh Tex, saree wholesale & retail.
+-- Also fixes the shop's card_color to the exact red sampled from the
+-- current logo. Idempotent and safe to re-run.
+-- ============================================================
+
+BEGIN;
+
+UPDATE public.store_settings
+SET card_color = '#A00818',
+    updated_at = NOW()
+WHERE id = 1;
+
+DELETE FROM public.products
+WHERE category_id IN (
+  SELECT id FROM public.categories
+  WHERE name_en IN (
+    'Fried Rice', 'Specialty Chicken Combos',
+    'Tailoring', 'Saree', 'Salwar', 'Nighty',
+    'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+  )
+)
+OR (
+  category_id IS NULL AND category IN (
+    'Fried Rice', 'Specialty Chicken Combos',
+    'Tailoring', 'Saree', 'Salwar', 'Nighty',
+    'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+  )
+);
+
+DELETE FROM public.categories
+WHERE name_en IN (
+  'Fried Rice', 'Specialty Chicken Combos',
+  'Tailoring', 'Saree', 'Salwar', 'Nighty',
+  'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+);
+
+NOTIFY pgrst, 'reload schema';
+
+COMMIT;

@@ -4,15 +4,18 @@
 -- This is the complete, single-file merge of everything needed to set
 -- up the database from scratch: every migration in supabase/migrations/,
 -- applied in order, PLUS fixes that were applied directly and were never
--- captured in a standalone migration file (see the 'EXTRA FIXES' section
--- below — payment-method whitelist removal, the products.item_type
--- column the catalog/POS queries depend on, RLS policy corrections, etc).
--- Every statement is idempotent, so this is safe to run against a fresh
--- Supabase project or re-run against the existing one.
+-- captured in a standalone migration file (payment-method whitelist
+-- removal, the products.item_type column the catalog/POS queries depend
+-- on, RLS policy corrections, etc), PLUS a final cleanup pass that
+-- removes the old-business catalogs the file seeds further up (Rice n'
+-- Rooster, the earlier tailoring price list) so a fresh run ends with
+-- only the current business's data. Every statement is idempotent, so
+-- this is safe to run against a fresh Supabase project or re-run
+-- against the existing one.
 --
 -- This file is kept identical to supabase/all_in_one_setup.sql (the file
 -- supabase/README.md tells you to run). Update both together.
--- Generated: 2026-09-17T19:10:26.287Z
+-- Generated: 2026-09-17T19:38:06.891Z
 -- ============================================================
 
 -- FILE: 20260716_0001_store_schema.sql
@@ -2732,3 +2735,48 @@ ON CONFLICT (name_en) DO UPDATE SET
 
 -- 4. Logo storage reuses the existing public 'product-images' bucket
 --    (see src/lib/storage.ts) under a branding/ prefix — no new bucket.
+
+-- ============================================================
+-- FINAL CLEANUP — remove every old-business catalog this file itself
+-- seeded further up (the Rice n' Rooster fried-rice/chicken menu, and
+-- before that the Sankaranarayanan tailoring/saree/salwar/nighty price
+-- list), so a fresh run of this single file ends with ONLY the current
+-- business's data: Sri Sakthi Pugazh Tex, saree wholesale & retail.
+-- Also fixes the shop's card_color to the exact red sampled from the
+-- current logo. Idempotent and safe to re-run.
+-- ============================================================
+
+BEGIN;
+
+UPDATE public.store_settings
+SET card_color = '#A00818',
+    updated_at = NOW()
+WHERE id = 1;
+
+DELETE FROM public.products
+WHERE category_id IN (
+  SELECT id FROM public.categories
+  WHERE name_en IN (
+    'Fried Rice', 'Specialty Chicken Combos',
+    'Tailoring', 'Saree', 'Salwar', 'Nighty',
+    'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+  )
+)
+OR (
+  category_id IS NULL AND category IN (
+    'Fried Rice', 'Specialty Chicken Combos',
+    'Tailoring', 'Saree', 'Salwar', 'Nighty',
+    'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+  )
+);
+
+DELETE FROM public.categories
+WHERE name_en IN (
+  'Fried Rice', 'Specialty Chicken Combos',
+  'Tailoring', 'Saree', 'Salwar', 'Nighty',
+  'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+);
+
+NOTIFY pgrst, 'reload schema';
+
+COMMIT;
