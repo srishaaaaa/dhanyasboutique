@@ -8,7 +8,7 @@
  * backgrounds, layout, typography, spacing and components are untouched.
  */
 
-export const DEFAULT_CARD_COLOR = '#8F1402'
+export const DEFAULT_CARD_COLOR = '#A00818'
 
 const THEME_CACHE_KEY = 'shop-card-color'
 
@@ -68,8 +68,12 @@ export const applyShopTheme = (hex: string) => {
   root.style.setProperty('--shop-card-rgb', channels(rgb))
   root.style.setProperty('--shop-accent-rgb', channels(lighten(rgb)))
   root.style.setProperty('--shop-soft-rgb', channels(mixWhite(rgb, 0.78)))
-  root.style.setProperty('--shop-tint-rgb', channels(mixWhite(rgb, 0.95)))
-  root.style.setProperty('--shop-deep-rgb', channels(mixBlack(rgb, 0.18)))
+  // Page background is plain white, not a red-tinted "cream" — the red/white
+  // theme reads as red + white (+ near-black chrome below), not red + beige.
+  root.style.setProperty('--shop-tint-rgb', '255 255 255')
+  // Deep chrome (sidebars, headers) mixes almost all the way to black so it
+  // reads as true black, matching the logo's black silhouette detailing.
+  root.style.setProperty('--shop-deep-rgb', channels(mixBlack(rgb, 0.85)))
   root.style.setProperty('--shop-on-card', contrastOn(base))
   try {
     window.localStorage.setItem(THEME_CACHE_KEY, base)
@@ -101,7 +105,7 @@ export const resolveCardSoftHex = (): string => toHex(mixWhite(toRgb(readCachedC
 
 /** Suggested swatches — all "card colour + white" safe. */
 export const CARD_COLOR_PRESETS = [
-  '#8F1402',
+  '#A00818',
   '#D6402E',
   '#8B1C31',
   '#7A2E8E',

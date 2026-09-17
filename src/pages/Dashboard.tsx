@@ -1191,7 +1191,12 @@ export default function Dashboard() {
               <img src={shopLogo} alt={`${shopName} logo`} className="w-full h-full object-cover" />
             </div>
             {!sidebarCollapsed && (
-              <h1 className="text-[16px] font-black text-white leading-tight tracking-tight break-words">{shopName}</h1>
+              <div className="min-w-0">
+                <h1 className="text-[16px] font-black text-white leading-tight tracking-tight break-words">{shopName}</h1>
+                <span className="mt-1 inline-block rounded-full border border-white/30 bg-shopAccent/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                  {role === 'admin' ? 'Admin Panel' : 'Staff Panel'}
+                </span>
+              </div>
             )}
           </Link>
           <button
