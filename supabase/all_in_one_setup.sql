@@ -1,3 +1,21 @@
+-- ============================================================
+-- Sri Sakthi Pugazh Tex — consolidated database schema (single file)
+--
+-- This is the complete, single-file merge of everything needed to set
+-- up the database from scratch: every migration in supabase/migrations/,
+-- applied in order, PLUS fixes that were applied directly and were never
+-- captured in a standalone migration file (payment-method whitelist
+-- removal, the products.item_type column the catalog/POS queries depend
+-- on, RLS policy corrections, etc), PLUS a final cleanup pass that
+-- removes the old-business catalogs the file seeds further up (Rice n'
+-- Rooster, the earlier tailoring price list), PLUS a starter saree
+-- product catalogue so a fresh run ends with only the current
+-- business's data and isn't empty out of the box. Every statement is
+-- idempotent, so this is safe to run against a fresh Supabase project
+-- or re-run against the existing one.
+-- ============================================================
+
+
 -- FILE: 20260716_0001_store_schema.sql
 -- ═══════════════════════════════════════════════════════════
 -- Sri Sakthi Pugazh Tex billing schema.
