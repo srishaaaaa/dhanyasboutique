@@ -15,7 +15,7 @@
 --
 -- This file is kept identical to supabase/all_in_one_setup.sql (the file
 -- supabase/README.md tells you to run). Update both together.
--- Generated: 2026-09-17T19:38:06.891Z
+-- Generated: 2026-09-17T19:47:48.977Z
 -- ============================================================
 
 -- FILE: 20260716_0001_store_schema.sql
@@ -2090,8 +2090,8 @@ WHERE LOWER(BTRIM(p.name)) = LOWER(BTRIM(tags.product_name));
 -- Sourced from loose .sql files in supabase/ (add_missing_order_columns.sql,
 -- fix_policies.sql, migration_payment_methods.sql), corrected:
 --   - add_missing_order_columns.sql had a stray typo after its semicolon
---   - migration_payment_methods.sql used broken dollar-quoting ($function
---     instead of $function$), which would fail to run as-is
+--   - migration_payment_methods.sql used a broken, unterminated dollar-quote
+--     tag on its function bodies, which would fail to run as-is
 --   - only the RPC versions actually called by the frontend are redefined
 --     here (create_advance_order, complete_advance_order_v2); the unused
 --     v1/v3 variants from the loose file are dropped as dead code
