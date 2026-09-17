@@ -8,14 +8,15 @@
 -- removal, the products.item_type column the catalog/POS queries depend
 -- on, RLS policy corrections, etc), PLUS a final cleanup pass that
 -- removes the old-business catalogs the file seeds further up (Rice n'
--- Rooster, the earlier tailoring price list) so a fresh run ends with
--- only the current business's data. Every statement is idempotent, so
--- this is safe to run against a fresh Supabase project or re-run
--- against the existing one.
+-- Rooster, the earlier tailoring price list), PLUS a starter saree
+-- product catalogue so a fresh run ends with only the current
+-- business's data and isn't empty out of the box. Every statement is
+-- idempotent, so this is safe to run against a fresh Supabase project
+-- or re-run against the existing one.
 --
 -- This file is kept identical to supabase/all_in_one_setup.sql (the file
 -- supabase/README.md tells you to run). Update both together.
--- Generated: 2026-09-17T19:47:48.977Z
+-- Generated: 2026-09-17T19:58:08.571Z
 -- ============================================================
 
 -- FILE: 20260716_0001_store_schema.sql
@@ -2775,6 +2776,124 @@ WHERE name_en IN (
   'Fried Rice', 'Specialty Chicken Combos',
   'Tailoring', 'Saree', 'Salwar', 'Nighty',
   'Jewellery & Accessories', 'Posstore', 'Sarees, Salwar & Nighty'
+);
+
+NOTIFY pgrst, 'reload schema';
+
+COMMIT;
+
+-- ============================================================
+-- STARTER SAREE CATALOGUE — sample products under each of the 16 saree
+-- categories above, so Inventory/POS aren't empty out of the box.
+-- Starting prices/stock are placeholders — edit real prices, stock, and
+-- images per item from the Inventory screen. Idempotent (matches by
+-- name, won't duplicate or overwrite an item you've already edited).
+-- ============================================================
+
+BEGIN;
+
+WITH catalog(category_name, product_name, price, sort_order) AS (
+  VALUES
+    -- Kanchipuram Silk Sarees
+    ('Kanchipuram Silk Sarees', 'Traditional Kanchipuram Silk Saree', 12999, 101),
+    ('Kanchipuram Silk Sarees', 'Temple Border Kanchipuram Silk Saree', 9999, 102),
+    ('Kanchipuram Silk Sarees', 'Bridal Kanchipuram Silk Saree', 18999, 103),
+    -- Soft Silk Sarees
+    ('Soft Silk Sarees', 'Plain Soft Silk Saree', 2499, 201),
+    ('Soft Silk Sarees', 'Zari Border Soft Silk Saree', 3499, 202),
+    ('Soft Silk Sarees', 'Printed Soft Silk Saree', 2999, 203),
+    -- Banarasi Sarees
+    ('Banarasi Sarees', 'Pure Banarasi Silk Saree', 7999, 301),
+    ('Banarasi Sarees', 'Banarasi Katan Silk Saree', 8999, 302),
+    ('Banarasi Sarees', 'Banarasi Georgette Saree', 4999, 303),
+    -- Cotton Sarees
+    ('Cotton Sarees', 'Handloom Cotton Saree', 899, 401),
+    ('Cotton Sarees', 'Chettinad Cotton Saree', 1299, 402),
+    ('Cotton Sarees', 'Printed Cotton Saree', 699, 403),
+    -- Silk Sarees
+    ('Silk Sarees', 'Mysore Silk Saree', 4999, 501),
+    ('Silk Sarees', 'Tussar Silk Saree', 3499, 502),
+    ('Silk Sarees', 'Art Silk Saree', 1999, 503),
+    -- Linen Sarees
+    ('Linen Sarees', 'Pure Linen Saree', 1999, 601),
+    ('Linen Sarees', 'Printed Linen Saree', 1599, 602),
+    ('Linen Sarees', 'Linen by Linen Saree', 2499, 603),
+    -- Organza Sarees
+    ('Organza Sarees', 'Plain Organza Saree', 2499, 701),
+    ('Organza Sarees', 'Floral Organza Saree', 2999, 702),
+    ('Organza Sarees', 'Embellished Organza Saree', 3999, 703),
+    -- Chiffon Sarees
+    ('Chiffon Sarees', 'Plain Chiffon Saree', 1499, 801),
+    ('Chiffon Sarees', 'Printed Chiffon Saree', 1299, 802),
+    ('Chiffon Sarees', 'Georgette Chiffon Saree', 1799, 803),
+    -- Georgette Sarees
+    ('Georgette Sarees', 'Plain Georgette Saree', 1499, 901),
+    ('Georgette Sarees', 'Printed Georgette Saree', 1799, 902),
+    ('Georgette Sarees', 'Embroidered Georgette Saree', 2499, 903),
+    -- Designer Sarees
+    ('Designer Sarees', 'Designer Net Saree', 4999, 1001),
+    ('Designer Sarees', 'Designer Party Wear Saree', 5999, 1002),
+    ('Designer Sarees', 'Designer Bridal Saree', 9999, 1003),
+    -- Bridal Sarees
+    ('Bridal Sarees', 'Bridal Banarasi Saree', 12999, 1101),
+    ('Bridal Sarees', 'Red Bridal Silk Saree', 15999, 1102),
+    ('Bridal Sarees', 'Maroon Bridal Kanchipuram Saree', 19999, 1103),
+    -- Party Wear Sarees
+    ('Party Wear Sarees', 'Net Party Wear Saree', 3499, 1201),
+    ('Party Wear Sarees', 'Sequin Party Wear Saree', 3999, 1202),
+    ('Party Wear Sarees', 'Shimmer Party Wear Saree', 4499, 1203),
+    -- Fancy Sarees
+    ('Fancy Sarees', 'Fancy Printed Saree', 1299, 1301),
+    ('Fancy Sarees', 'Fancy Net Saree', 1799, 1302),
+    ('Fancy Sarees', 'Fancy Embellished Saree', 1999, 1303),
+    -- Printed Sarees
+    ('Printed Sarees', 'Floral Printed Saree', 899, 1401),
+    ('Printed Sarees', 'Abstract Printed Saree', 999, 1402),
+    ('Printed Sarees', 'Digital Printed Saree', 1199, 1403),
+    -- Embroidered Sarees
+    ('Embroidered Sarees', 'Thread Embroidered Saree', 2999, 1501),
+    ('Embroidered Sarees', 'Zari Embroidered Saree', 3999, 1502),
+    ('Embroidered Sarees', 'Stone Embroidered Saree', 4499, 1503),
+    -- Traditional Sarees
+    ('Traditional Sarees', 'Traditional Cotton Saree', 1299, 1601),
+    ('Traditional Sarees', 'Traditional Handloom Saree', 2499, 1602),
+    ('Traditional Sarees', 'Traditional Silk Saree', 5999, 1603)
+), resolved AS (
+  SELECT c.id AS category_id, c.name_en AS category_name, catalog.product_name, catalog.price,
+         catalog.sort_order
+  FROM catalog
+  JOIN public.categories c ON LOWER(c.name_en) = LOWER(catalog.category_name)
+)
+INSERT INTO public.products (
+  name, category, category_id, price, purchase_price, mrp, unit_type, unit_label,
+  unit, base_quantity, stock_quantity, opening_stock, stock, stock_unit,
+  allow_decimal_quantity, predefined_options, description, is_active, sort_order
+)
+SELECT
+  resolved.product_name,
+  resolved.category_name,
+  resolved.category_id,
+  resolved.price,
+  0,
+  resolved.price,
+  'unit',
+  'piece',
+  'piece',
+  1,
+  10,
+  10,
+  10,
+  'piece',
+  FALSE,
+  '[]'::JSONB,
+  resolved.product_name,
+  TRUE,
+  resolved.sort_order
+FROM resolved
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM public.products p
+  WHERE LOWER(BTRIM(p.name)) = LOWER(BTRIM(resolved.product_name))
 );
 
 NOTIFY pgrst, 'reload schema';
