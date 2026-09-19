@@ -293,7 +293,7 @@ export default function StoreSettings() {
               <Input
                 value={form.ownerName}
                 onChange={(e) => set('ownerName', e.target.value)}
-                placeholder="SHANMUGAPRIYA"
+                placeholder="Ananthi M"
                 error={errors.ownerName}
               />
             </Field>
@@ -301,7 +301,7 @@ export default function StoreSettings() {
               <Input
                 value={form.name}
                 onChange={(e) => set('name', e.target.value)}
-                placeholder="SRI SAKTHI PUGAZH TEX"
+                placeholder="Dhanyas Boutique"
                 error={errors.name}
               />
             </Field>
@@ -323,7 +323,7 @@ export default function StoreSettings() {
               <Input
                 value={form.phone}
                 onChange={(e) => set('phone', e.target.value)}
-                placeholder="73586 70411"
+                placeholder="80980 89591"
                 inputMode="tel"
                 error={errors.phone}
               />
@@ -332,7 +332,7 @@ export default function StoreSettings() {
               <Input
                 value={form.shopContact}
                 onChange={(e) => set('shopContact', e.target.value)}
-                placeholder="73586 70411"
+                placeholder="80980 89591"
                 inputMode="tel"
                 error={errors.shopContact}
               />
@@ -341,7 +341,7 @@ export default function StoreSettings() {
               <Input
                 value={form.email}
                 onChange={(e) => set('email', e.target.value)}
-                placeholder="shop@example.com"
+                placeholder="dhanyasboutique2015@gmail.com"
                 inputMode="email"
                 error={errors.email}
               />
@@ -358,7 +358,7 @@ export default function StoreSettings() {
                 rows={4}
                 value={form.address}
                 onChange={(e) => set('address', e.target.value)}
-                placeholder={'NO. 185, LE SITHARAS SQUARE, MUDICHUR ROAD,\nNEXT TO HP PETROL PUMP, MUDICHUR,\nCHENNAI - 600048'}
+                placeholder={'Kasthoribhai Road, AGM Apartment,\nKumbakonam - 612001'}
                 error={errors.address}
               />
             </Field>
@@ -366,7 +366,7 @@ export default function StoreSettings() {
               <Input
                 value={form.instagramId}
                 onChange={(e) => set('instagramId', e.target.value)}
-                placeholder="@srisakthipugazhtex"
+                placeholder="@ananthinathan84"
                 leftIcon={<AtSign size={14} />}
                 error={errors.instagramId}
               />
@@ -423,7 +423,7 @@ export default function StoreSettings() {
                 <Input
                   value={form.cardColor}
                   onChange={(e) => set('cardColor', e.target.value)}
-                  placeholder="#8F1402"
+                  placeholder="#31042F"
                   error={errors.cardColor}
                 />
               </div>

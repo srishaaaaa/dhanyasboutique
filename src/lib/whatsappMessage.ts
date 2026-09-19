@@ -146,4 +146,4 @@ Dear ${customerName},
 🙏 Thank you for paying the initial amount as advance!`
 }
 
-export const BUSINESS_PHONE = '919363400210'
+export const BUSINESS_PHONE = '918098089591'

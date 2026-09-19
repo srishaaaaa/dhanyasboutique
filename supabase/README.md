@@ -1,8 +1,8 @@
-# Sri Sakthi Pugazh Tex Supabase setup
+# Dhanyas Boutique Supabase setup
 
 ## Quickest path: one file
 
-Run **`supabase/all_in_one_setup.sql`** in the Supabase SQL Editor (dashboard → SQL Editor → New query → paste the whole file → Run). It sets up everything in one go: schema, tables, RPC functions, the Sri Sakthi Pugazh Tex fried rice & chicken combo catalogue, flavour tags, and store settings — plus a few bug fixes (payment method whitelist, a missing `invoice_pdf_url` column, and RLS policies that would otherwise block the admin dashboard) that weren't captured in any individual migration file.
+Run **`supabase/all_in_one_setup.sql`** in the Supabase SQL Editor (dashboard → SQL Editor → New query → paste the whole file → Run). It sets up everything in one go: schema, tables, RPC functions, store settings, and the Dhanyas Boutique saree catalogue — plus a few bug fixes (payment method whitelist, a missing `invoice_pdf_url` column, and RLS policies that would otherwise block the admin dashboard) that weren't captured in any individual migration file.
 
 It's safe to re-run if something fails partway through — every statement is idempotent.
 
@@ -10,7 +10,7 @@ After it runs, create the owner account in Supabase Authentication and set its `
 
 ## Alternative: migrations one at a time
 
-`all_in_one_setup.sql` is generated from the files in `supabase/migrations/`, run in filename order. If you'd rather apply them individually (e.g. to track which one introduces an issue), run them in that same filename order, ending with `20260914_0001_rice_n_rooster_rebrand.sql`.
+`all_in_one_setup.sql` is generated from the files in `supabase/migrations/`, run in filename order. If you'd rather apply them individually (e.g. to track which one introduces an issue), run them in that same filename order, ending with `20260919_0001_dhanyas_boutique_rebrand.sql`.
 
 ## Notes
 

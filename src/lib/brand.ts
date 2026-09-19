@@ -26,14 +26,14 @@ export interface ShopProfile {
 
 /** Fallback used before settings load and when Supabase is not configured. */
 export const DEFAULT_SHOP_PROFILE: ShopProfile = {
-  name: 'SRI SAKTHI PUGAZH TEX',
-  ownerName: 'SHANMUGAPRIYA',
+  name: 'Dhanyas Boutique',
+  ownerName: 'Ananthi M',
   businessType: 'SAREE WHOLESALE & RETAIL',
-  phone: '73586 70411',
-  shopContact: '73586 70411',
-  email: '',
-  address: 'NO. 185, LE SITHARAS SQUARE, MUDICHUR ROAD, NEXT TO HP PETROL PUMP, MUDICHUR, CHENNAI - 600048',
-  instagramId: '@srisakthipugazhtex',
+  phone: '80980 89591',
+  shopContact: '80980 89591',
+  email: 'dhanyasboutique2015@gmail.com',
+  address: 'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
+  instagramId: '@ananthinathan84',
   logoUrl: '',
 }
 
