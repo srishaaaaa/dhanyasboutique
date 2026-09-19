@@ -1,15 +1,15 @@
 -- Rebrand store settings and replace the tailoring catalog with the
--- Sri Sakthi Pugazh Tex fried rice / specialty chicken combo menu.
+-- Dhanyas Boutique fried rice / specialty chicken combo menu.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Sri Sakthi Pugazh Tex',
-  'Sankaranarayanan. S',
-  '+91 93634 00210',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
@@ -31,7 +31,7 @@ UPDATE public.categories
 SET is_active = FALSE, updated_at = NOW()
 WHERE name_en IN ('Tailoring', 'Saree', 'Salwar', 'Nighty');
 
--- 3. New categories for the Sri Sakthi Pugazh Tex menu.
+-- 3. New categories for the Dhanyas Boutique menu.
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
   ('Fried Rice', '', TRUE, 1),

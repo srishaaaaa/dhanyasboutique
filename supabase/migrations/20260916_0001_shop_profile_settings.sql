@@ -17,7 +17,7 @@ ALTER TABLE public.store_settings
 -- cleared, so an empty string must be acceptable.
 ALTER TABLE public.store_settings ALTER COLUMN email SET DEFAULT '';
 
--- 2. Current shop information for SRI SAKTHI PUGAZH TEX.
+-- 2. Current shop information for DHANYAS BOUTIQUE.
 --    Only the shop-profile row (id = 1) is touched. Existing non-empty values
 --    for the newer columns are preserved; the identity fields are set to the
 --    details supplied by the shop owner.
@@ -27,16 +27,16 @@ INSERT INTO public.store_settings (
 )
 VALUES (
   1,
-  'SRI SAKTHI PUGAZH TEX',
-  'SHANMUGAPRIYA',
-  '73586 70411',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  'NO. 185, LE SITHARAS SQUARE, MUDICHUR ROAD, NEXT TO HP PETROL PUMP, MUDICHUR, CHENNAI - 600048',
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   'SAREE WHOLESALE & RETAIL',
-  '73586 70411',
-  '@srisakthipugazhtex',
+  '80980 89591',
+  '@ananthinathan84',
   '',
-  '#8F1402'
+  '#31042F'
 )
 ON CONFLICT (id) DO UPDATE SET
   name          = EXCLUDED.name,

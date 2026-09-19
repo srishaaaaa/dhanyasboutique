@@ -48,7 +48,7 @@ function getHeaders(auth = false): HeadersInit {
   }
 
   if (auth) {
-    const token = localStorage.getItem('ssp-tex-token')
+    const token = localStorage.getItem('dhanyas-token')
     if (token) {
       headers.Authorization = `Bearer ${token}`
     }

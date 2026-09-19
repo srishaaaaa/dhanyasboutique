@@ -39,10 +39,7 @@ export type AdvanceDepositWhatsAppInput = {
 
 export const publicInvoiceUrl = (invoiceNumber: string) => {
   const formatted = formatInvoiceNo(invoiceNumber)
-  const origin =
-    typeof window !== 'undefined' && window.location?.origin && !window.location.origin.includes('localhost')
-      ? window.location.origin
-      : 'https://srisakthipugazhtex.vercel.app'
+  const origin = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : ''
   return `${origin}/invoice/${encodeURIComponent(formatted)}`
 }
 

@@ -19,8 +19,8 @@
 
 -- FILE: 20260716_0001_store_schema.sql
 -- ═══════════════════════════════════════════════════════════
--- Sri Sakthi Pugazh Tex billing schema.
--- Safe to run against a fresh project or the existing Sri Sakthi Pugazh Tex project.
+-- Dhanyas Boutique billing schema.
+-- Safe to run against a fresh project or the existing Dhanyas Boutique project.
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -202,11 +202,11 @@ ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS public.store_settings (
   id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  name TEXT NOT NULL DEFAULT 'Sri Sakthi Pugazh Tex',
-  owner_name TEXT NOT NULL DEFAULT 'Sankaranarayanan. S',
-  phone TEXT NOT NULL DEFAULT '+91 93634 00210',
+  name TEXT NOT NULL DEFAULT 'Dhanyas Boutique',
+  owner_name TEXT NOT NULL DEFAULT 'Ananthi M',
+  phone TEXT NOT NULL DEFAULT '80980 89591',
   email TEXT NOT NULL DEFAULT '',
-  address TEXT NOT NULL DEFAULT '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106',
+  address TEXT NOT NULL DEFAULT 'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   gst_enabled BOOLEAN NOT NULL DEFAULT FALSE,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -214,11 +214,11 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Sri Sakthi Pugazh Tex',
-  'Sankaranarayanan. S',
-  '+91 93634 00210',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
@@ -576,7 +576,7 @@ $$;
 
 -- FILE: 20260716_0002_store_catalog.sql
 -- ═══════════════════════════════════════════════════════════
--- Sri Sakthi Pugazh Tex initial catalog. Existing matching products are preserved.
+-- Dhanyas Boutique initial catalog. Existing matching products are preserved.
 
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
@@ -1818,17 +1818,17 @@ CREATE POLICY "Enable all access for all authenticated users" ON public.attendan
 
 -- FILE: 20260904_0001_tailoring_catalog_retired.sql
 -- ═══════════════════════════════════════════════════════════
--- Rebrand store settings and replace the tailoring catalog for Sri Sakthi Pugazh Tex.
+-- Rebrand store settings and replace the tailoring catalog for Dhanyas Boutique.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Sri Sakthi Pugazh Tex',
-  'Sankaranarayanan. S',
-  '+91 93634 00210',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
@@ -1856,7 +1856,7 @@ WHERE p.category_id = c.id
     'silk fabric per mtr', 'readymade blouse'
   );
 
--- 3. Retire categories not on the Sri Sakthi Pugazh Tex list — only Tailoring, Saree, Salwar,
+-- 3. Retire categories not on the Dhanyas Boutique list — only Tailoring, Saree, Salwar,
 -- and Nighty should remain. Jewellery & Accessories and Posstore came from the old
 -- placeholder catalog and are not part of this business.
 UPDATE public.products p
@@ -1890,7 +1890,7 @@ WHERE c.name_en IN ('Saree', 'Salwar', 'Nighty')
   AND LOWER(BTRIM(p.name)) = LOWER(c.name_en)
   AND p.category_id IS DISTINCT FROM c.id;
 
--- 5. Sri Sakthi Pugazh Tex tailoring price list, split across Tailoring / Saree / Salwar /
+-- 5. Dhanyas Boutique tailoring price list, split across Tailoring / Saree / Salwar /
 -- Nighty per the confirmed category mapping.
 WITH catalog(category_name, product_name, price, unit, unit_label, allow_decimal, sort_order) AS (
   VALUES
@@ -2429,17 +2429,17 @@ NOTIFY pgrst, 'reload schema';
 -- FILE: 20260914_0001_rice_n_rooster_rebrand.sql
 -- ═══════════════════════════════════════════════════════════
 -- Rebrand store settings and replace the tailoring catalog with the
--- Sri Sakthi Pugazh Tex fried rice / specialty chicken combo menu.
+-- Dhanyas Boutique fried rice / specialty chicken combo menu.
 
 -- 1. Store settings (name, contact, address shown across invoices/UI)
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Sri Sakthi Pugazh Tex',
-  'Sankaranarayanan. S',
-  '+91 93634 00210',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
@@ -2461,7 +2461,7 @@ UPDATE public.categories
 SET is_active = FALSE, updated_at = NOW()
 WHERE name_en IN ('Tailoring', 'Saree', 'Salwar', 'Nighty');
 
--- 3. New categories for the Sri Sakthi Pugazh Tex menu.
+-- 3. New categories for the Dhanyas Boutique menu.
 INSERT INTO public.categories (name_en, name_ta, is_active, sort_order)
 VALUES
   ('Fried Rice', '', TRUE, 1),
@@ -2669,7 +2669,7 @@ ALTER TABLE public.store_settings
 -- cleared, so an empty string must be acceptable.
 ALTER TABLE public.store_settings ALTER COLUMN email SET DEFAULT '';
 
--- 2. Current shop information for SRI SAKTHI PUGAZH TEX.
+-- 2. Current shop information for DHANYAS BOUTIQUE.
 --    Only the shop-profile row (id = 1) is touched. Existing non-empty values
 --    for the newer columns are preserved; the identity fields are set to the
 --    details supplied by the shop owner.
@@ -2679,16 +2679,16 @@ INSERT INTO public.store_settings (
 )
 VALUES (
   1,
-  'SRI SAKTHI PUGAZH TEX',
-  'SHANMUGAPRIYA',
-  '73586 70411',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  'NO. 185, LE SITHARAS SQUARE, MUDICHUR ROAD, NEXT TO HP PETROL PUMP, MUDICHUR, CHENNAI - 600048',
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   'SAREE WHOLESALE & RETAIL',
-  '73586 70411',
-  '@srisakthipugazhtex',
+  '80980 89591',
+  '@ananthinathan84',
   '',
-  '#8F1402'
+  '#31042F'
 )
 ON CONFLICT (id) DO UPDATE SET
   name          = EXCLUDED.name,
@@ -2738,17 +2738,17 @@ ON CONFLICT (name_en) DO UPDATE SET
 -- ============================================================
 -- FINAL CLEANUP — remove every old-business catalog this file itself
 -- seeded further up (the Rice n' Rooster fried-rice/chicken menu, and
--- before that the Sankaranarayanan tailoring/saree/salwar/nighty price
+-- before that the original tailoring/saree/salwar/nighty price
 -- list), so a fresh run of this single file ends with ONLY the current
--- business's data: Sri Sakthi Pugazh Tex, saree wholesale & retail.
--- Also fixes the shop's card_color to the exact red sampled from the
+-- business's data: Dhanyas Boutique, saree wholesale & retail.
+-- Also fixes the shop's card_color to the deep purple sampled from the
 -- current logo. Idempotent and safe to re-run.
 -- ============================================================
 
 BEGIN;
 
 UPDATE public.store_settings
-SET card_color = '#A00818',
+SET card_color = '#31042F',
     updated_at = NOW()
 WHERE id = 1;
 

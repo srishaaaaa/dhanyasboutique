@@ -297,7 +297,7 @@ export const useAuthStore = create<AuthState>()(
         }
       }
     }),
-    { name: 'ssp-tex-auth' }
+    { name: 'dhanyas-auth' }
   )
 )
 
@@ -515,12 +515,12 @@ export const useAdminAuthStore = create<AdminAuthState>()(
         const id = portalId.trim()
         const pwd = password.trim()
         if (ADMIN_PORTAL_ID && ADMIN_PORTAL_PASSWORD && id === ADMIN_PORTAL_ID && pwd === ADMIN_PORTAL_PASSWORD) {
-          try { sessionStorage.setItem('ssp_tex_fresh_login', '1') } catch { /* ignore */ }
+          try { sessionStorage.setItem('dhanyas_fresh_login', '1') } catch { /* ignore */ }
           set({ isLoggedIn: true, role: 'admin' })
           return 'admin'
         }
         if (STAFF_PORTAL_ID && STAFF_PORTAL_PASSWORD && id === STAFF_PORTAL_ID && pwd === STAFF_PORTAL_PASSWORD) {
-          try { sessionStorage.setItem('ssp_tex_fresh_login', '1') } catch { /* ignore */ }
+          try { sessionStorage.setItem('dhanyas_fresh_login', '1') } catch { /* ignore */ }
           set({ isLoggedIn: true, role: 'staff' })
           return 'staff'
         }
@@ -529,7 +529,7 @@ export const useAdminAuthStore = create<AdminAuthState>()(
       logout: () => set({ isLoggedIn: false, role: null }),
     }),
     {
-      name: 'ssp-tex-admin-session',
+      name: 'dhanyas-admin-session',
       // Using sessionStorage so the session is cleared when the tab is closed
       storage: {
         getItem: (name) => {

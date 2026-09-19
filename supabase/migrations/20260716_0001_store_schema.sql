@@ -1,5 +1,5 @@
--- Sri Sakthi Pugazh Tex billing schema.
--- Safe to run against a fresh project or the existing Sri Sakthi Pugazh Tex project.
+-- Dhanyas Boutique billing schema.
+-- Safe to run against a fresh project or the existing Dhanyas Boutique project.
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
@@ -181,11 +181,11 @@ ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS public.store_settings (
   id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
-  name TEXT NOT NULL DEFAULT 'Sri Sakthi Pugazh Tex',
-  owner_name TEXT NOT NULL DEFAULT 'Sankaranarayanan. S',
-  phone TEXT NOT NULL DEFAULT '+91 93634 00210',
+  name TEXT NOT NULL DEFAULT 'Dhanyas Boutique',
+  owner_name TEXT NOT NULL DEFAULT 'Ananthi M',
+  phone TEXT NOT NULL DEFAULT '80980 89591',
   email TEXT NOT NULL DEFAULT '',
-  address TEXT NOT NULL DEFAULT '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106',
+  address TEXT NOT NULL DEFAULT 'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   gst_enabled BOOLEAN NOT NULL DEFAULT FALSE,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -193,11 +193,11 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
 INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
 VALUES (
   1,
-  'Sri Sakthi Pugazh Tex',
-  'Sankaranarayanan. S',
-  '+91 93634 00210',
+  'Dhanyas Boutique',
+  'Ananthi M',
+  '80980 89591',
   '',
-  '1st floor, 14/A, Water Tank Rd, MMDA Colony, Arumbakkam, Chennai, Tamil Nadu 600106'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
