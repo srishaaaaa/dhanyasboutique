@@ -2459,7 +2459,7 @@ export default function Dashboard() {
                 <div className="flex flex-wrap gap-2 items-center">
                   {(['today', 'week', 'month', 'custom'] as const).map(preset => (
                     <button key={preset} type="button" onClick={() => applyDatePreset(preset)}
-                      className={`min-h-[44px] px-3 py-1.5 rounded-xl text-[12px] font-black transition-colors ${datePreset === preset ? 'bg-shopDeep text-shopAccent shadow-sm' : 'bg-[#F9FAFB] text-[#374151] hover:bg-shopSoft/40'}`}>
+                      className={`min-h-[44px] px-3 py-1.5 rounded-xl text-[12px] font-black transition-colors ${datePreset === preset ? 'bg-shopDeep text-white shadow-sm' : 'bg-[#F9FAFB] text-[#374151] hover:bg-shopSoft/40'}`}>
                       {preset === 'today' ? l('Today','இன்று') : preset === 'week' ? l('This Week','இந்த வாரம்') : preset === 'month' ? l('This Month','இந்த மாதம்') : l('Custom Range','தேர்வு')}
                     </button>
                   ))}

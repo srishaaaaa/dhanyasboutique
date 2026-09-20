@@ -206,8 +206,8 @@ export default function Expenses() {
       )}
 
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
-        <button onClick={() => setTab('expenses')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-shopDeep text-shopAccent' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Expenses</button>
-        <button onClick={() => setTab('categories')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-shopDeep text-shopAccent' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Categories</button>
+        <button onClick={() => setTab('expenses')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Expenses</button>
+        <button onClick={() => setTab('categories')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Categories</button>
       </div>
 
       {tab === 'expenses' && (
@@ -265,7 +265,7 @@ export default function Expenses() {
                 { id: 'year' as const, label: 'This Year' },
               ]).map(p => (
                 <button key={p.id} onClick={() => applyPreset(p.id)}
-                  className={`shrink-0 h-9 px-3 rounded-lg text-[11px] font-black uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-shopDeep text-shopAccent' : 'text-[#6B7280] hover:text-[#111111] border border-[#E5E7EB] bg-white'}`}>
+                  className={`shrink-0 h-9 px-3 rounded-lg text-[11px] font-black uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-shopDeep text-white' : 'text-[#6B7280] hover:text-[#111111] border border-[#E5E7EB] bg-white'}`}>
                   {p.label}
                 </button>
               ))}

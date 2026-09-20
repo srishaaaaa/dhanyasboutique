@@ -720,7 +720,7 @@ export default function Inventory() {
           ['analytics', 'Analytics & Reports', BarChart3],
         ] as const).map(([key, label, Icon]) => (
           <button key={key} onClick={() => setActiveTab(key)}
-            className={`shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm transition-colors whitespace-nowrap ${activeTab === key ? 'bg-shopDeep text-shopAccent' : 'text-[#374151] hover:bg-[#FAFAFA]'}`}>
+            className={`shrink-0 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm transition-colors whitespace-nowrap ${activeTab === key ? 'bg-shopDeep text-white' : 'text-[#374151] hover:bg-[#FAFAFA]'}`}>
             <Icon size={15} className="shrink-0" /> {label}
           </button>
         ))}
@@ -800,7 +800,9 @@ export default function Inventory() {
                     const pillClass = status === 'out' ? 'bg-red-50 text-red-700 border-red-200' : status === 'low' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                     return (
                       <tr key={String(p.id)} className="border-b border-shopSoft/20 hover:bg-[#FAFAFA]">
-                        <td className="px-4 py-3 font-bold text-[#111111] text-sm whitespace-nowrap max-w-[220px] truncate">{p.name}</td>
+                        <td className="px-4 py-3 font-bold text-[#111111] text-sm">
+                          <div className="max-w-[220px] overflow-x-auto whitespace-nowrap">{p.name}</div>
+                        </td>
                         <td className="px-4 py-3 text-sm text-[#374151] whitespace-nowrap">{p.category || '—'}</td>
                         <td className="px-4 py-3 whitespace-nowrap">
                           <span className={`inline-flex items-center gap-1 whitespace-nowrap px-2.5 py-1 rounded-full text-[11px] font-black border ${pillClass}`}>

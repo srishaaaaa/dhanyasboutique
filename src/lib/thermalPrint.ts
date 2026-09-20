@@ -88,6 +88,7 @@ export function printThermalReceipt(data: ThermalReceiptData) {
           table { width: 100%; border-collapse: collapse; }
           th, td { padding: 2px 0; vertical-align: top; }
           .item-name { font-size: 11px; padding-right: 4px; }
+          .qty-col { padding-right: 10px; }
         </style>
       </head>
       <body>
@@ -109,7 +110,7 @@ export function printThermalReceipt(data: ThermalReceiptData) {
           <thead>
             <tr style="font-size: 10px; border-bottom: 1px dashed #000;">
               <th class="text-left">Item</th>
-              <th class="text-right">Qty</th>
+              <th class="text-right qty-col">Qty</th>
               <th class="text-right">Total</th>
             </tr>
           </thead>
@@ -123,7 +124,7 @@ export function printThermalReceipt(data: ThermalReceiptData) {
                     ${item.name} <br/>
                     <span style="font-size: 9px;">${formatCurrency(item.price)} ${unit ? ` / ${unit}` : ''}</span>
                   </td>
-                  <td class="text-right">${item.qty}</td>
+                  <td class="text-right qty-col">${item.qty}</td>
                   <td class="text-right">${formatCurrency(lineTotal)}</td>
                 </tr>
               `

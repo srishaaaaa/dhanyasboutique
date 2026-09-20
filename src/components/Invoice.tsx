@@ -229,11 +229,11 @@ export const Invoice: React.FC<InvoiceProps> = ({
         <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 300 }}>
           <thead>
             <tr style={{ background: DARK }}>
-              <th style={{ padding: '9px 6px', textAlign: 'left',   fontSize: 10, fontWeight: 800, color: RED, textTransform: 'uppercase', letterSpacing: 0.8, width: 22 }}>#</th>
-              <th style={{ padding: '9px 6px', textAlign: 'left',   fontSize: 10, fontWeight: 800, color: RED, textTransform: 'uppercase', letterSpacing: 0.8 }}>Item Description</th>
-              <th style={{ padding: '9px 6px', textAlign: 'center', fontSize: 10, fontWeight: 800, color: RED, textTransform: 'uppercase', letterSpacing: 0.8, width: 58 }}>Qty</th>
-              <th style={{ padding: '9px 6px', textAlign: 'right',  fontSize: 10, fontWeight: 800, color: RED, textTransform: 'uppercase', letterSpacing: 0.8, width: 78 }}>Rate</th>
-              <th style={{ padding: '9px 6px', textAlign: 'right',  fontSize: 10, fontWeight: 800, color: RED, textTransform: 'uppercase', letterSpacing: 0.8, width: 82 }}>Amount</th>
+              <th style={{ padding: '9px 6px', textAlign: 'left',   fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8, width: 22 }}>#</th>
+              <th style={{ padding: '9px 6px', textAlign: 'left',   fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8 }}>Item Description</th>
+              <th style={{ padding: '9px 6px', textAlign: 'center', fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8, width: 58 }}>Qty</th>
+              <th style={{ padding: '9px 6px', textAlign: 'right',  fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8, width: 78 }}>Rate</th>
+              <th style={{ padding: '9px 6px', textAlign: 'right',  fontSize: 10, fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: 0.8, width: 82 }}>Amount</th>
             </tr>
           </thead>
           <tbody>

@@ -158,7 +158,7 @@ export function createInvoicePdf(data: InvoicePdfData): Blob {
   doc.rect(left, y, contentW, 9, 'F')
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(7)
-  doc.setTextColor(RED)
+  doc.setTextColor('#ffffff')
   doc.text('#',               colNum,   y + 6)
   doc.text('ITEM DESCRIPTION',colDesc,  y + 6)
   doc.text('QTY',             colQtyR,  y + 6, { align: 'right' })

@@ -824,13 +824,13 @@ export default function Pos(props: PosProps = {}) {
           <div className="grid grid-cols-2 bg-white rounded-xl border border-shopSoft/60 p-1 shadow-sm flex-1 min-[480px]:flex-none">
             <button
               onClick={() => setOrdermode('offline')}
-              className={`h-9 px-4 rounded-lg text-[11px] font-black tracking-wider uppercase transition-colors ${ordermode === 'offline' ? 'bg-shopDeep text-shopAccent' : 'text-[#374151] hover:bg-[#F9FAFB]'}`}
+              className={`h-9 px-4 rounded-lg text-[11px] font-black tracking-wider uppercase transition-colors ${ordermode === 'offline' ? 'bg-shopDeep text-white' : 'text-[#374151] hover:bg-[#F9FAFB]'}`}
             >
               Offline
             </button>
             <button
               onClick={() => setOrdermode('online')}
-              className={`h-9 px-4 rounded-lg text-[11px] font-black tracking-wider uppercase transition-colors ${ordermode === 'online' ? 'bg-shopDeep text-shopAccent' : 'text-[#374151] hover:bg-[#F9FAFB]'}`}
+              className={`h-9 px-4 rounded-lg text-[11px] font-black tracking-wider uppercase transition-colors ${ordermode === 'online' ? 'bg-shopDeep text-white' : 'text-[#374151] hover:bg-[#F9FAFB]'}`}
             >
               Online
             </button>

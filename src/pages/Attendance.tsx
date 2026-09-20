@@ -156,7 +156,7 @@ export default function Attendance() {
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
         {(['today', 'report', 'staff'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
-            className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-shopDeep text-shopAccent' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>
+            className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>
             {t === 'today' ? "Today's Attendance" : t === 'report' ? 'Monthly Report' : 'Staff Management'}
           </button>
         ))}

@@ -193,7 +193,7 @@ export default function CatalogModal({ isOpen, onClose, onAdd }: CatalogModalPro
               <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
                 {categories.map(cat => (
                   <button key={cat} onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider whitespace-nowrap transition-colors ${activeCategory === cat ? 'bg-shopDeep text-shopAccent' : 'bg-[#FAFAFA] text-[#374151] hover:bg-[#F9FAFB] border border-shopSoft/60'}`}>
+                    className={`px-4 py-2 rounded-xl text-[11px] font-black uppercase tracking-wider whitespace-nowrap transition-colors ${activeCategory === cat ? 'bg-shopDeep text-white' : 'bg-[#FAFAFA] text-[#374151] hover:bg-[#F9FAFB] border border-shopSoft/60'}`}>
                     {cat}
                   </button>
                 ))}
