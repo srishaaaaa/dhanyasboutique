@@ -6,11 +6,22 @@ Run **`supabase/all_in_one_setup.sql`** in the Supabase SQL Editor (dashboard �
 
 It's safe to re-run if something fails partway through — every statement is idempotent.
 
+**One manual step this file can't do:** storage buckets. `INSERT INTO storage.buckets` from the SQL Editor is silently rejected by Supabase (no error, the row just never lands) — creating a bucket is a privileged Storage API operation. After running the file, go to **Dashboard → Storage → New bucket** and create:
+
+| Bucket | Visibility |
+| --- | --- |
+| `product-images` | Public |
+| `invoices` | Public |
+| `avatars` | Public |
+| `receipts` | Private |
+
+The storage policies for all 4 are already set up by the SQL and activate automatically the moment each bucket exists — nothing else to run afterward.
+
 After it runs, create the owner account in Supabase Authentication and set its `role` metadata to `admin` if customer login is enabled.
 
 ## Alternative: migrations one at a time
 
-`all_in_one_setup.sql` is generated from the files in `supabase/migrations/`, run in filename order. If you'd rather apply them individually (e.g. to track which one introduces an issue), run them in that same filename order, ending with `20260919_0001_dhanyas_boutique_rebrand.sql`.
+`all_in_one_setup.sql` is generated from the files in `supabase/migrations/`, run in filename order. If you'd rather apply them individually (e.g. to track which one introduces an issue), run them in that same filename order, ending with `20260920_0001_ensure_storage_buckets.sql`.
 
 ## Notes
 

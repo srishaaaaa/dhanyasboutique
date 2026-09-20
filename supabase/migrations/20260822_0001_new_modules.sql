@@ -162,9 +162,13 @@ CREATE TABLE IF NOT EXISTS public.attendance (
 -- ==========================================
 -- STORAGE & RLS POLICIES
 -- ==========================================
--- Assuming 'receipts' bucket needs to be created (Supabase storage.buckets)
-INSERT INTO storage.buckets (id, name, public) VALUES ('receipts', 'receipts', false)
-ON CONFLICT (id) DO NOTHING;
+-- The 'receipts' bucket itself is NOT created here — INSERT INTO
+-- storage.buckets from the SQL Editor is silently rejected on current
+-- Supabase projects (no error surfaces, the row just never lands; bucket
+-- creation needs the Storage API, which the SQL Editor role can't write to
+-- directly). Create it from Dashboard -> Storage -> New bucket: name
+-- "receipts", Private. These policies are safe to run regardless — inert
+-- until the bucket exists, and take effect automatically once it's created.
 
 -- Policies for storage (Allow authenticated users to upload/read)
 DROP POLICY IF EXISTS "Authenticated users can upload receipts" ON storage.objects;

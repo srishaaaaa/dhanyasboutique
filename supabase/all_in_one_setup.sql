@@ -10,10 +10,20 @@
 -- removes the old-business catalogs the file seeds further up (Rice n'
 -- Rooster, the earlier tailoring price list), PLUS a starter saree
 -- product catalogue, PLUS the Dhanyas Boutique rebrand (shop profile,
--- colour theme, and real catalogue) so a fresh run ends with only the
+-- colour theme, and real catalogue), so a fresh run ends with only the
 -- current business's data and isn't empty out of the box. Every
 -- statement is idempotent, so this is safe to run against a fresh
 -- Supabase project or re-run against the existing one.
+--
+-- ONE MANUAL STEP THIS FILE CANNOT DO: storage buckets. Confirmed twice
+-- against a live project that INSERT INTO storage.buckets from the SQL
+-- Editor is silently rejected (no error, row never lands) — creating a
+-- bucket is a privileged Storage API operation, not a plain table write.
+-- After running this file, go to Dashboard -> Storage -> New bucket and
+-- create: product-images (Public), invoices (Public), avatars (Public),
+-- receipts (Private). Every storage.objects policy this file sets up is
+-- already correct and takes effect automatically the moment each bucket
+-- exists — nothing else to run afterward.
 -- ============================================================
 
 
@@ -541,9 +551,16 @@ CREATE POLICY order_items_portal_manage ON public.order_items FOR ALL TO anon, a
 DROP POLICY IF EXISTS store_settings_portal_manage ON public.store_settings;
 CREATE POLICY store_settings_portal_manage ON public.store_settings FOR ALL TO anon, authenticated USING (TRUE) WITH CHECK (TRUE);
 
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('invoices', 'invoices', TRUE, 10485760, ARRAY['application/pdf'])
-ON CONFLICT (id) DO UPDATE SET public = TRUE, file_size_limit = 10485760, allowed_mime_types = ARRAY['application/pdf'];
+-- The 'invoices' bucket itself is NOT created here. On current Supabase
+-- projects, INSERT INTO storage.buckets from the SQL Editor is silently
+-- rejected (no error surfaces, but the row never lands) — bucket creation
+-- needs the Storage API, which the SQL Editor role doesn't have write access
+-- to directly. Create it from Dashboard -> Storage -> New bucket instead:
+-- name "invoices", Public. See the FILE: 20260920_0001_ensure_storage_buckets.sql
+-- section near the end of this file for the full list of buckets this app
+-- needs and their required settings. The policies below are safe to run
+-- regardless — they're inert until the bucket exists, and take effect
+-- automatically once it's created.
 
 DROP POLICY IF EXISTS invoices_public_read ON storage.objects;
 CREATE POLICY invoices_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'invoices');
@@ -1292,12 +1309,10 @@ NOTIFY pgrst, 'reload schema';
 
 -- FILE: 20260724_0009_create_invoices_bucket.sql
 -- ═══════════════════════════════════════════════════════════
--- Migration: Create invoices storage bucket
--- Creates the 'invoices' bucket and sets up public read access and upload policies
-
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('invoices', 'invoices', TRUE, 10485760, ARRAY['application/pdf'])
-ON CONFLICT (id) DO UPDATE SET public = TRUE, file_size_limit = 10485760, allowed_mime_types = ARRAY['application/pdf'];
+-- Migration: invoices storage bucket policies
+-- The bucket itself is NOT created here — see the note earlier in this file
+-- (FILE: 20260716_0001_store_schema.sql section). Create it from Dashboard
+-- -> Storage -> New bucket: name "invoices", Public.
 
 DROP POLICY IF EXISTS invoices_public_read ON storage.objects;
 CREATE POLICY invoices_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'invoices');
@@ -1780,9 +1795,9 @@ CREATE TABLE IF NOT EXISTS public.attendance (
 -- ==========================================
 -- STORAGE & RLS POLICIES
 -- ==========================================
--- Assuming 'receipts' bucket needs to be created (Supabase storage.buckets)
-INSERT INTO storage.buckets (id, name, public) VALUES ('receipts', 'receipts', false)
-ON CONFLICT (id) DO NOTHING;
+-- The 'receipts' bucket itself is NOT created here — see the note earlier
+-- in this file (FILE: 20260716_0001_store_schema.sql section). Create it
+-- from Dashboard -> Storage -> New bucket: name "receipts", Private.
 
 -- Policies for storage (Allow authenticated users to upload/read)
 DROP POLICY IF EXISTS "Authenticated users can upload receipts" ON storage.objects;
@@ -3098,3 +3113,51 @@ WHERE NOT EXISTS (
 NOTIFY pgrst, 'reload schema';
 
 COMMIT;
+
+
+
+
+-- FILE: 20260920_0001_ensure_storage_buckets.sql
+-- ═══════════════════════════════════════════════════════════
+-- Storage buckets this app needs — and why they can't be created from here.
+--
+-- INSERT INTO storage.buckets from the SQL Editor is silently rejected on
+-- current Supabase projects: no error surfaces (a wrapped DO block with
+-- EXCEPTION WHEN OTHERS never caught anything either — confirmed by
+-- directly querying `SELECT * FROM storage.buckets` afterward and finding
+-- the rows never landed), but the bucket never actually gets created.
+-- Bucket creation is a privileged operation that goes through the Storage
+-- API, not a plain table write the SQL Editor's role can perform. This
+-- isn't new: 'product-images' and 'avatars' were never created by SQL
+-- anywhere in this migration's history either — always assumed to already
+-- exist.
+--
+-- Create all 4 from Dashboard -> Storage -> New bucket:
+--
+--   product-images   Public
+--   invoices         Public
+--   avatars          Public
+--   receipts         Private
+--
+-- Once they exist, the policies below take effect automatically — they're
+-- safe to run before or after bucket creation, since a storage.objects
+-- policy is just a rule keyed on a bucket_id string, not a foreign key to
+-- an existing bucket row.
+
+-- product-images and avatars never had storage.objects policies defined
+-- anywhere in the migration history either (invoices and receipts already
+-- have theirs, from earlier migrations). product-images is written from the
+-- admin/POS side, which authenticates via portal login, not Supabase Auth —
+-- so it needs anon write access, matching every other "portal_manage"
+-- policy in this schema.
+DROP POLICY IF EXISTS product_images_public_read ON storage.objects;
+CREATE POLICY product_images_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'product-images');
+DROP POLICY IF EXISTS product_images_portal_write ON storage.objects;
+CREATE POLICY product_images_portal_write ON storage.objects FOR ALL TO anon, authenticated USING (bucket_id = 'product-images') WITH CHECK (bucket_id = 'product-images');
+
+DROP POLICY IF EXISTS avatars_public_read ON storage.objects;
+CREATE POLICY avatars_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'avatars');
+DROP POLICY IF EXISTS avatars_own_write ON storage.objects;
+CREATE POLICY avatars_own_write ON storage.objects FOR ALL TO authenticated USING (bucket_id = 'avatars') WITH CHECK (bucket_id = 'avatars');
+
+NOTIFY pgrst, 'reload schema';

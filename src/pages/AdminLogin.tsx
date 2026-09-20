@@ -41,7 +41,7 @@ export default function AdminLogin() {
       <div className="relative grid w-full max-w-5xl overflow-hidden rounded-[32px] border border-shopSoft bg-white shadow-[0_24px_80px_rgba(44,57,42,0.14)] lg:grid-cols-[0.9fr_1.1fr]">
         <div className="hidden flex-col justify-between bg-shopDeep p-10 text-white lg:flex">
           <div>
-            <div className="mb-8 inline-flex items-center justify-center rounded-2xl bg-shopDeep border border-white/30/70 p-1.5 shadow-xl overflow-hidden"><img src={BRAND_LOGO} alt={`${BRAND_EN} logo`} className="h-12 w-12 rounded-xl object-cover" /></div>
+            <div className="mb-8 inline-flex items-center justify-center rounded-2xl bg-shopDeep border border-[#BE7D40] p-1.5 shadow-xl overflow-hidden"><img src={BRAND_LOGO} alt={`${BRAND_EN} logo`} className="h-12 w-12 rounded-xl object-cover" /></div>
             <p className="text-[11px] font-black uppercase tracking-[0.28em] text-white/70">{BRAND_SUBTITLE}</p>
             <h2 className="mt-4 max-w-xs text-4xl font-black leading-tight tracking-tight">Everything you need to run billing clearly.</h2>
             <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">Manage products, bills, orders, invoices, and WhatsApp customer communication from one secure portal.</p>
@@ -51,7 +51,7 @@ export default function AdminLogin() {
         <div className="p-6 sm:p-10 lg:p-12">
         {/* Brand */}
         <div className="mb-8 flex flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="mb-5 inline-flex items-center justify-center rounded-2xl bg-shopDeep border border-white/30/70 p-1.5 shadow-xl overflow-hidden lg:hidden"><img src={BRAND_LOGO} alt={`${BRAND_EN} logo`} className="h-12 w-12 rounded-xl object-cover" /></div>
+          <div className="mb-5 inline-flex items-center justify-center rounded-2xl bg-shopDeep border border-[#BE7D40] p-1.5 shadow-xl overflow-hidden lg:hidden"><img src={BRAND_LOGO} alt={`${BRAND_EN} logo`} className="h-12 w-12 rounded-xl object-cover" /></div>
           <p className="text-[11px] font-black uppercase tracking-[0.24em] text-shopCard">{BRAND_SUBTITLE}</p>
           <h1 className="mt-2 text-3xl font-black tracking-tight text-[#111111]">{BRAND_EN}</h1>
           <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-shopSoft bg-shopTint px-3 py-1.5 text-[11px] font-black uppercase tracking-wider text-shopCard">

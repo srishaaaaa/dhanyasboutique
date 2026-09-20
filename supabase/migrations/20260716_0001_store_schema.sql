@@ -520,9 +520,15 @@ CREATE POLICY order_items_portal_manage ON public.order_items FOR ALL TO anon, a
 DROP POLICY IF EXISTS store_settings_portal_manage ON public.store_settings;
 CREATE POLICY store_settings_portal_manage ON public.store_settings FOR ALL TO anon, authenticated USING (TRUE) WITH CHECK (TRUE);
 
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('invoices', 'invoices', TRUE, 10485760, ARRAY['application/pdf'])
-ON CONFLICT (id) DO UPDATE SET public = TRUE, file_size_limit = 10485760, allowed_mime_types = ARRAY['application/pdf'];
+-- The 'invoices' bucket itself is NOT created here. On current Supabase
+-- projects, INSERT INTO storage.buckets from the SQL Editor is silently
+-- rejected (no error surfaces, but the row never lands) — bucket creation
+-- needs the Storage API, which the SQL Editor role doesn't have write access
+-- to directly. Create it from Dashboard -> Storage -> New bucket instead:
+-- name "invoices", Public. See 20260920_0001_ensure_storage_buckets.sql for
+-- the full list of buckets this app needs and their required settings.
+-- The policies below are safe to run regardless — they're inert until the
+-- bucket exists, and take effect automatically once it's created.
 
 DROP POLICY IF EXISTS invoices_public_read ON storage.objects;
 CREATE POLICY invoices_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'invoices');

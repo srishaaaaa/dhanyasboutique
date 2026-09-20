@@ -1,9 +1,11 @@
--- Migration: Create invoices storage bucket
--- Creates the 'invoices' bucket and sets up public read access and upload policies
-
-INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-VALUES ('invoices', 'invoices', TRUE, 10485760, ARRAY['application/pdf'])
-ON CONFLICT (id) DO UPDATE SET public = TRUE, file_size_limit = 10485760, allowed_mime_types = ARRAY['application/pdf'];
+-- Migration: invoices storage bucket policies
+-- The bucket itself is NOT created here — INSERT INTO storage.buckets from
+-- the SQL Editor is silently rejected on current Supabase projects (no error
+-- surfaces, the row just never lands; bucket creation needs the Storage API,
+-- which the SQL Editor role can't write to directly). Create it from
+-- Dashboard -> Storage -> New bucket: name "invoices", Public. These
+-- policies are safe to run regardless — inert until the bucket exists, and
+-- take effect automatically once it's created.
 
 DROP POLICY IF EXISTS invoices_public_read ON storage.objects;
 CREATE POLICY invoices_public_read ON storage.objects FOR SELECT TO public USING (bucket_id = 'invoices');

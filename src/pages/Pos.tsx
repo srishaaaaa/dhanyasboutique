@@ -933,7 +933,7 @@ export default function Pos(props: PosProps = {}) {
               <div className="grid grid-cols-2 md:flex md:items-stretch gap-2">
                 <Button variant="secondary" size="sm" iconLeft={<Trash2 size={13} />} onClick={clearAll} className="md:flex-1">Clear Order</Button>
                 <Button variant="secondary" size="sm" iconLeft={<Search size={13} />} onClick={() => setCatalogOpen(true)} className="md:flex-1">Search Catalog</Button>
-                <Button variant="primary" size="sm" iconLeft={<Plus size={13} />} onClick={() => setAddProductOpen(true)} className="md:flex-1">Add to Catalog</Button>
+                <Button variant="primary" size="sm" iconLeft={<Plus size={13} />} onClick={() => setAddProductOpen(true)} className="md:flex-1 !text-[10px]">Add to Catalog</Button>
                 <Button variant="secondary" size="sm" iconLeft={<Plus size={13} />} onClick={() => setCustomItemOpen(open => !open)} className="md:flex-1">Custom Item</Button>
               </div>
               {customItemOpen && (
