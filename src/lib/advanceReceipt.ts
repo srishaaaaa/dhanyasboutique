@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf'
-import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY } from './brand'
+import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK, BRAND_REVIEW_LINK } from './brand'
 import { LOGO_BASE64 } from './logoBase64'
 import { getShopLogoDataUrl } from './brand'
 import { resolveCardColorHex } from './shopTheme'
@@ -37,6 +37,17 @@ export function advanceReceiptPdf(order: AdvanceOrder) {
   const money = [[ 'Total order amount', order.total_amount ], [ 'Deposit paid', order.deposit_amount ], [ 'Remaining balance', order.remaining_balance ]] as const
   money.forEach(([label, value], index) => { const rowY = y + 11 + index * 11; doc.setFont('helvetica', index === 2 ? 'bold' : 'normal'); doc.setTextColor(index === 2 ? '#C73660' : '#374151'); doc.text(label, 22, rowY); doc.text(pdfMoney(value), 188, rowY, { align: 'right' }) })
   doc.setFont('helvetica', 'bold'); doc.setTextColor('#b45309'); doc.setFontSize(9); doc.text('This receipt records an advance payment only. It is not a final invoice.', 105, y + 55, { align: 'center' })
+
+  doc.setFont('helvetica', 'normal'); doc.setTextColor('#6b7280'); doc.setFontSize(7)
+  let footerY = y + 65
+  if (BRAND_INSTAGRAM_LINK && BRAND_INSTAGRAM_LINK !== '#') {
+    doc.text(`Instagram: ${BRAND_INSTAGRAM_LINK}`, 105, footerY, { align: 'center' })
+    footerY += 6
+  }
+  if (BRAND_REVIEW_LINK) {
+    doc.text(`Review: ${BRAND_REVIEW_LINK}`, 105, footerY, { align: 'center' })
+  }
+
   return new File([doc.output('blob')], `Advance-Receipt-${order.deposit_id}.pdf`, { type: 'application/pdf' })
 }
 
@@ -84,6 +95,7 @@ export function printAdvanceReceipt(order: AdvanceOrder) {
 <div class="c big">${esc(BRAND_EN)}</div>
 <div class="c" style="font-size:10px;color:#555;">${esc(BRAND_ADDRESS)}</div>
 <div class="c" style="font-size:10px;color:#555;">${esc(BRAND_PHONE_DISPLAY)}</div>
+${BRAND_INSTAGRAM ? `<div class="c" style="font-size:10px;color:#555;">@${esc(BRAND_INSTAGRAM)}</div>` : ''}
 <div class="line"></div>
 <div class="c big">ADVANCE RECEIPT</div>
 <div class="c" style="font-size:10px;">Not a final tax invoice</div>
@@ -104,6 +116,7 @@ ${order.category ? `<div class="r"><span class="label">Category</span><span>${es
 <div class="r balance-row"><span>Balance Due</span><span>${esc(formatCurrency(order.remaining_balance))}</span></div>
 <div class="line"></div>
 <div class="warn">ADVANCE PAYMENT ONLY &mdash; NOT A FINAL INVOICE</div>
+${BRAND_REVIEW_LINK ? `<div style="font-size:9px;color:#555;margin-top:8px;text-align:center;">${esc(BRAND_REVIEW_LINK)}</div>` : ''}
 </body></html>`
   doc.open()
   doc.write(html)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BRAND_ADDRESS, BRAND_EMAIL, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY } from '../lib/brand'
+import { BRAND_ADDRESS, BRAND_EMAIL, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK, BRAND_REVIEW_LINK } from '../lib/brand'
 import { formatQuantityDisplay, normalizeStructuredOrderItem, formatInvoiceNo } from '../lib/retail'
 import { formatPhoneDisplay } from '../lib/phone'
 
@@ -346,6 +346,20 @@ export const Invoice: React.FC<InvoiceProps> = ({
         <div style={{ fontSize: 12, fontWeight: 800, color: RED, letterSpacing: 0.5, textTransform: 'uppercase' }}>
           Thank you for shopping with us
         </div>
+        {(BRAND_INSTAGRAM_LINK && BRAND_INSTAGRAM_LINK !== '#') && (
+          <div style={{ fontSize: 10, color: '#666', marginTop: 8 }}>
+            <a href={BRAND_INSTAGRAM_LINK} target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none' }}>
+              Follow us on Instagram
+            </a>
+          </div>
+        )}
+        {BRAND_REVIEW_LINK && (
+          <div style={{ fontSize: 10, color: '#666', marginTop: 4 }}>
+            <a href={BRAND_REVIEW_LINK} target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none' }}>
+              Leave us a review
+            </a>
+          </div>
+        )}
         {onPrintReceipt && (
           <button
             type="button"
