@@ -143,7 +143,13 @@ Dear ${customerName},
 
 .
 
-🙏 Thank you for paying the initial amount as advance!`
+🙏 Thank you for paying the initial amount as advance!
+
+Follow us on Instagram:
+https://www.instagram.com/${BRAND_INSTAGRAM}
+
+Please share your experience with us:
+${BRAND_REVIEW_LINK}`
 }
 
 export const BUSINESS_PHONE = '918098089591'
