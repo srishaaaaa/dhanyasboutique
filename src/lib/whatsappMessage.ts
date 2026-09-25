@@ -1,5 +1,5 @@
 import { formatInvoiceNo } from './retail'
-import { BRAND_EN, BRAND_INSTAGRAM } from './brand'
+import { BRAND_EN, BRAND_INSTAGRAM, BRAND_REVIEW_LINK } from './brand'
 
 export type WhatsAppLineItem = {
   name: string
@@ -101,7 +101,10 @@ ${itemsText ? `📦 *ITEMS ORDERED:*\n${itemsText}\n\n${totalsText}\n` : input.t
 🙏 Thank you, and we hope to see you again soon!
 
 Follow us on Instagram:
-https://www.instagram.com/${BRAND_INSTAGRAM}`
+https://www.instagram.com/${BRAND_INSTAGRAM}
+
+Please share your experience with us:
+${BRAND_REVIEW_LINK}`
 }
 
 export const buildAdvanceDepositWhatsAppMessage = (input: AdvanceDepositWhatsAppInput) => {

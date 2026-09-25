@@ -21,6 +21,7 @@ export interface ShopProfile {
   email: string
   address: string
   instagramId: string
+  reviewLink: string
   logoUrl: string
 }
 
@@ -34,6 +35,7 @@ export const DEFAULT_SHOP_PROFILE: ShopProfile = {
   email: 'dhanyasboutique2015@gmail.com',
   address: 'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   instagramId: '@ananthinathan84',
+  reviewLink: 'https://g.page/r/Ccpknn3jk8O6ECA/review',
   logoUrl: '',
 }
 
@@ -85,6 +87,7 @@ export let BRAND_ADDRESS = DEFAULT_SHOP_PROFILE.address
 export const BRAND_LOCATION_LINK = '#'
 export let BRAND_INSTAGRAM = toInstagramHandle(DEFAULT_SHOP_PROFILE.instagramId)
 export let BRAND_INSTAGRAM_LINK = toInstagramLink(DEFAULT_SHOP_PROFILE.instagramId)
+export let BRAND_REVIEW_LINK = DEFAULT_SHOP_PROFILE.reviewLink
 
 /** Point every brand binding at the saved shop profile. */
 export const applyShopProfile = (profile: Partial<ShopProfile>, cache = true) => {
@@ -111,6 +114,7 @@ export const applyShopProfile = (profile: Partial<ShopProfile>, cache = true) =>
   BRAND_ADDRESS = next.address || ''
   BRAND_INSTAGRAM = toInstagramHandle(next.instagramId)
   BRAND_INSTAGRAM_LINK = toInstagramLink(next.instagramId)
+  BRAND_REVIEW_LINK = next.reviewLink || ''
 
   if (cache) {
     try {

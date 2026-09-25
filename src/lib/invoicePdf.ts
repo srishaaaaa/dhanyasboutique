@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
-import { BRAND_ADDRESS, BRAND_EN, BRAND_EMAIL, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK } from './brand'
+import { BRAND_ADDRESS, BRAND_EN, BRAND_EMAIL, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK, BRAND_REVIEW_LINK } from './brand'
 import { formatQuantityDisplay, normalizeStructuredOrderItem, formatInvoiceNo } from './retail'
 import { LOGO_BASE64 } from './logoBase64'
 import { getShopLogoDataUrl } from './brand'
@@ -299,6 +299,14 @@ export function createInvoicePdf(data: InvoicePdfData): Blob {
   doc.setFontSize(8)
   doc.setTextColor(RED)
   doc.text('THANK YOU FOR SHOPPING WITH US', pageWidth / 2, footerY + 8, { align: 'center' })
+
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(6.5)
+  doc.setTextColor(MUTED)
+  if (BRAND_REVIEW_LINK) {
+    doc.text('Please share your review:', pageWidth / 2, footerY + 14, { align: 'center' })
+    doc.text(BRAND_REVIEW_LINK, pageWidth / 2, footerY + 18, { align: 'center' })
+  }
 
   return doc.output('blob')
 }
