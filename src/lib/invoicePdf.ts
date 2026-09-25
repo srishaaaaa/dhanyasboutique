@@ -1,6 +1,6 @@
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
-import { BRAND_ADDRESS, BRAND_EN, BRAND_EMAIL, BRAND_PHONE_DISPLAY } from './brand'
+import { BRAND_ADDRESS, BRAND_EN, BRAND_EMAIL, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK } from './brand'
 import { formatQuantityDisplay, normalizeStructuredOrderItem, formatInvoiceNo } from './retail'
 import { LOGO_BASE64 } from './logoBase64'
 import { getShopLogoDataUrl } from './brand'
@@ -84,8 +84,13 @@ export function createInvoicePdf(data: InvoicePdfData): Blob {
   doc.text(addressLines, brandX, y + 11)
   const afterAddress = y + 11 + addressLines.length * 3.5
   doc.text(`Phone: ${BRAND_PHONE_DISPLAY}`, brandX, afterAddress)
+  let contactY = afterAddress + 4
   if (BRAND_EMAIL) {
-    doc.text(`Email: ${BRAND_EMAIL}`, brandX, afterAddress + 4)
+    doc.text(`Email: ${BRAND_EMAIL}`, brandX, contactY)
+    contactY += 4
+  }
+  if (BRAND_INSTAGRAM_LINK && BRAND_INSTAGRAM_LINK !== '#') {
+    doc.text(`Instagram: ${BRAND_INSTAGRAM_LINK}`, brandX, contactY)
   }
 
   // Right side: date + payment
