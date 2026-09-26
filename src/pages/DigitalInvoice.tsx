@@ -9,8 +9,11 @@ import { uploadInvoicePdf } from '../lib/storage'
 import { isUuid, normalizeStructuredOrderItem, formatInvoiceNo } from '../lib/retail'
 import { buildProfessionalWhatsAppMessage } from '../lib/whatsappMessage'
 import { toWhatsAppUrl } from '../lib/phone'
+import { useSound } from '../context/SoundContext'
 
 export default function DigitalInvoice() {
+  const { soundEnabled, setSoundEnabled } = useSound()
+  const [soundWasEnabled, setSoundWasEnabled] = useState(soundEnabled)
   const { id } = useParams()
   const navigate = useNavigate()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,6 +37,14 @@ export default function DigitalInvoice() {
       navigate('/dashboard')
     }
   }
+
+  useEffect(() => {
+    setSoundWasEnabled(soundEnabled)
+    setSoundEnabled(false)
+    return () => {
+      setSoundEnabled(soundWasEnabled)
+    }
+  }, [])
 
   useEffect(() => {
     async function loadInvoice() {
