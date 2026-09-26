@@ -260,7 +260,7 @@ function InventoryAnalytics({ products, downloadCSV }: { products: InventoryProd
           { label: 'Incoming Stock', value: `+${totalIncoming} Units`, Icon: PackagePlus, iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600' },
           { label: 'Units Sold (POS)', value: `${totalSold} Units`, Icon: ShoppingCart, iconBg: 'bg-purple-50', iconColor: 'text-purple-600' },
           { label: 'Lost / Damaged', value: `${totalLost} Units`, Icon: AlertTriangle, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
-          { label: 'Net Stock Delta', value: `${netDelta >= 0 ? '+' : ''}${netDelta} Units`, Icon: TrendingUp, iconBg: 'bg-shopDeep', iconColor: 'text-shopAccent' },
+          { label: 'Net Stock Delta', value: `${netDelta >= 0 ? '+' : ''}${netDelta} Units`, Icon: TrendingUp, iconBg: 'bg-shopDeep', iconColor: 'text-white' },
         ].map(c => (
           <div key={c.label} className="flex items-center gap-2 sm:gap-3 bg-white rounded-2xl border border-shopSoft/60 p-3 sm:p-4 shadow-sm overflow-hidden">
             <span className={`shrink-0 flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl ${c.iconBg} ${c.iconColor}`}>
