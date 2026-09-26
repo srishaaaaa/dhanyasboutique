@@ -188,7 +188,7 @@ export default function Attendance() {
     <div className="p-3 sm:p-6 space-y-3 sm:space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-1">
         <div className="flex items-center gap-3">
-          <div className="w-1.5 h-12 bg-pink-600 rounded-r-lg shrink-0"></div>
+          <div className="w-1.5 h-12 bg-shopCard rounded-r-lg shrink-0"></div>
           <h1 className="text-base sm:text-xl md:text-2xl font-black text-[#111111]">Attendance & Staff</h1>
         </div>
       </div>
@@ -206,7 +206,7 @@ export default function Attendance() {
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
         {(['today', 'report', 'staff'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
-            className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-pink-600 text-white' : 'bg-white border border-pink-200 text-[#374151] hover:bg-pink-50'}`}>
+            className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-shopCard text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-shopCard/5'}`}>
             {t === 'today' ? "Today's Attendance" : t === 'report' ? 'Monthly Report' : 'Staff Management'}
           </button>
         ))}
@@ -215,9 +215,9 @@ export default function Attendance() {
       {/* TODAY TAB */}
       {tab === 'today' && (
         <div className="space-y-5">
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-pink-200 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-shopSoft/60 shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="bg-pink-100 p-2.5 rounded-xl text-pink-600"><Calendar size={20} /></div>
+              <div className="bg-shopCard/5 p-2.5 rounded-xl text-shopCard"><Calendar size={20} /></div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Select Date</p>
                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
@@ -232,9 +232,9 @@ export default function Attendance() {
           </div>
 
           {loading ? (
-            <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-pink-200">Loading...</p>
+            <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">Loading...</p>
           ) : activeStaff.length === 0 ? (
-            <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-pink-200">No active staff. Add staff in Staff Management tab.</p>
+            <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">No active staff. Add staff in Staff Management tab.</p>
           ) : (
             <>
               {/* Mobile card list */}
@@ -243,10 +243,10 @@ export default function Attendance() {
                   const clk = clockMap[member.id]
                   const status = attendanceMap[member.id]
                   return (
-                    <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-pink-200 p-3.5">
+                    <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-3.5">
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                          <div className="w-8 h-8 rounded-full bg-shopCard/5 text-shopCard border border-shopSoft/60 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                           <div className="min-w-0">
                             <p className="font-bold text-[#111111] text-sm truncate">{member.name}</p>
                             <p className="text-[11px] text-[#6B7280]">{member.role}</p>
@@ -280,10 +280,10 @@ export default function Attendance() {
               </div>
 
               {/* Desktop table */}
-              <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
+              <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left">
-                    <thead className="bg-[#FAFAFA] border-b border-pink-200">
+                    <thead className="bg-[#FAFAFA] border-b border-shopSoft/60">
                       <tr>
                         <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Staff Member</th>
                         <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Role</th>
@@ -297,10 +297,10 @@ export default function Attendance() {
                         const clk = clockMap[member.id]
                         const status = attendanceMap[member.id]
                         return (
-                          <tr key={member.id} className="border-b border-pink-100 hover:bg-[#FAFAFA]">
+                          <tr key={member.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                                <div className="w-8 h-8 rounded-full bg-shopCard/5 text-shopCard border border-shopSoft/60 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                                 <span className="font-bold text-[#111111] text-sm">{member.name}</span>
                               </div>
                             </td>
@@ -355,16 +355,16 @@ export default function Attendance() {
         <div className="space-y-5">
           <div className="flex justify-end">
             <button onClick={() => { setEditingStaff(null); setForm({ name: '', role: '', phone: '', base_salary: '' }); setShowModal(true) }} disabled={dbError}
-              className="h-10 bg-pink-600 border border-pink-600 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-pink-700 disabled:opacity-50">
+              className="h-10 bg-shopCard border border-shopCard text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopAccent disabled:opacity-50">
               <Plus size={16} /> Add Staff
             </button>
           </div>
           {/* Mobile card list */}
           <div className="space-y-3 md:hidden">
             {staff.length === 0 ? (
-              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-pink-200">No staff added yet.</p>
+              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">No staff added yet.</p>
             ) : staff.map(member => (
-              <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-pink-200 p-3.5">
+              <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-3.5">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <p className="font-bold text-[#111111] text-sm truncate">{member.name}</p>
@@ -372,7 +372,7 @@ export default function Attendance() {
                   </div>
                   <div className="flex gap-1.5 shrink-0">
                     <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
-                      className="h-9 w-9 flex items-center justify-center text-[#374151] hover:text-pink-600 bg-gray-50 hover:bg-pink-50 rounded-lg border border-transparent hover:border-pink-300 transition-colors">
+                      className="h-9 w-9 flex items-center justify-center text-[#374151] hover:text-shopCard bg-gray-50 hover:bg-shopCard/5 rounded-lg border border-transparent hover:border-shopSoft transition-colors">
                       <Edit2 size={14} />
                     </button>
                     <button onClick={() => void deleteStaff(member)}
@@ -393,10 +393,10 @@ export default function Attendance() {
           </div>
 
           {/* Desktop table */}
-          <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
+          <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-[#FAFAFA] border-b border-pink-200">
+                <thead className="bg-[#FAFAFA] border-b border-shopSoft/60">
                   <tr>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Name</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Role</th>
@@ -410,7 +410,7 @@ export default function Attendance() {
                   {staff.length === 0 ? (
                     <tr><td colSpan={6} className="text-center p-8 text-[#6B7280] font-bold">No staff added yet.</td></tr>
                   ) : staff.map(member => (
-                    <tr key={member.id} className="border-b border-pink-100 hover:bg-[#FAFAFA]">
+                    <tr key={member.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 font-bold text-[#111111] text-sm">{member.name}</td>
                       <td className="px-4 py-3 text-sm text-[#374151]">{member.role}</td>
                       <td className="px-4 py-3 text-sm text-[#374151]">{member.phone || '—'}</td>
@@ -424,7 +424,7 @@ export default function Attendance() {
                       <td className="px-4 py-3 text-right">
                         <div className="flex gap-1.5 justify-end">
                           <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
-                            className="text-[#374151] hover:text-pink-600 p-1.5 bg-gray-50 hover:bg-pink-50 rounded-lg border border-transparent hover:border-pink-300 transition-colors">
+                            className="text-[#374151] hover:text-shopCard p-1.5 bg-gray-50 hover:bg-shopCard/5 rounded-lg border border-transparent hover:border-shopSoft transition-colors">
                             <Edit2 size={14} />
                           </button>
                           <button onClick={() => void deleteStaff(member)}
@@ -445,11 +445,11 @@ export default function Attendance() {
       {/* MONTHLY REPORT TAB */}
       {tab === 'report' && (
         <div className="space-y-5">
-          <div className="bg-white rounded-2xl border border-pink-200 shadow-sm p-4">
+          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4">
             <div className="flex flex-wrap items-center gap-4 justify-between">
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
-                  <Calendar size={18} className="text-pink-600" />
+                  <Calendar size={18} className="text-shopCard" />
                   <span className="text-[11px] font-bold uppercase text-[#6B7280]">MONTH:</span>
                   <input type="month" value={reportMonth} onChange={e => setReportMonth(e.target.value)} className="font-bold text-[#111111] bg-transparent outline-none w-40" />
                 </div>
@@ -465,13 +465,13 @@ export default function Attendance() {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2 ml-auto">
-                <button className="flex items-center gap-2 bg-pink-600 text-white px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-pink-700 transition-colors">
+                <button className="flex items-center gap-2 bg-shopCard text-white px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-shopAccent transition-colors">
                   Apply Filter / Sort
                 </button>
                 <button className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2.5 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
                   Reset / All
                 </button>
-                <button onClick={exportReportToCSV} className="flex items-center gap-2 border-2 border-pink-600 bg-white text-pink-600 px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-pink-50 transition-colors">
+                <button onClick={exportReportToCSV} className="flex items-center gap-2 border-2 border-shopCard bg-white text-shopCard px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-shopCard/5 transition-colors">
                   <Download size={14} /> Export to Excel
                 </button>
               </div>
@@ -487,15 +487,15 @@ export default function Attendance() {
           {/* Mobile card list */}
           <div className="space-y-3 md:hidden">
             {reportLoading ? (
-              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-pink-200">Loading report...</p>
+              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">Loading report...</p>
             ) : activeStaff.length === 0 ? (
-              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-pink-200">No active staff members.</p>
+              <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">No active staff members.</p>
             ) : getSortedStaff().map(member => {
               const stats = reportData[member.id] || { present: 0, half: 0, absent: 0, leave: 0 }
               return (
-                <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-pink-200 p-3.5">
+                <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-3.5">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-pink-50 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                    <div className="w-8 h-8 rounded-full bg-shopCard/5 text-shopCard border border-shopSoft/60 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                     <div className="min-w-0">
                       <p className="font-bold text-[#111111] text-sm truncate">{member.name}</p>
                       <p className="text-[11px] text-[#6B7280]">{member.role}</p>
@@ -513,10 +513,10 @@ export default function Attendance() {
           </div>
 
           {/* Desktop table */}
-          <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
+          <div className="hidden md:block bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-[#FAFAFA] border-b border-pink-200">
+                <thead className="bg-[#FAFAFA] border-b border-shopSoft/60">
                   <tr>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Staff Member</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151]">Role</th>
@@ -534,10 +534,10 @@ export default function Attendance() {
                   ) : getSortedStaff().map(member => {
                     const stats = reportData[member.id] || { present: 0, half: 0, absent: 0, leave: 0 }
                     return (
-                      <tr key={member.id} className="border-b border-pink-100 hover:bg-[#FAFAFA]">
+                      <tr key={member.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-full bg-pink-50 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                            <div className="w-8 h-8 rounded-full bg-shopCard/5 text-shopCard border border-shopSoft/60 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                             <span className="font-bold text-[#111111] text-sm">{member.name}</span>
                           </div>
                         </td>
@@ -557,7 +557,7 @@ export default function Attendance() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-pink-600/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-shopCard/50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto hide-scrollbar p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xl font-black text-[#111111]">{editingStaff ? 'Edit Staff' : 'Add Staff'}</h2>
@@ -566,23 +566,23 @@ export default function Attendance() {
             <form onSubmit={handleSaveStaff} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Full Name *</label>
-                <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required />
+                <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Role / Job Title *</label>
-                <input type="text" value={form.role} onChange={e => setForm({...form, role: e.target.value})} placeholder="e.g. Tailor, Manager" className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required />
+                <input type="text" value={form.role} onChange={e => setForm({...form, role: e.target.value})} placeholder="e.g. Tailor, Manager" className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Phone Number</label>
-                <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="+91" className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" />
+                <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder="+91" className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Base Salary (₹)</label>
-                <input type="number" step="0.01" min="0" value={form.base_salary} onChange={e => setForm({...form, base_salary: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" placeholder="0.00" />
+                <input type="number" step="0.01" min="0" value={form.base_salary} onChange={e => setForm({...form, base_salary: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" placeholder="0.00" />
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-pink-600 border border-pink-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-pink-700 disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-shopCard border border-shopCard text-white p-3 rounded-xl font-bold text-sm hover:bg-shopAccent disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
               </div>
             </form>
           </div>

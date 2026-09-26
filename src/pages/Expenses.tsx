@@ -209,7 +209,7 @@ export default function Expenses() {
     <div className="p-3 sm:p-6 space-y-3 sm:space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
         <div className="flex items-start gap-3">
-          <div className="w-1.5 h-12 bg-pink-600 rounded-r-lg shrink-0"></div>
+          <div className="w-1.5 h-12 bg-shopCard rounded-r-lg shrink-0"></div>
           <div>
             <h2 className="text-base sm:text-xl md:text-[22px] font-black text-[#111111] leading-tight">Expense Tracker</h2>
             <p className="text-[11px] sm:text-[13px] text-[#6B7280] mt-0.5">Monitor store overheads, operating costs, and categorized expenses</p>
@@ -225,8 +225,8 @@ export default function Expenses() {
       )}
 
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
-        <button onClick={() => setTab('expenses')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-pink-600 text-white' : 'bg-white border border-pink-200 text-[#374151] hover:bg-pink-50'}`}>Expenses</button>
-        <button onClick={() => setTab('categories')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-pink-600 text-white' : 'bg-white border border-pink-200 text-[#374151] hover:bg-pink-50'}`}>Categories</button>
+        <button onClick={() => setTab('expenses')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-shopCard text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-shopCard/5'}`}>Expenses</button>
+        <button onClick={() => setTab('categories')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-shopCard text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-shopCard/5'}`}>Categories</button>
       </div>
 
       {tab === 'expenses' && (
@@ -237,9 +237,9 @@ export default function Expenses() {
               { label: 'This Week', value: formatCurrency(totalWeek), Icon: CalendarRange, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
               { label: 'This Month', value: formatCurrency(totalMonth), Icon: CalendarClock, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
               { label: 'This Year', value: formatCurrency(totalYear), Icon: Receipt, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
-              { label: 'Total All Time', value: formatCurrency(totalAll), Icon: Wallet, iconBg: 'bg-pink-600', iconColor: 'text-white' },
+              { label: 'Total All Time', value: formatCurrency(totalAll), Icon: Wallet, iconBg: 'bg-shopCard', iconColor: 'text-white' },
             ].map((c, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-pink-200 p-3 sm:p-4 shadow-sm overflow-hidden">
+              <div key={i} className="bg-white rounded-2xl border border-shopSoft/60 p-3 sm:p-4 shadow-sm overflow-hidden">
                 <div className="flex items-start justify-between gap-2">
                   <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">{c.label}</p>
                   <span className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-lg ${c.iconBg} ${c.iconColor}`}>
@@ -252,7 +252,7 @@ export default function Expenses() {
           </div>
 
           {/* Filter bar */}
-          <div className="bg-white rounded-2xl border border-pink-200 shadow-sm p-4">
+          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4">
             <div className="flex flex-wrap items-center gap-3 justify-between">
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
@@ -287,7 +287,7 @@ export default function Expenses() {
                     { id: 'year' as const, label: 'THIS YEAR' },
                   ]).map(p => (
                     <button key={p.id} onClick={() => applyPreset(p.id)}
-                      className={`px-3.5 py-1.5 rounded-lg text-[11px] font-bold uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-pink-600 text-white' : 'text-[#6B7280] bg-white border border-[#E5E7EB] hover:bg-[#F9FAFB]'}`}>
+                      className={`px-3.5 py-1.5 rounded-lg text-[11px] font-bold uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-shopCard text-white' : 'text-[#6B7280] bg-white border border-[#E5E7EB] hover:bg-[#F9FAFB]'}`}>
                       {p.label}
                     </button>
                   ))}
@@ -298,7 +298,7 @@ export default function Expenses() {
                 <select
                   value={selectedCategory ?? ''}
                   onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
-                  className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-pink-600"
+                  className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
                 >
                   <option value="">All Categories</option>
                   {categories.filter(c => c.is_active).map(cat => (
@@ -310,20 +310,20 @@ export default function Expenses() {
                   <Download size={14} /> Export CSV
                 </button>
 
-                <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-pink-600 border border-pink-600 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-pink-700 disabled:opacity-50 whitespace-nowrap">
+                <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopCard border border-shopCard text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopAccent disabled:opacity-50 whitespace-nowrap">
                   <Plus size={16} /> Record Expense
                 </button>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
-            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-pink-200">
+          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
+            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-shopSoft/60">
               <h3 className="text-[11px] font-black uppercase tracking-wider text-[#374151]">Expense Records ({filteredExpenses.length})</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-[640px] w-full text-left">
-                <thead className="bg-[#FAFAFA] border-b border-pink-200">
+                <thead className="bg-[#FAFAFA] border-b border-shopSoft/60">
                   <tr>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Date</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Category</th>
@@ -340,10 +340,10 @@ export default function Expenses() {
                       No expense records found matching the filters.
                     </td></tr>
                   ) : filteredExpenses.map(exp => (
-                    <tr key={exp.id} className="border-b border-pink-100 hover:bg-[#FAFAFA]">
+                    <tr key={exp.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 text-sm font-semibold text-[#111111] whitespace-nowrap">{new Date(exp.expense_date).toLocaleDateString('en-MY')}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="bg-pink-100 text-pink-600 border border-pink-200 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
+                        <span className="bg-shopCard/5 text-shopCard border border-shopSoft/60 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
                           {exp.expense_categories?.name || 'Unknown'}
                         </span>
                       </td>
@@ -351,7 +351,7 @@ export default function Expenses() {
                       <td className="px-4 py-3 text-sm font-black text-red-600 whitespace-nowrap">{formatCurrency(exp.amount)}</td>
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
-                          <button onClick={() => openEditExpense(exp)} className="text-pink-600 hover:text-pink-700 p-1.5 bg-pink-100 rounded-lg" title="Edit expense"><Edit2 size={14} /></button>
+                          <button onClick={() => openEditExpense(exp)} className="text-shopCard hover:text-shopAccent p-1.5 bg-shopCard/5 rounded-lg" title="Edit expense"><Edit2 size={14} /></button>
                           <button onClick={() => handleDeleteExpense(exp.id)} className="text-red-400 hover:text-red-600 p-1.5 bg-red-50 rounded-lg" title="Delete expense"><Trash2 size={14} /></button>
                         </div>
                       </td>
@@ -366,21 +366,21 @@ export default function Expenses() {
 
       {tab === 'categories' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-5">
             <h3 className="text-base font-black text-[#111111] mb-4">Add Category</h3>
             <form onSubmit={handleAddCategory} className="flex gap-2">
-              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required disabled={dbError} />
-              <button type="submit" disabled={dbError} className="bg-pink-600 border border-pink-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-pink-700 disabled:opacity-50">Add</button>
+              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required disabled={dbError} />
+              <button type="submit" disabled={dbError} className="bg-shopCard border border-shopCard text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-shopAccent disabled:opacity-50">Add</button>
             </form>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
-            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-pink-200">
+          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
+            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-shopSoft/60">
               <h3 className="text-[11px] font-black uppercase tracking-wider text-[#374151]">All Categories ({categories.length})</h3>
             </div>
             {categories.length === 0 ? (
               <p className="text-center p-6 text-[#6B7280] text-sm font-bold">No categories added.</p>
             ) : (
-              <div className="divide-y divide-pink-100">
+              <div className="divide-y divide-shopSoft/30">
                 {categories.map(cat => (
                   <div key={cat.id} className="flex items-center justify-between gap-2 px-4 py-3">
                     <span className="font-bold text-[#111111] text-sm truncate">{cat.name}</span>
@@ -401,7 +401,7 @@ export default function Expenses() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-pink-600/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-shopCard/50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto hide-scrollbar p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xl font-black text-[#111111]">{editingExpenseId ? 'Edit Expense' : 'Record Expense'}</h2>
@@ -410,26 +410,26 @@ export default function Expenses() {
             <form onSubmit={handleSaveExpense} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Date</label>
-                <input type="date" value={form.expense_date} onChange={e => setForm({...form, expense_date: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required />
+                <input type="date" value={form.expense_date} onChange={e => setForm({...form, expense_date: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Category</label>
-                <select value={form.category_id} onChange={e => setForm({...form, category_id: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600 bg-white" required>
+                <select value={form.category_id} onChange={e => setForm({...form, category_id: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard bg-white" required>
                   <option value="">Select Category</option>
                   {categories.filter(c => c.is_active).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Amount (₹)</label>
-                <input type="number" step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required placeholder="0.00" />
+                <input type="number" step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required placeholder="0.00" />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Description / Note</label>
-                <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" placeholder="Optional details..." />
+                <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" placeholder="Optional details..." />
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowModal(false); resetExpenseForm() }} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-pink-600 border border-pink-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-pink-700 disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-shopCard border border-shopCard text-white p-3 rounded-xl font-bold text-sm hover:bg-shopAccent disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
               </div>
             </form>
           </div>
