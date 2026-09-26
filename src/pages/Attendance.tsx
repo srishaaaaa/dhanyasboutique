@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Users, Calendar, AlertTriangle, Plus, X, Edit2, LogIn, LogOut } from 'lucide-react'
+import { Users, Calendar, AlertTriangle, Plus, X, Edit2, LogIn, LogOut, Download } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { formatCurrency } from '../lib/retail'
 import { useBodyScrollLock } from '../components/ui/useBodyScrollLock'
@@ -33,6 +33,9 @@ export default function Attendance() {
   const [attendanceMap, setAttendanceMap] = useState<Record<string, string>>({})
   const [clockMap, setClockMap] = useState<Record<string, { clock_in: string|null; clock_out: string|null }>>({})
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0])
+  const [dateFromRange, setDateFromRange] = useState('')
+  const [dateToRange, setDateToRange] = useState('')
+  const [staffSortBy, setStaffSortBy] = useState<'name'|'present'|'absent'>('name')
   const [loading, setLoading] = useState(true)
   const [dbError, setDbError] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -131,6 +134,44 @@ export default function Attendance() {
     void fetchData()
   }
 
+  const exportReportToCSV = () => {
+    const rows = [
+      ['Staff Member', 'Role', 'Present', 'Half Day', 'Absent', 'Leave'],
+      ...getSortedStaff().map(member => {
+        const stats = reportData[member.id] || { present: 0, half: 0, absent: 0, leave: 0 }
+        return [member.name, member.role, stats.present, stats.half, stats.absent, stats.leave]
+      })
+    ]
+    const csv = rows.map(r => r.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',')).join('\n')
+    const blob = new Blob([csv], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `attendance-report-${reportMonth}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const getSortedStaff = () => {
+    const staffCopy = [...activeStaff]
+    if (staffSortBy === 'name') {
+      return staffCopy.sort((a, b) => a.name.localeCompare(b.name))
+    } else if (staffSortBy === 'present') {
+      return staffCopy.sort((a, b) => {
+        const statsA = reportData[a.id]?.present || 0
+        const statsB = reportData[b.id]?.present || 0
+        return statsB - statsA
+      })
+    } else if (staffSortBy === 'absent') {
+      return staffCopy.sort((a, b) => {
+        const statsA = reportData[a.id]?.absent || 0
+        const statsB = reportData[b.id]?.absent || 0
+        return statsB - statsA
+      })
+    }
+    return staffCopy
+  }
+
 
   const activeStaff = staff.filter(s => s.is_active)
   const presentCount = activeStaff.filter(s => attendanceMap[s.id] === 'present').length
@@ -166,11 +207,20 @@ export default function Attendance() {
       {tab === 'today' && (
         <div className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-shopSoft/60 shadow-sm">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <div className="bg-orange-100 p-2.5 rounded-xl text-orange-600"><Calendar size={20} /></div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Select Date</p>
                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
+              </div>
+              <div className="text-[#9CA3AF]">|</div>
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Custom Range</p>
+                <div className="flex gap-2 items-center">
+                  <input type="date" value={dateFromRange} onChange={e => setDateFromRange(e.target.value)} placeholder="From" className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none border-b border-[#E5E7EB]" />
+                  <span className="text-[#9CA3AF]">to</span>
+                  <input type="date" value={dateToRange} onChange={e => setDateToRange(e.target.value)} placeholder="To" className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none border-b border-[#E5E7EB]" />
+                </div>
               </div>
             </div>
             <div className="flex gap-4 sm:gap-6 flex-wrap">
@@ -391,6 +441,20 @@ export default function Attendance() {
                 <input type="month" value={reportMonth} onChange={e => setReportMonth(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
               </div>
             </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <select
+                value={staffSortBy}
+                onChange={e => setStaffSortBy(e.target.value as 'name'|'present'|'absent')}
+                className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+              >
+                <option value="name">Sort by Name</option>
+                <option value="present">Sort by Present (High to Low)</option>
+                <option value="absent">Sort by Absent (High to Low)</option>
+              </select>
+              <button onClick={exportReportToCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
+                <Download size={14} /> Export CSV
+              </button>
+            </div>
           </div>
           {/* Mobile card list */}
           <div className="space-y-3 md:hidden">
@@ -398,7 +462,7 @@ export default function Attendance() {
               <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">Loading report...</p>
             ) : activeStaff.length === 0 ? (
               <p className="text-center p-8 text-[#6B7280] font-bold bg-white rounded-2xl border border-shopSoft/60">No active staff members.</p>
-            ) : activeStaff.map(member => {
+            ) : getSortedStaff().map(member => {
               const stats = reportData[member.id] || { present: 0, half: 0, absent: 0, leave: 0 }
               return (
                 <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-3.5">
@@ -439,7 +503,7 @@ export default function Attendance() {
                     <tr><td colSpan={6} className="text-center p-8 text-[#6B7280] font-bold">Loading report...</td></tr>
                   ) : activeStaff.length === 0 ? (
                     <tr><td colSpan={6} className="text-center p-8 text-[#6B7280] font-bold">No active staff members.</td></tr>
-                  ) : activeStaff.map(member => {
+                  ) : getSortedStaff().map(member => {
                     const stats = reportData[member.id] || { present: 0, half: 0, absent: 0, leave: 0 }
                     return (
                       <tr key={member.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
