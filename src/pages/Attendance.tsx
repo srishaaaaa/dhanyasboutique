@@ -210,20 +210,11 @@ export default function Attendance() {
       {tab === 'today' && (
         <div className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-shopSoft/60 shadow-sm">
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-3">
               <div className="bg-pink-100 p-2.5 rounded-xl text-pink-600"><Calendar size={20} /></div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Select Date</p>
                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
-              </div>
-              <div className="text-[#9CA3AF]">|</div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Custom Range</p>
-                <div className="flex gap-2 items-center">
-                  <input type="date" value={dateFromRange} onChange={e => setDateFromRange(e.target.value)} placeholder="From" className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none border-b border-[#E5E7EB]" />
-                  <span className="text-[#9CA3AF]">to</span>
-                  <input type="date" value={dateToRange} onChange={e => setDateToRange(e.target.value)} placeholder="To" className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none border-b border-[#E5E7EB]" />
-                </div>
               </div>
             </div>
             <div className="flex gap-4 sm:gap-6 flex-wrap">
