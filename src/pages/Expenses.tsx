@@ -225,8 +225,8 @@ export default function Expenses() {
       )}
 
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
-        <button onClick={() => setTab('expenses')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-pink-600 text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-pink-50'}`}>Expenses</button>
-        <button onClick={() => setTab('categories')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-pink-600 text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-pink-50'}`}>Categories</button>
+        <button onClick={() => setTab('expenses')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-pink-600 text-white' : 'bg-white border border-pink-200 text-[#374151] hover:bg-pink-50'}`}>Expenses</button>
+        <button onClick={() => setTab('categories')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-pink-600 text-white' : 'bg-white border border-pink-200 text-[#374151] hover:bg-pink-50'}`}>Categories</button>
       </div>
 
       {tab === 'expenses' && (
@@ -239,7 +239,7 @@ export default function Expenses() {
               { label: 'This Year', value: formatCurrency(totalYear), Icon: Receipt, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
               { label: 'Total All Time', value: formatCurrency(totalAll), Icon: Wallet, iconBg: 'bg-pink-600', iconColor: 'text-white' },
             ].map((c, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-shopSoft/60 p-3 sm:p-4 shadow-sm overflow-hidden">
+              <div key={i} className="bg-white rounded-2xl border border-pink-200 p-3 sm:p-4 shadow-sm overflow-hidden">
                 <div className="flex items-start justify-between gap-2">
                   <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">{c.label}</p>
                   <span className={`shrink-0 flex h-7 w-7 items-center justify-center rounded-lg ${c.iconBg} ${c.iconColor}`}>
@@ -252,7 +252,7 @@ export default function Expenses() {
           </div>
 
           {/* Filter bar */}
-          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4">
+          <div className="bg-white rounded-2xl border border-pink-200 shadow-sm p-4">
             <div className="flex flex-wrap items-center gap-3 justify-between">
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
@@ -298,7 +298,7 @@ export default function Expenses() {
                 <select
                   value={selectedCategory ?? ''}
                   onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
-                  className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+                  className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-pink-600"
                 >
                   <option value="">All Categories</option>
                   {categories.filter(c => c.is_active).map(cat => (
@@ -317,13 +317,13 @@ export default function Expenses() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
-            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-shopSoft/60">
+          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
+            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-pink-200">
               <h3 className="text-[11px] font-black uppercase tracking-wider text-[#374151]">Expense Records ({filteredExpenses.length})</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-[640px] w-full text-left">
-                <thead className="bg-[#FAFAFA] border-b border-shopSoft/60">
+                <thead className="bg-[#FAFAFA] border-b border-pink-200">
                   <tr>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Date</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Category</th>
@@ -340,7 +340,7 @@ export default function Expenses() {
                       No expense records found matching the filters.
                     </td></tr>
                   ) : filteredExpenses.map(exp => (
-                    <tr key={exp.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
+                    <tr key={exp.id} className="border-b border-pink-100 hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 text-sm font-semibold text-[#111111] whitespace-nowrap">{new Date(exp.expense_date).toLocaleDateString('en-MY')}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
                         <span className="bg-pink-100 text-pink-600 border border-pink-200 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
@@ -366,21 +366,21 @@ export default function Expenses() {
 
       {tab === 'categories' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 p-5">
             <h3 className="text-base font-black text-[#111111] mb-4">Add Category</h3>
             <form onSubmit={handleAddCategory} className="flex gap-2">
-              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required disabled={dbError} />
+              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required disabled={dbError} />
               <button type="submit" disabled={dbError} className="bg-pink-600 border border-pink-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-pink-700 disabled:opacity-50">Add</button>
             </form>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
-            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-shopSoft/60">
+          <div className="bg-white rounded-2xl shadow-sm border border-pink-200 overflow-hidden">
+            <div className="px-4 py-3 bg-[#FAFAFA] border-b border-pink-200">
               <h3 className="text-[11px] font-black uppercase tracking-wider text-[#374151]">All Categories ({categories.length})</h3>
             </div>
             {categories.length === 0 ? (
               <p className="text-center p-6 text-[#6B7280] text-sm font-bold">No categories added.</p>
             ) : (
-              <div className="divide-y divide-shopSoft/30">
+              <div className="divide-y divide-pink-100">
                 {categories.map(cat => (
                   <div key={cat.id} className="flex items-center justify-between gap-2 px-4 py-3">
                     <span className="font-bold text-[#111111] text-sm truncate">{cat.name}</span>
@@ -410,22 +410,22 @@ export default function Expenses() {
             <form onSubmit={handleSaveExpense} className="space-y-4">
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Date</label>
-                <input type="date" value={form.expense_date} onChange={e => setForm({...form, expense_date: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required />
+                <input type="date" value={form.expense_date} onChange={e => setForm({...form, expense_date: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Category</label>
-                <select value={form.category_id} onChange={e => setForm({...form, category_id: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard bg-white" required>
+                <select value={form.category_id} onChange={e => setForm({...form, category_id: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600 bg-white" required>
                   <option value="">Select Category</option>
                   {categories.filter(c => c.is_active).map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Amount (₹)</label>
-                <input type="number" step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required placeholder="0.00" />
+                <input type="number" step="0.01" min="0" value={form.amount} onChange={e => setForm({...form, amount: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required placeholder="0.00" />
               </div>
               <div>
                 <label className="block text-[10px] font-black uppercase text-[#374151] mb-1.5">Description / Note</label>
-                <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" placeholder="Optional details..." />
+                <input type="text" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full border border-pink-200 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" placeholder="Optional details..." />
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowModal(false); resetExpenseForm() }} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
