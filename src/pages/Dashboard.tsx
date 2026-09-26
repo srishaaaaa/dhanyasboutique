@@ -560,6 +560,24 @@ export default function Dashboard() {
       .sort((a, b) => b[1] - a[1]).slice(0, 8)
       .map(([name, count]) => ({ name, count }))
 
+    // Payment mode revenue breakdown
+    const paymentModeRevenue = {
+      cash: 0,
+      creditCard: 0,
+      debitCard: 0,
+      gpay: 0,
+      others: 0,
+    }
+    billableCompleted.forEach(order => {
+      const mode = (order.payment_mode || order.payment_method || 'OTHERS').toUpperCase().trim()
+      const revenue = getOrderTotal(order)
+      if (mode === 'CASH') paymentModeRevenue.cash += revenue
+      else if (mode === 'CREDIT_CARD' || mode === 'CREDIT CARD') paymentModeRevenue.creditCard += revenue
+      else if (mode === 'DEBIT_CARD' || mode === 'DEBIT CARD') paymentModeRevenue.debitCard += revenue
+      else if (mode === 'GPAY' || mode === 'G-PAY' || mode === 'GOOGLE_PAY') paymentModeRevenue.gpay += revenue
+      else paymentModeRevenue.others += revenue
+    })
+
     return {
       totalCompletedRevenue: completedRevenue,
       averageRevenuePerBill,
@@ -638,6 +656,7 @@ export default function Dashboard() {
       })(),
       totalExpenses: expensesList.reduce((s, e) => s + toNumber(e.amount, 0), 0),
       netProfit: completedRevenue - expensesList.reduce((s, e) => s + toNumber(e.amount, 0), 0),
+      paymentModeRevenue,
     }
   }, [orders, orderItems, products, analyticsDateFrom, analyticsDateTo, expensesList])
 
@@ -1913,6 +1932,27 @@ export default function Dashboard() {
                       </div>
                       <p className="text-[22px] font-bold text-[#111111] leading-none mb-2 line-clamp-2">{card.value}</p>
                       <p className="text-[12px] text-[#6B7280]">{card.helper}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+                  {[
+                    { label: 'CASH',         helper: 'Cash payments',       value: formatCurrency(analytics.paymentModeRevenue.cash),       icon: <Banknote size={16} />,    color: 'text-green-600',   bg: 'bg-green-100' },
+                    { label: 'CREDIT CARD',  helper: 'Credit card payments', value: formatCurrency(analytics.paymentModeRevenue.creditCard), icon: <CreditCard size={16} />,  color: 'text-blue-600',    bg: 'bg-blue-100' },
+                    { label: 'DEBIT CARD',   helper: 'Debit card payments',  value: formatCurrency(analytics.paymentModeRevenue.debitCard),  icon: <CreditCard size={16} />,  color: 'text-indigo-600', bg: 'bg-indigo-100' },
+                    { label: 'GPAY',         helper: 'Google Pay payments',  value: formatCurrency(analytics.paymentModeRevenue.gpay),       icon: <Smartphone size={16} />,  color: 'text-purple-600', bg: 'bg-purple-100' },
+                    { label: 'OTHERS',       helper: 'Other payment modes',  value: formatCurrency(analytics.paymentModeRevenue.others),     icon: <Wallet size={16} />,      color: 'text-gray-600',   bg: 'bg-gray-100' },
+                  ].map((card, index) => (
+                    <div key={index} className="bg-white rounded-card border border-borderLight p-5 shadow-soft">
+                      <div className="flex items-start justify-between gap-2 mb-4">
+                        <div>
+                          <p className="text-[11px] font-bold text-[#111111] uppercase tracking-wider mb-1">{card.label}</p>
+                        </div>
+                        <div className={`w-8 h-8 rounded-full ${card.bg} flex items-center justify-center ${card.color}`}>{card.icon}</div>
+                      </div>
+                      <p className="text-[24px] xl:text-[20px] 2xl:text-[24px] font-bold text-[#111111] leading-none mb-2 truncate">{card.value}</p>
+                      <p className="text-[12px] text-[#6B7280] truncate">{card.helper}</p>
                     </div>
                   ))}
                 </div>
