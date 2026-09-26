@@ -23,6 +23,9 @@ export default function DigitalInvoice() {
   // the PDF captured from it both read as a full page, while still letting
   // longer invoices push past one page's worth of content instead of clipping.
   const [pageMinHeight, setPageMinHeight] = useState<number>()
+  const [isSharing, setIsSharing] = useState(false)
+  const [isDownloading, setIsDownloading] = useState(false)
+  const [isPrinting, setIsPrinting] = useState(false)
 
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -160,6 +163,8 @@ export default function DigitalInvoice() {
   })
 
   const downloadPdf = async () => {
+    if (isDownloading) return
+    setIsDownloading(true)
     try {
       const file = buildInvoicePdfFile()
       const url = URL.createObjectURL(file)
@@ -171,10 +176,19 @@ export default function DigitalInvoice() {
     } catch (err) {
       console.error('Failed to generate invoice PDF:', err)
       alert('Could not generate the PDF. Please try again.')
+    } finally {
+      setIsDownloading(false)
     }
   }
 
   const shareViaWhatsApp = async () => {
+    if (isSharing) return
+    if (!invoice.phone) {
+      alert('Customer phone number is required to share via WhatsApp.')
+      return
+    }
+
+    setIsSharing(true)
     // Open the tab synchronously, in direct response to the click, so
     // Safari/Chrome popup blockers don't swallow it — everything below is
     // async (canvas render, upload), and by the time it resolves the
@@ -245,29 +259,37 @@ export default function DigitalInvoice() {
       console.error('Failed to share invoice via WhatsApp:', err)
       shareWindow?.close()
       alert('Could not prepare the invoice for WhatsApp. Please try again.')
+    } finally {
+      setIsSharing(false)
     }
   }
 
   const printReceipt = () => {
-    const subtotal = invoice.total - (invoice.delivery_charge || 0) + (invoice.discount_amount || 0)
-    printThermalReceipt({
-      invoiceNo: invoice.invoice_no,
-      date: invoice.created_at,
-      customerName: invoice.customer_name,
-      phone: invoice.phone,
-      items: (invoice.items || []).map((item: Record<string, unknown>) => ({
-        name: item.name || item.product_name,
-        qty: item.qty || item.quantity,
-        unit: item.unit,
-        price: item.price || item.base_price || 0,
-        line_total: item.line_total
-      })),
-      subtotal,
-      shipping: invoice.delivery_charge || 0,
-      couponDiscount: invoice.discount_amount || 0,
-      totalGst: invoice.total_gst || invoice.gst_amount || 0,
-      total: invoice.total > 0 ? invoice.total : (subtotal + (invoice.delivery_charge || 0) + (invoice.total_gst || invoice.gst_amount || 0) - (invoice.discount_amount || 0) - (invoice.manual_discount_amount || 0))
-    })
+    if (isPrinting) return
+    setIsPrinting(true)
+    try {
+      const subtotal = invoice.total - (invoice.delivery_charge || 0) + (invoice.discount_amount || 0)
+      printThermalReceipt({
+        invoiceNo: invoice.invoice_no,
+        date: invoice.created_at,
+        customerName: invoice.customer_name,
+        phone: invoice.phone,
+        items: (invoice.items || []).map((item: Record<string, unknown>) => ({
+          name: item.name || item.product_name,
+          qty: item.qty || item.quantity,
+          unit: item.unit,
+          price: item.price || item.base_price || 0,
+          line_total: item.line_total
+        })),
+        subtotal,
+        shipping: invoice.delivery_charge || 0,
+        couponDiscount: invoice.discount_amount || 0,
+        totalGst: invoice.total_gst || invoice.gst_amount || 0,
+        total: invoice.total > 0 ? invoice.total : (subtotal + (invoice.delivery_charge || 0) + (invoice.total_gst || invoice.gst_amount || 0) - (invoice.discount_amount || 0) - (invoice.manual_discount_amount || 0))
+      })
+    } finally {
+      setTimeout(() => setIsPrinting(false), 500)
+    }
   }
 
   return (
@@ -280,21 +302,51 @@ export default function DigitalInvoice() {
         <div className="flex items-center gap-2">
           <button
             onClick={downloadPdf}
-            className="flex items-center gap-2 bg-shopDeep border border-white0 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-shopCard transition-colors"
+            disabled={isDownloading}
+            className="flex items-center gap-2 bg-shopDeep border border-white0 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-shopCard transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Download size={16} /> PDF
+            {isDownloading ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Generating...
+              </>
+            ) : (
+              <>
+                <Download size={16} /> PDF
+              </>
+            )}
           </button>
           <button
             onClick={printReceipt}
-            className="flex items-center gap-2 bg-white border border-shopSoft/60 text-[#374151] px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-sm hover:bg-[#F9FAFB] transition-colors"
+            disabled={isPrinting}
+            className="flex items-center gap-2 bg-white border border-shopSoft/60 text-[#374151] px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-sm hover:bg-[#F9FAFB] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <Printer size={16} /> Print
+            {isPrinting ? (
+              <>
+                <span className="w-4 h-4 border-2 border-[#374151] border-t-transparent rounded-full animate-spin" />
+                Printing...
+              </>
+            ) : (
+              <>
+                <Printer size={16} /> Print
+              </>
+            )}
           </button>
           <button
             onClick={shareViaWhatsApp}
-            className="flex items-center gap-2 bg-green-500 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-green-600 transition-colors"
+            disabled={isSharing}
+            className="flex items-center gap-2 bg-green-500 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-green-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            <MessageCircle size={16} /> WhatsApp
+            {isSharing ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Sharing...
+              </>
+            ) : (
+              <>
+                <MessageCircle size={16} /> WhatsApp
+              </>
+            )}
           </button>
         </div>
       </div>
