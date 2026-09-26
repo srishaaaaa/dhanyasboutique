@@ -218,17 +218,19 @@ CREATE TABLE IF NOT EXISTS public.store_settings (
   email TEXT NOT NULL DEFAULT '',
   address TEXT NOT NULL DEFAULT 'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
   gst_enabled BOOLEAN NOT NULL DEFAULT FALSE,
+  review_link TEXT NOT NULL DEFAULT 'https://g.page/r/Ccpknn3jk8O6ECA/review',
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-INSERT INTO public.store_settings (id, name, owner_name, phone, email, address)
+INSERT INTO public.store_settings (id, name, owner_name, phone, email, address, review_link)
 VALUES (
   1,
   'Dhanyas Boutique',
   'Ananthi M',
   '80980 89591',
   '',
-  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001'
+  'Kasthoribhai Road, AGM Apartment, Kumbakonam - 612001',
+  'https://g.page/r/Ccpknn3jk8O6ECA/review'
 )
 ON CONFLICT (id) DO UPDATE SET
   name = EXCLUDED.name,
@@ -236,6 +238,7 @@ ON CONFLICT (id) DO UPDATE SET
   phone = EXCLUDED.phone,
   email = EXCLUDED.email,
   address = EXCLUDED.address,
+  review_link = EXCLUDED.review_link,
   updated_at = NOW();
 
 CREATE OR REPLACE FUNCTION public.is_admin()
