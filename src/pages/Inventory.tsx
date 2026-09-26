@@ -735,7 +735,7 @@ export default function Inventory() {
           {/* Summary Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
             {[
-              { label: 'Total SKUs', value: activeProducts.length, iconBg: 'bg-shopDeep', iconColor: 'text-shopAccent', Icon: Layers },
+              { label: 'Total SKUs', value: activeProducts.length, iconBg: 'bg-shopDeep', iconColor: 'text-white', Icon: Layers },
               { label: 'Total Stock', value: `${activeProducts.reduce((s, p) => s + p.stock_quantity, 0)} Units`, iconBg: 'bg-emerald-50', iconColor: 'text-emerald-600', Icon: Package },
               { label: 'Low Stock Items', value: lowCount + outCount, iconBg: 'bg-amber-50', iconColor: 'text-amber-600', Icon: AlertTriangle },
               { label: 'Stock Valuation', value: formatCurrency(stockValue), iconBg: 'bg-[#FFF8F2]', iconColor: 'text-shopCard', Icon: IndianRupee },

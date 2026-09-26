@@ -2484,13 +2484,13 @@ export default function Dashboard() {
                     </>
                   ) : (
                     <button type="submit" disabled={searchLoading}
-                      className="sm:col-span-2 min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-shopDeep border border-shopAccent py-2.5 text-[13px] font-bold text-shopAccent shadow-sm transition-colors hover:bg-shopDeep disabled:opacity-60">
+                      className="sm:col-span-2 min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-shopDeep border border-shopAccent py-2.5 text-[13px] font-bold text-white shadow-sm transition-colors hover:bg-shopDeep disabled:opacity-60">
                       <Search size={14} /> {searchLoading ? l('Searching...','தேடுகிறது...') : l('Search Bills','தேடு')}
                     </button>
                   )}
                   {datePreset === 'custom' && (
                     <button type="submit" disabled={searchLoading}
-                      className="sm:col-span-2 lg:col-span-4 min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-shopDeep border border-shopAccent py-2.5 text-[13px] font-bold text-shopAccent shadow-sm transition-colors hover:bg-shopDeep disabled:opacity-60">
+                      className="sm:col-span-2 lg:col-span-4 min-h-[48px] flex items-center justify-center gap-2 rounded-xl bg-shopDeep border border-shopAccent py-2.5 text-[13px] font-bold text-white shadow-sm transition-colors hover:bg-shopDeep disabled:opacity-60">
                       <Search size={14} /> {searchLoading ? l('Searching...','தேடுகிறது...') : l('Search Bills','தேடு')}
                     </button>
                   )}
@@ -2783,7 +2783,7 @@ export default function Dashboard() {
                       <button
                         type="button"
                         onClick={generateCouponCode}
-                        className="shrink-0 rounded-xl border border-shopAccent bg-shopDeep px-3 py-2.5 text-[11px] font-black text-shopAccent transition-colors hover:bg-shopDeep"
+                        className="shrink-0 rounded-xl border border-shopAccent bg-shopDeep px-3 py-2.5 text-[11px] font-black text-white transition-colors hover:bg-shopDeep"
                       >
                         Generate
                       </button>
@@ -2845,7 +2845,7 @@ export default function Dashboard() {
 
                 <button
                   type="submit"
-                  className="w-full rounded-xl bg-shopDeep border border-shopAccent py-3 text-[13px] font-black text-shopAccent shadow-sm transition-colors hover:bg-shopDeep"
+                  className="w-full rounded-xl bg-shopDeep border border-shopAccent py-3 text-[13px] font-black text-white shadow-sm transition-colors hover:bg-shopDeep"
                 >
                   {editingCouponId !== null ? l('Update Coupon', 'கூப்பனை புதுப்பி') : l('Create Coupon', 'கூப்பனை உருவாக்கு')}
                 </button>
