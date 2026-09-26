@@ -763,7 +763,7 @@ export default function Pos(props: PosProps = {}) {
               <MessageCircle size={16} /> <span className="text-[11px] font-black">WhatsApp</span>
             </button>
             <button onClick={clearAll}
-              className="flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white/30 bg-shopDeep py-3 text-white hover:bg-shopCard transition-colors">
+              className="flex flex-col items-center justify-center gap-1.5 rounded-xl border border-white0 bg-shopDeep py-3 text-white hover:bg-shopCard transition-colors">
               <RefreshCw size={16} /> <span className="text-[11px] font-black">New Sale</span>
             </button>
           </div>

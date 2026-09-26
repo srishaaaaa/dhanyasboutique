@@ -275,7 +275,7 @@ export default function Expenses() {
               <button onClick={handleExportCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
                 <Download size={14} /> Export CSV
               </button>
-              <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopDeep border border-white/30 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
+              <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
                 <Plus size={16} /> Record Expense
               </button>
             </div>
@@ -334,7 +334,7 @@ export default function Expenses() {
             <h3 className="text-base font-black text-[#111111] mb-4">Add Category</h3>
             <form onSubmit={handleAddCategory} className="flex gap-2">
               <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required disabled={dbError} />
-              <button type="submit" disabled={dbError} className="bg-shopDeep border border-white/30 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-shopCard disabled:opacity-50">Add</button>
+              <button type="submit" disabled={dbError} className="bg-shopDeep border border-white0 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-shopCard disabled:opacity-50">Add</button>
             </form>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
@@ -393,7 +393,7 @@ export default function Expenses() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowModal(false); resetExpenseForm() }} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white/30 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white0 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
               </div>
             </form>
           </div>

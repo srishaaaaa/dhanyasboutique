@@ -200,7 +200,7 @@ export default function StaffPunch({ embedded = false }: StaffPunchProps) {
 
               {!todayRecord?.clock_in ? (
                 <button onClick={() => void punchIn()} disabled={saving}
-                  className="w-full bg-shopDeep border border-white/30 hover:bg-shopCard text-white rounded-2xl py-5 text-xl font-black shadow-lg shadow-black/20 active:scale-95 transition-all disabled:opacity-60 flex items-center justify-center gap-3">
+                  className="w-full bg-shopDeep border border-white0 hover:bg-shopCard text-white rounded-2xl py-5 text-xl font-black shadow-lg shadow-black/20 active:scale-95 transition-all disabled:opacity-60 flex items-center justify-center gap-3">
                   <LogIn size={24} />{saving ? 'Recording...' : 'PUNCH IN'}
                 </button>
               ) : !todayRecord?.clock_out ? (
@@ -250,7 +250,7 @@ export default function StaffPunch({ embedded = false }: StaffPunchProps) {
             <p className="text-[13px] text-[#9BAB9A] mb-6">Remember to punch out when you leave!</p>
           )}
           <button onClick={reset}
-            className="bg-shopDeep border border-white/30 text-white px-8 py-3 rounded-xl font-black hover:bg-shopCard active:scale-95 transition-all">
+            className="bg-shopDeep border border-white0 text-white px-8 py-3 rounded-xl font-black hover:bg-shopCard active:scale-95 transition-all">
             Done
           </button>
         </div>
@@ -269,12 +269,12 @@ export default function StaffPunch({ embedded = false }: StaffPunchProps) {
           <img src={BRAND_LOGO} alt="Logo" className="h-9 w-9 rounded-xl object-cover bg-[#BE7D40]" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
           <div>
             <p className="text-white font-black text-base leading-tight">{BRAND_EN}</p>
-            <p className="text-white/70 text-[11px] font-bold">Staff Attendance</p>
+            <p className="text-white text-[11px] font-bold">Staff Attendance</p>
           </div>
         </div>
         <div className="text-right">
           <p className="text-white font-black text-sm">{currentTime}</p>
-          <p className="text-white/70 text-[10px]">{new Date().toLocaleDateString('en-MY', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+          <p className="text-white text-[10px]">{new Date().toLocaleDateString('en-MY', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
         </div>
       </div>
       {inner}

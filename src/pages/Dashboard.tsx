@@ -1147,7 +1147,7 @@ export default function Dashboard() {
       <div className="bg-white p-8 rounded-3xl shadow-xl text-center max-w-sm">
         <AlertCircle className="mx-auto text-red-400 mb-4" size={48} />
         <h2 className="text-2xl font-black mb-2">{l('Unauthorized', 'அன� மதி இல� லை')}</h2>
-        <Link to="/" className="px-6 py-3 bg-shopDeep border border-white/30 text-white rounded-xl font-bold inline-block mt-4 hover:bg-shopCard">{l('Go Home', 'ம� கப� பிற� க� ')}</Link>
+        <Link to="/" className="px-6 py-3 bg-shopDeep border border-white0 text-white rounded-xl font-bold inline-block mt-4 hover:bg-shopCard">{l('Go Home', 'ம� கப� பிற� க� ')}</Link>
       </div>
     </div>
   )
@@ -1187,7 +1187,7 @@ export default function Dashboard() {
             {!sidebarCollapsed && (
               <div className="min-w-0">
                 <h1 className="text-[16px] font-black text-white leading-tight tracking-tight break-words">{shopName}</h1>
-                <span className="mt-1 inline-block rounded-full border border-white/30 bg-shopAccent/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                <span className="mt-1 inline-block rounded-full border border-white0 bg-shopAccent/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
                   {role === 'admin' ? 'Admin Panel' : 'Staff Panel'}
                 </span>
               </div>
@@ -1196,7 +1196,7 @@ export default function Dashboard() {
           <button
             type="button"
             onClick={() => setSidebarCollapsed((state) => !state)}
-            className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white/80 hover:bg-white/15 hover:text-white transition-colors shrink-0"
+            className="flex h-8 w-8 items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/15 transition-colors shrink-0"
             aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
@@ -1204,13 +1204,13 @@ export default function Dashboard() {
           </button>
         </div>
         {/* Mobile mini-header */}
-        <div className="flex lg:hidden items-center justify-between gap-2 px-3.5 py-2.5 border-b border-white/10">
+        <div className="flex lg:hidden items-center justify-between gap-2 px-3.5 py-2.5 border-b border-white0">
           <Link to="/pos" title="Go to Billing Panel" className="flex items-center gap-2 min-w-0">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-shopDeep border border-[#BE7D40] shrink-0 overflow-hidden shadow-sm p-1 hover:scale-105 transition-transform">
               <img src={shopLogo} alt={`${shopName} logo`} className="w-full h-full object-cover" />
             </div>
             <span className="text-[12px] font-black text-white leading-tight break-words">{shopName}</span>
-            <span className="shrink-0 rounded-full border border-white/30/50 bg-shopAccent/10 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider text-white">
+            <span className="shrink-0 rounded-full border border-white0/50 bg-shopAccent/10 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wider text-white">
               {role === 'admin' ? 'Admin' : 'Staff'}
             </span>
           </Link>
@@ -1240,7 +1240,7 @@ export default function Dashboard() {
                 sidebarCollapsed ? 'lg:w-[48px] lg:justify-center mx-auto' : 'lg:px-4',
                 'px-0 py-1 lg:py-0',
                 'rounded-lg lg:rounded-xl font-bold text-[10px] lg:text-[14px] transition-all overflow-hidden',
-                tab === item.id ? 'bg-white text-shopDeep shadow-sm' : 'text-white/70 hover:bg-white/10 hover:text-white',
+                tab === item.id ? 'bg-white text-shopDeep shadow-sm' : 'text-white hover:bg-white/10',
               ].join(' ')}
             >
               <span className="shrink-0 flex items-center gap-1">
@@ -1262,7 +1262,7 @@ export default function Dashboard() {
               'lg:gap-3',
               'lg:w-full lg:h-[48px]',
               sidebarCollapsed ? 'lg:w-[48px] lg:justify-center mx-auto' : 'lg:px-4',
-              'rounded-xl font-bold lg:text-[14px] transition-all text-white/70 hover:bg-red-500/15 hover:text-red-300 lg:mt-auto mb-1 lg:mb-4 overflow-hidden',
+              'rounded-xl font-bold lg:text-[14px] transition-all text-white hover:bg-red-500/20 hover:text-red-200 lg:mt-auto mb-1 lg:mb-4 overflow-hidden',
             ].join(' ')}
           >
             <span className="shrink-0"><Power size={20} /></span>
@@ -1284,7 +1284,7 @@ export default function Dashboard() {
         {tab === 'overview' && (() => {
           const latestPOS = searchResults.slice(0, 10)
           return (
-          <div className="space-y-6 rounded-[28px] bg-maroon-dark p-5 sm:p-6 lg:p-7 shadow-2xl border border-white/10 text-white">
+          <div className="space-y-6 rounded-[28px] bg-maroon-dark p-5 sm:p-6 lg:p-7 shadow-2xl border border-white0 text-white">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl font-black text-white">{l('Analytics Dashboard', 'பகுப்பாய்வு தட்டு')}</h2>
               <div className="flex items-center gap-2">
@@ -1339,7 +1339,7 @@ export default function Dashboard() {
                 { label: l('Online Revenue',  'ஆன்லைன் வருவாய்'),  value: formatCurrency(analytics.onlinePosRevenue),     from: 'from-cyan-50 via-cyan-50/80 to-sky-50', iconBg: 'from-cyan-400 to-sky-500', icon: <RMIcon size={16} /> },
                 { label: l('Manual Revenue',  'கைமுறை வருவாய்'),   value: formatCurrency(analytics.manualRevenue),        from: 'from-violet-50 via-violet-50/80 to-purple-50', iconBg: 'from-violet-400 to-purple-500', icon: <ShoppingCart size={16} /> },
               ].map((card, i) => (
-                <div key={i} className={`bg-gradient-to-br ${card.from} rounded-2xl border border-white/40 p-4 shadow-sm backdrop-blur-sm`}>
+                <div key={i} className={`bg-gradient-to-br ${card.from} rounded-2xl border border-white0 p-4 shadow-sm backdrop-blur-sm`}>
                   <div className="flex items-center justify-between gap-1 mb-2">
                     <p className="text-[10px] uppercase font-black text-[#374151] tracking-wider leading-tight">{card.label}</p>
                     <div className={`w-7 h-7 rounded-xl bg-gradient-to-br ${card.iconBg} flex items-center justify-center text-white shrink-0 shadow-sm`}>{card.icon}</div>
@@ -2152,11 +2152,11 @@ export default function Dashboard() {
                     { label: 'Average Product Revenue', value: `${formatCurrency(analytics.averageProductRevenue)} / Product`, icon: <RMIcon size={18} />, from: 'from-violet-500 to-purple-600' },
                     { label: 'Top Product', value: analytics.bestProduct, icon: <Trophy size={18} />, from: 'from-amber-500 to-orange-600' },
                   ].map((card, i) => (
-                    <div key={i} className={`relative overflow-hidden rounded-2xl p-5 shadow-lg border border-white/20 bg-gradient-to-br ${card.from}`}>
+                    <div key={i} className={`relative overflow-hidden rounded-2xl p-5 shadow-lg border border-white0 bg-gradient-to-br ${card.from}`}>
                       <div className="absolute inset-0 bg-gradient-to-tl from-white/30 via-white/10 to-transparent" />
                       <div className="relative z-10">
                         <div className="flex items-center justify-between mb-3">
-                          <p className="text-[10px] uppercase font-black text-white/80 tracking-wider">{card.label}</p>
+                          <p className="text-[10px] uppercase font-black text-white tracking-wider">{card.label}</p>
                           <div className="w-9 h-9 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center text-white shadow-sm">{card.icon}</div>
                         </div>
                         <p className="text-[15px] sm:text-[22px] font-extrabold text-white drop-shadow-sm leading-tight break-words">{card.value}</p>
@@ -2291,11 +2291,11 @@ export default function Dashboard() {
                     { label: 'Usage Rate', value: `${analytics.couponUsageRate.toFixed(1)}%`, icon: <TrendingUp size={18} />, from: 'from-violet-500 to-purple-600' },
                     { label: 'Unique Coupons', value: String(analytics.topCoupons.length), icon: <Trophy size={18} />, from: 'from-amber-500 to-orange-600' },
                   ].map((card, i) => (
-                    <div key={i} className={`relative overflow-hidden rounded-2xl p-5 shadow-lg border border-white/20 bg-gradient-to-br ${card.from}`}>
+                    <div key={i} className={`relative overflow-hidden rounded-2xl p-5 shadow-lg border border-white0 bg-gradient-to-br ${card.from}`}>
                       <div className="absolute inset-0 bg-gradient-to-tl from-white/30 via-white/10 to-transparent" />
                       <div className="relative z-10">
                         <div className="flex items-center justify-between mb-3">
-                          <p className="text-[10px] uppercase font-black text-white/80 tracking-wider">{card.label}</p>
+                          <p className="text-[10px] uppercase font-black text-white tracking-wider">{card.label}</p>
                           <div className="w-9 h-9 rounded-xl bg-white/25 backdrop-blur-sm flex items-center justify-center text-white shadow-sm">{card.icon}</div>
                         </div>
                         <p className="text-[22px] font-extrabold text-white drop-shadow-sm truncate">{card.value}</p>

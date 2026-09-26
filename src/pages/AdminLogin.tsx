@@ -42,11 +42,11 @@ export default function AdminLogin() {
         <div className="hidden flex-col justify-between bg-shopDeep p-10 text-white lg:flex">
           <div>
             <div className="mb-8 inline-flex items-center justify-center rounded-2xl bg-shopDeep border border-[#BE7D40] p-1.5 shadow-xl overflow-hidden"><img src={BRAND_LOGO} alt={`${BRAND_EN} logo`} className="h-12 w-12 rounded-xl object-cover" /></div>
-            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-white/70">{BRAND_SUBTITLE}</p>
+            <p className="text-[11px] font-black uppercase tracking-[0.28em] text-white">{BRAND_SUBTITLE}</p>
             <h2 className="mt-4 max-w-xs text-4xl font-black leading-tight tracking-tight">Everything you need to run billing clearly.</h2>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-white/70">Manage products, bills, orders, invoices, and WhatsApp customer communication from one secure portal.</p>
+            <p className="mt-5 max-w-sm text-sm leading-7 text-white">Manage products, bills, orders, invoices, and WhatsApp customer communication from one secure portal.</p>
           </div>
-          <div className="flex items-center gap-2 text-xs font-bold text-white/60"><ShieldCheck size={16} className="text-white/70" /> Secure admin workspace</div>
+          <div className="flex items-center gap-2 text-xs font-bold text-white"><ShieldCheck size={16} className="text-white" /> Secure admin workspace</div>
         </div>
         <div className="p-6 sm:p-10 lg:p-12">
         {/* Brand */}
@@ -121,7 +121,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-shopDeep border border-white/30 py-3.5 font-black text-white shadow-lg shadow-black/10 transition-colors hover:bg-shopCard disabled:opacity-60"
+            className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-shopDeep border border-white0 py-3.5 font-black text-white shadow-lg shadow-black/10 transition-colors hover:bg-shopCard disabled:opacity-60"
           >
             {loading ? (
               <>

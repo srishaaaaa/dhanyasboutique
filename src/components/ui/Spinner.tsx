@@ -21,7 +21,7 @@ export function Spinner({ size = 'md', className, inverted = false }: SpinnerPro
       className={cn(
         'inline-block shrink-0 animate-spin rounded-full',
         inverted
-          ? 'border-white/30 border-t-white'
+          ? 'border-white0 border-t-white'
           : 'border-shopSoft border-t-shopCard',
         SIZES[size],
         className,

@@ -166,7 +166,7 @@ export default function CatalogModal({ isOpen, onClose, onAdd }: CatalogModalPro
                 </div>
               </div>
               <button type="submit" disabled={editLoading}
-                className="mt-4 w-full py-3.5 bg-shopDeep border border-white/30 text-white hover:bg-shopCard rounded-xl text-[13px] font-black uppercase tracking-wider transition-colors disabled:opacity-50">
+                className="mt-4 w-full py-3.5 bg-shopDeep border border-white0 text-white hover:bg-shopCard rounded-xl text-[13px] font-black uppercase tracking-wider transition-colors disabled:opacity-50">
                 {editLoading ? 'Saving...' : 'Save Changes'}
               </button>
             </form>
@@ -208,7 +208,7 @@ export default function CatalogModal({ isOpen, onClose, onAdd }: CatalogModalPro
               ) : error ? (
                 <div className="flex min-h-48 flex-col items-center justify-center gap-2 px-4 text-center text-red-500">
                   <p className="text-[13px] font-bold">Unable to load catalog items.</p>
-                  <button type="button" onClick={() => void fetchProducts(true)} className="rounded-lg bg-shopDeep border border-white/30 px-3 py-2 text-[11px] font-black text-white hover:bg-shopCard">Try again</button>
+                  <button type="button" onClick={() => void fetchProducts(true)} className="rounded-lg bg-shopDeep border border-white0 px-3 py-2 text-[11px] font-black text-white hover:bg-shopCard">Try again</button>
                 </div>
               ) : filtered.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-[#374151]/60 py-12">

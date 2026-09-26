@@ -235,7 +235,7 @@ function InventoryAnalytics({ products, downloadCSV }: { products: InventoryProd
         <button onClick={downloadCSV} className="sm:ml-auto flex items-center gap-2 border border-emerald-300 text-emerald-700 bg-emerald-50 px-4 py-2 rounded-xl text-[12px] font-black hover:bg-emerald-100 transition-colors">
           <Download size={14} /> Export Snapshot CSV
         </button>
-        <button onClick={downloadMovementsCSV} className="flex items-center gap-2 bg-shopDeep border border-white/30 text-white px-4 py-2 rounded-xl text-[12px] font-black hover:bg-shopCard transition-colors">
+        <button onClick={downloadMovementsCSV} className="flex items-center gap-2 bg-shopDeep border border-white0 text-white px-4 py-2 rounded-xl text-[12px] font-black hover:bg-shopCard transition-colors">
           <Download size={14} /> Export Movements CSV
         </button>
         {datePreset === 'custom' && (
@@ -958,7 +958,7 @@ export default function Inventory() {
 
               <div className="flex gap-3">
                 <button type="submit" disabled={savingProduct}
-                  className="flex-1 flex items-center justify-center gap-2 bg-shopDeep border border-white/30 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">
+                  className="flex-1 flex items-center justify-center gap-2 bg-shopDeep border border-white0 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">
                   <CheckCircle2 size={15} />
                   {savingProduct ? 'Saving...' : editingProduct ? 'Save Changes' : 'Save & Add Product'}
                 </button>
@@ -1222,7 +1222,7 @@ export default function Inventory() {
               <div className="shrink-0 border-t border-[#E5E7EB] p-3 flex gap-2.5">
                 <button type="button" onClick={() => { setAdjustModal(null); setNotice('') }} className="flex-1 bg-gray-100 p-2.5 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
                 <button onClick={() => void saveAdjust()} disabled={saving || !hasEntry || exceedsStock}
-                  className="flex-[1.5] flex items-center justify-center gap-2 bg-shopDeep border border-white/30 text-white p-2.5 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">
+                  className="flex-[1.5] flex items-center justify-center gap-2 bg-shopDeep border border-white0 text-white p-2.5 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">
                   <CheckCircle2 size={16} />
                   {saving ? 'Saving...' : adjustModal.adjustType === 'reconciliation'
                     ? `Confirm Reconciliation (${hasEntry ? newTotal : '—'} Units)`

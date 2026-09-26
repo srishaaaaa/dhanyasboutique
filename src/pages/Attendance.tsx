@@ -305,7 +305,7 @@ export default function Attendance() {
         <div className="space-y-5">
           <div className="flex justify-end">
             <button onClick={() => { setEditingStaff(null); setForm({ name: '', role: '', phone: '', base_salary: '' }); setShowModal(true) }} disabled={dbError}
-              className="h-10 bg-shopDeep border border-white/30 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
+              className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
               <Plus size={16} /> Add Staff
             </button>
           </div>
@@ -490,7 +490,7 @@ export default function Attendance() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white/30 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white0 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
               </div>
             </form>
           </div>

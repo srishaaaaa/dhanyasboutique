@@ -127,7 +127,7 @@ export default function DigitalInvoice() {
         <p className="text-gray-500 mb-6">The requested invoice could not be found.</p>
         <button
           onClick={handleBack}
-          className="inline-flex items-center gap-2 px-6 py-2 bg-shopDeep border border-white/30 text-white rounded-full font-bold hover:bg-shopCard transition cursor-pointer"
+          className="inline-flex items-center gap-2 px-6 py-2 bg-shopDeep border border-white0 text-white rounded-full font-bold hover:bg-shopCard transition cursor-pointer"
         >
           <ArrowLeft size={16} /> Back
         </button>
@@ -280,7 +280,7 @@ export default function DigitalInvoice() {
         <div className="flex items-center gap-2">
           <button
             onClick={downloadPdf}
-            className="flex items-center gap-2 bg-shopDeep border border-white/30 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-shopCard transition-colors"
+            className="flex items-center gap-2 bg-shopDeep border border-white0 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-sm shadow-md hover:bg-shopCard transition-colors"
           >
             <Download size={16} /> PDF
           </button>

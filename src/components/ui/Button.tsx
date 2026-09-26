@@ -6,7 +6,7 @@ export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost'
 export type ButtonSize = 'sm' | 'md'
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-  primary: 'bg-shopDeep border border-white/30 text-white hover:bg-shopCard active:scale-[0.98]',
+  primary: 'bg-shopDeep border border-white0 text-white hover:bg-shopCard active:scale-[0.98]',
   secondary: 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-[#F9FAFB] active:scale-[0.98]',
   danger: 'bg-red-50 border border-red-200 text-red-600 hover:bg-red-100 active:scale-[0.98]',
   ghost: 'bg-transparent border border-transparent text-[#374151] hover:bg-gray-100 active:scale-[0.98]',
