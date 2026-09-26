@@ -1,5 +1,5 @@
 import { jsPDF } from 'jspdf'
-import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM_LINK, BRAND_REVIEW_LINK } from './brand'
+import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_PHONE_DISPLAY, BRAND_INSTAGRAM, BRAND_INSTAGRAM_LINK, BRAND_REVIEW_LINK } from './brand'
 import { LOGO_BASE64 } from './logoBase64'
 import { getShopLogoDataUrl } from './brand'
 import { resolveCardColorHex } from './shopTheme'

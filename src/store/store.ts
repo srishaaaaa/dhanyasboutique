@@ -410,6 +410,7 @@ const rowToSettings = (data: Record<string, unknown>): StoreSettings => ({
   email: String(data.email ?? ''),
   address: String(data.address ?? ''),
   instagramId: String(data.instagram_id ?? ''),
+  reviewLink: String(data.review_link ?? ''),
   logoUrl: String(data.logo_url ?? ''),
   gstEnabled: Boolean(data.gst_enabled),
   cardColor: normalizeHex(String(data.card_color ?? '')) || DEFAULT_CARD_COLOR,
