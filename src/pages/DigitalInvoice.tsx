@@ -12,8 +12,8 @@ import { toWhatsAppUrl } from '../lib/phone'
 import { useSound } from '../context/SoundContext'
 
 export default function DigitalInvoice() {
-  const { soundEnabled, setSoundEnabled } = useSound()
-  const [soundWasEnabled, setSoundWasEnabled] = useState(soundEnabled)
+  const { setSoundEnabled } = useSound()
+  const soundEnabledRef = useRef<boolean>(false)
   const { id } = useParams()
   const navigate = useNavigate()
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,12 +39,12 @@ export default function DigitalInvoice() {
   }
 
   useEffect(() => {
-    setSoundWasEnabled(soundEnabled)
+    soundEnabledRef.current = true
     setSoundEnabled(false)
     return () => {
-      setSoundEnabled(soundEnabled)
+      setSoundEnabled(soundEnabledRef.current)
     }
-  }, [soundEnabled, setSoundEnabled])
+  }, [setSoundEnabled])
 
   useEffect(() => {
     async function loadInvoice() {
