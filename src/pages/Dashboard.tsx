@@ -4,6 +4,7 @@ import {
   Box, Receipt, AlertCircle, Power, Download, TrendingUp,
   Package, Search, RefreshCw, ShieldCheck, ShieldOff, Trophy,
   MessageCircle, ChevronDown, Eye, FileText, Printer, X, Users, AlertTriangle, Tag, CheckCircle2, Repeat, Settings,
+  Banknote, CreditCard, Smartphone, Wallet,
 } from 'lucide-react'
 
 // Custom Indian Rupee icon — replaces the generic dollar-sign icon
