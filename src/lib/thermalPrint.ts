@@ -1,4 +1,4 @@
-import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_WHATSAPP, BRAND_INSTAGRAM, BRAND_REVIEW_LINK } from './brand'
+import { BRAND_ADDRESS, BRAND_EN, BRAND_LOGO, BRAND_WHATSAPP, BRAND_INSTAGRAM } from './brand'
 import { formatCurrency, formatInvoiceNo } from './retail'
 import { formatPhoneDisplay } from './phone'
 
@@ -175,7 +175,6 @@ export function printThermalReceipt(data: ThermalReceiptData) {
           <div class="font-bold">Thank you for visiting!</div>
           <div>Visit again</div>
           ${BRAND_INSTAGRAM ? `<div style="margin-top: 8px; font-size: 10px;">Follow: @${BRAND_INSTAGRAM}</div>` : ''}
-          ${BRAND_REVIEW_LINK ? `<div style="font-size: 9px; color: #555; margin-top: 4px;">${BRAND_REVIEW_LINK}</div>` : ''}
         </div>
       </body>
     </html>
