@@ -208,8 +208,8 @@ export default function Expenses() {
   return (
     <div className="p-3 sm:p-6 space-y-3 sm:space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
-        <div className="flex items-start gap-2">
-          <Receipt size={16} className="sm:size-6 shrink-0 text-shopCard mt-0.5" />
+        <div className="flex items-start gap-3">
+          <div className="w-1.5 h-12 bg-pink-600 rounded-r-lg shrink-0 mt-0.5"></div>
           <div>
             <h2 className="text-base sm:text-xl md:text-[22px] font-black text-[#111111] leading-tight">Expense Tracker</h2>
             <p className="text-[11px] sm:text-[13px] text-[#6B7280] mt-0.5">Monitor store overheads, operating costs, and categorized expenses</p>
@@ -225,8 +225,8 @@ export default function Expenses() {
       )}
 
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
-        <button onClick={() => setTab('expenses')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Expenses</button>
-        <button onClick={() => setTab('categories')} className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>Categories</button>
+        <button onClick={() => setTab('expenses')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'expenses' ? 'bg-pink-600 text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-pink-50'}`}>Expenses</button>
+        <button onClick={() => setTab('categories')} className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === 'categories' ? 'bg-pink-600 text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-pink-50'}`}>Categories</button>
       </div>
 
       {tab === 'expenses' && (
@@ -237,7 +237,7 @@ export default function Expenses() {
               { label: 'This Week', value: formatCurrency(totalWeek), Icon: CalendarRange, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
               { label: 'This Month', value: formatCurrency(totalMonth), Icon: CalendarClock, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
               { label: 'This Year', value: formatCurrency(totalYear), Icon: Receipt, iconBg: 'bg-red-50', iconColor: 'text-red-600' },
-              { label: 'Total All Time', value: formatCurrency(totalAll), Icon: Wallet, iconBg: 'bg-shopDeep', iconColor: 'text-shopAccent' },
+              { label: 'Total All Time', value: formatCurrency(totalAll), Icon: Wallet, iconBg: 'bg-pink-600', iconColor: 'text-white' },
             ].map((c, i) => (
               <div key={i} className="bg-white rounded-2xl border border-shopSoft/60 p-3 sm:p-4 shadow-sm overflow-hidden">
                 <div className="flex items-start justify-between gap-2">
@@ -252,60 +252,68 @@ export default function Expenses() {
           </div>
 
           {/* Filter bar */}
-          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4 space-y-3">
-            {/* Search + Main filters row */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              <input
-                type="text"
-                placeholder="Search description, category, staff, amount..."
-                className="flex-1 min-w-[200px] border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard placeholder:text-[#9CA3AF]"
-              />
+          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4">
+            <div className="flex flex-wrap items-center gap-3 justify-between">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">FROM</span>
+                  <input
+                    type="date"
+                    value={filterFrom}
+                    onChange={e => { setFilterFrom(e.target.value); setDatePreset('all') }}
+                    className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none w-32"
+                    placeholder="dd-mm-yyyy"
+                  />
+                </div>
 
-              <select
-                value={selectedCategory ?? ''}
-                onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
-                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-              >
-                <option value="">All Categories</option>
-                {categories.filter(c => c.is_active).map(cat => (
-                  <option key={cat.id} value={cat.id}>{cat.name}</option>
-                ))}
-              </select>
+                <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">TO</span>
+                  <input
+                    type="date"
+                    value={filterTo}
+                    onChange={e => { setFilterTo(e.target.value); setDatePreset('all') }}
+                    className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none w-32"
+                    placeholder="dd-mm-yyyy"
+                  />
+                </div>
 
-              <select
-                value={datePreset}
-                onChange={e => applyPreset(e.target.value as typeof datePreset)}
-                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-              >
-                <option value="all">All Dates</option>
-                <option value="today">Today</option>
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-                <option value="year">This Year</option>
-              </select>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">PERIOD</span>
+                  {([
+                    { id: 'all' as const, label: 'ALL TIME' },
+                    { id: 'today' as const, label: 'TODAY' },
+                    { id: 'week' as const, label: 'THIS WEEK' },
+                    { id: 'month' as const, label: 'THIS MONTH' },
+                    { id: 'year' as const, label: 'THIS YEAR' },
+                  ]).map(p => (
+                    <button key={p.id} onClick={() => applyPreset(p.id)}
+                      className={`px-3.5 py-1.5 rounded-lg text-[11px] font-bold uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-pink-600 text-white' : 'text-[#6B7280] bg-white border border-[#E5E7EB] hover:bg-[#F9FAFB]'}`}>
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <select
-                value={sortBy}
-                onChange={e => setSortBy(e.target.value as 'date'|'amount'|'category')}
-                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-              >
-                <option value="">Filters</option>
-                <option value="date">Sort: Date (Newest)</option>
-                <option value="amount">Sort: Amount (Highest)</option>
-                <option value="category">Sort: Category</option>
-              </select>
+              <div className="flex items-center gap-2 flex-wrap">
+                <select
+                  value={selectedCategory ?? ''}
+                  onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
+                  className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-pink-600"
+                >
+                  <option value="">All Categories</option>
+                  {categories.filter(c => c.is_active).map(cat => (
+                    <option key={cat.id} value={cat.id}>{cat.name}</option>
+                  ))}
+                </select>
 
-              <button onClick={() => void fetchData()} className="shrink-0 h-10 w-10 flex items-center justify-center border border-[#E5E7EB] bg-white rounded-xl text-[#374151] hover:bg-[#F9FAFB] transition-colors" title="Refresh">
-                <Receipt size={16} />
-              </button>
+                <button onClick={handleExportCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2 rounded-xl text-[12px] font-bold hover:bg-[#F9FAFB] transition-colors whitespace-nowrap">
+                  <Download size={14} /> Export CSV
+                </button>
 
-              <button onClick={handleExportCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2.5 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors whitespace-nowrap">
-                <Download size={14} /> Export CSV
-              </button>
-
-              <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50 whitespace-nowrap">
-                <Plus size={16} /> Record Expense
-              </button>
+                <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-pink-600 border border-pink-600 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-pink-700 disabled:opacity-50 whitespace-nowrap">
+                  <Plus size={16} /> Record Expense
+                </button>
+              </div>
             </div>
           </div>
 
@@ -335,7 +343,7 @@ export default function Expenses() {
                     <tr key={exp.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                       <td className="px-4 py-3 text-sm font-semibold text-[#111111] whitespace-nowrap">{new Date(exp.expense_date).toLocaleDateString('en-MY')}</td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        <span className="bg-[#FFF8F2] text-shopCard border border-shopSoft px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
+                        <span className="bg-pink-100 text-pink-600 border border-pink-200 px-2 py-1 rounded-md text-[10px] font-black uppercase tracking-wider">
                           {exp.expense_categories?.name || 'Unknown'}
                         </span>
                       </td>
@@ -343,7 +351,7 @@ export default function Expenses() {
                       <td className="px-4 py-3 text-sm font-black text-red-600 whitespace-nowrap">{formatCurrency(exp.amount)}</td>
                       <td className="px-4 py-3 text-right whitespace-nowrap">
                         <div className="flex items-center justify-end gap-1.5">
-                          <button onClick={() => openEditExpense(exp)} className="text-shopCard hover:text-[#B23323] p-1.5 bg-[#FFF8F2] rounded-lg" title="Edit expense"><Edit2 size={14} /></button>
+                          <button onClick={() => openEditExpense(exp)} className="text-pink-600 hover:text-pink-700 p-1.5 bg-pink-100 rounded-lg" title="Edit expense"><Edit2 size={14} /></button>
                           <button onClick={() => handleDeleteExpense(exp.id)} className="text-red-400 hover:text-red-600 p-1.5 bg-red-50 rounded-lg" title="Delete expense"><Trash2 size={14} /></button>
                         </div>
                       </td>
@@ -361,8 +369,8 @@ export default function Expenses() {
           <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-5">
             <h3 className="text-base font-black text-[#111111] mb-4">Add Category</h3>
             <form onSubmit={handleAddCategory} className="flex gap-2">
-              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" required disabled={dbError} />
-              <button type="submit" disabled={dbError} className="bg-shopDeep border border-white0 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-shopCard disabled:opacity-50">Add</button>
+              <input type="text" value={newCatName} onChange={e => setNewCatName(e.target.value)} placeholder="e.g. Utility Bills" className="flex-1 border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-pink-600" required disabled={dbError} />
+              <button type="submit" disabled={dbError} className="bg-pink-600 border border-pink-600 text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-pink-700 disabled:opacity-50">Add</button>
             </form>
           </div>
           <div className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 overflow-hidden">
@@ -393,7 +401,7 @@ export default function Expenses() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-shopDeep/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-pink-600/50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto hide-scrollbar p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xl font-black text-[#111111]">{editingExpenseId ? 'Edit Expense' : 'Record Expense'}</h2>
@@ -421,7 +429,7 @@ export default function Expenses() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => { setShowModal(false); resetExpenseForm() }} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white0 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-pink-600 border border-pink-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-pink-700 disabled:opacity-50">{submitting ? 'Saving...' : editingExpenseId ? 'Update Expense' : 'Save Expense'}</button>
               </div>
             </form>
           </div>
