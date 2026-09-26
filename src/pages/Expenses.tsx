@@ -36,6 +36,8 @@ export default function Expenses() {
   const [filterFrom, setFilterFrom] = useState('')
   const [filterTo, setFilterTo] = useState('')
   const [datePreset, setDatePreset] = useState<'all'|'today'|'week'|'month'|'year'>('all')
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
+  const [sortBy, setSortBy] = useState<'date'|'amount'|'category'>('date')
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -169,13 +171,30 @@ export default function Expenses() {
   const totalYear = expenses.filter(e => new Date(e.expense_date).getFullYear() === now.getFullYear()).reduce((s, e) => s + e.amount, 0)
   const totalAll = expenses.reduce((s, e) => s + e.amount, 0)
 
-  const filteredExpenses = expenses.filter(exp => {
-    if (!filterFrom && !filterTo) return true
-    const d = exp.expense_date
-    if (filterFrom && d < filterFrom) return false
-    if (filterTo && d > filterTo) return false
-    return true
-  })
+  const filteredExpenses = expenses
+    .filter(exp => {
+      // Date range filter
+      if (filterFrom || filterTo) {
+        const d = exp.expense_date
+        if (filterFrom && d < filterFrom) return false
+        if (filterTo && d > filterTo) return false
+      }
+      // Category filter
+      if (selectedCategory !== null && exp.category_id !== selectedCategory) return false
+      return true
+    })
+    .sort((a, b) => {
+      if (sortBy === 'date') {
+        return new Date(b.expense_date).getTime() - new Date(a.expense_date).getTime()
+      } else if (sortBy === 'amount') {
+        return b.amount - a.amount
+      } else if (sortBy === 'category') {
+        const catA = a.expense_categories?.name || 'Unknown'
+        const catB = b.expense_categories?.name || 'Unknown'
+        return catA.localeCompare(catB)
+      }
+      return 0
+    })
 
   const applyPreset = (preset: typeof datePreset) => {
     setDatePreset(preset)
@@ -234,6 +253,29 @@ export default function Expenses() {
 
           {/* Filter bar */}
           <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
+            {/* Category filter */}
+            <select
+              value={selectedCategory ?? ''}
+              onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
+              className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+            >
+              <option value="">All Categories</option>
+              {categories.filter(c => c.is_active).map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.name}</option>
+              ))}
+            </select>
+
+            {/* Sort by */}
+            <select
+              value={sortBy}
+              onChange={e => setSortBy(e.target.value as 'date'|'amount'|'category')}
+              className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+            >
+              <option value="date">Sort by Date (Newest)</option>
+              <option value="amount">Sort by Amount (Highest)</option>
+              <option value="category">Sort by Category</option>
+            </select>
+
             {/* FROM date */}
             <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB]">
               <span className="text-[11px] font-black uppercase text-[#6B7280]">From</span>
