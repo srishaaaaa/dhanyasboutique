@@ -353,13 +353,6 @@ export const Invoice: React.FC<InvoiceProps> = ({
             </a>
           </div>
         )}
-        {BRAND_REVIEW_LINK && (
-          <div style={{ fontSize: 10, color: '#666', marginTop: 4 }}>
-            <a href={BRAND_REVIEW_LINK} target="_blank" rel="noopener noreferrer" style={{ color: '#666', textDecoration: 'none' }}>
-              Leave us a review
-            </a>
-          </div>
-        )}
         {onPrintReceipt && (
           <button
             type="button"
