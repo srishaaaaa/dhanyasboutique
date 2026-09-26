@@ -436,29 +436,45 @@ export default function Attendance() {
       {/* MONTHLY REPORT TAB */}
       {tab === 'report' && (
         <div className="space-y-5">
-          <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-shopSoft/60 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="bg-purple-100 p-2.5 rounded-xl text-purple-600"><Calendar size={20} /></div>
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Select Month</p>
-                <input type="month" value={reportMonth} onChange={e => setReportMonth(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
+          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4">
+            <div className="flex flex-wrap items-center gap-4 justify-between">
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
+                  <Calendar size={18} className="text-pink-600" />
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">MONTH:</span>
+                  <input type="month" value={reportMonth} onChange={e => setReportMonth(e.target.value)} className="font-bold text-[#111111] bg-transparent outline-none w-40" />
+                </div>
+
+                <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">FROM</span>
+                  <input type="date" className="font-bold text-[#111111] bg-transparent outline-none w-32" />
+                </div>
+
+                <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB]">
+                  <span className="text-[11px] font-bold uppercase text-[#6B7280]">TO</span>
+                  <input type="date" className="font-bold text-[#111111] bg-transparent outline-none w-32" />
+                </div>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 ml-auto">
+                <button className="flex items-center gap-2 bg-pink-600 text-white px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-pink-700 transition-colors">
+                  Apply Filter / Sort
+                </button>
+                <button className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2.5 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
+                  Reset / All
+                </button>
+                <button onClick={exportReportToCSV} className="flex items-center gap-2 border-2 border-pink-600 bg-white text-pink-600 px-4 py-2.5 rounded-xl text-[12px] font-black hover:bg-pink-50 transition-colors">
+                  <Download size={14} /> Export to Excel
+                </button>
               </div>
             </div>
-            <div className="flex flex-wrap items-center gap-2">
-              <select
-                value={staffSortBy}
-                onChange={e => setStaffSortBy(e.target.value as 'name'|'present'|'absent')}
-                className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-              >
-                <option value="name">Sort by Name</option>
-                <option value="present">Sort by Present (High to Low)</option>
-                <option value="absent">Sort by Absent (High to Low)</option>
-              </select>
-              <button onClick={exportReportToCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
-                <Download size={14} /> Export CSV
-              </button>
-            </div>
           </div>
+
+          {/* Info line */}
+          <div className="px-4 py-3 text-[12px] font-semibold text-[#6B7280] flex justify-between">
+            <div>Showing records from: <span className="font-black text-[#111111]">2026-09-01</span> to <span className="font-black text-[#111111]">2026-09-30</span></div>
+            <div className="text-right">Staff: <span className="font-black text-[#111111]">{activeStaff.length}</span> Sorted by: <span className="font-black uppercase">NAME (ASC)</span></div>
+          </div>
+
           {/* Mobile card list */}
           <div className="space-y-3 md:hidden">
             {reportLoading ? (
