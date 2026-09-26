@@ -114,7 +114,7 @@ export const applyShopProfile = (profile: Partial<ShopProfile>, cache = true) =>
   BRAND_ADDRESS = next.address || ''
   BRAND_INSTAGRAM = toInstagramHandle(next.instagramId)
   BRAND_INSTAGRAM_LINK = toInstagramLink(next.instagramId)
-  BRAND_REVIEW_LINK = next.reviewLink || ''
+  BRAND_REVIEW_LINK = next.reviewLink || DEFAULT_SHOP_PROFILE.reviewLink
 
   if (cache) {
     try {
