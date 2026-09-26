@@ -2677,6 +2677,7 @@ ALTER TABLE public.store_settings
   ADD COLUMN IF NOT EXISTS business_type  TEXT NOT NULL DEFAULT '',
   ADD COLUMN IF NOT EXISTS shop_contact   TEXT NOT NULL DEFAULT '',
   ADD COLUMN IF NOT EXISTS instagram_id   TEXT NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS review_link    TEXT NOT NULL DEFAULT 'https://g.page/r/Ccpknn3jk8O6ECA/review',
   ADD COLUMN IF NOT EXISTS logo_url       TEXT NOT NULL DEFAULT '',
   ADD COLUMN IF NOT EXISTS card_color     TEXT NOT NULL DEFAULT '#8F1402';
 
@@ -2690,7 +2691,7 @@ ALTER TABLE public.store_settings ALTER COLUMN email SET DEFAULT '';
 --    details supplied by the shop owner.
 INSERT INTO public.store_settings (
   id, name, owner_name, phone, email, address,
-  business_type, shop_contact, instagram_id, logo_url, card_color
+  business_type, shop_contact, instagram_id, review_link, logo_url, card_color
 )
 VALUES (
   1,
@@ -2702,6 +2703,7 @@ VALUES (
   'SAREE WHOLESALE & RETAIL',
   '80980 89591',
   '@ananthinathan84',
+  'https://g.page/r/Ccpknn3jk8O6ECA/review',
   '',
   '#31042F'
 )
