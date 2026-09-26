@@ -180,8 +180,11 @@ export default function Attendance() {
 
   return (
     <div className="p-3 sm:p-6 space-y-3 sm:space-y-5">
-      <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-        <h1 className="text-base sm:text-xl md:text-2xl font-black text-[#111111] flex items-center gap-1.5"><Users size={16} className="sm:size-6 shrink-0 text-shopCard" /> Attendance & Staff</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-1">
+        <div className="flex items-center gap-3">
+          <div className="w-1.5 h-12 bg-pink-600 rounded-r-lg shrink-0"></div>
+          <h1 className="text-base sm:text-xl md:text-2xl font-black text-[#111111]">Attendance & Staff</h1>
+        </div>
       </div>
 
       {dbError && (
@@ -197,7 +200,7 @@ export default function Attendance() {
       <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto hide-scrollbar">
         {(['today', 'report', 'staff'] as const).map(t => (
           <button key={t} onClick={() => setTab(t)}
-            className={`shrink-0 px-3 sm:px-4 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-shopDeep text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-orange-50'}`}>
+            className={`shrink-0 px-4 sm:px-5 h-10 rounded-xl font-bold text-[13px] sm:text-sm whitespace-nowrap transition-colors ${tab === t ? 'bg-pink-600 text-white' : 'bg-white border border-shopSoft/60 text-[#374151] hover:bg-pink-50'}`}>
             {t === 'today' ? "Today's Attendance" : t === 'report' ? 'Monthly Report' : 'Staff Management'}
           </button>
         ))}
@@ -208,7 +211,7 @@ export default function Attendance() {
         <div className="space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-shopSoft/60 shadow-sm">
             <div className="flex flex-wrap items-center gap-3">
-              <div className="bg-orange-100 p-2.5 rounded-xl text-orange-600"><Calendar size={20} /></div>
+              <div className="bg-pink-100 p-2.5 rounded-xl text-pink-600"><Calendar size={20} /></div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-wider text-[#6B7280]">Select Date</p>
                 <input type="date" value={selectedDate} onChange={e => setSelectedDate(e.target.value)} className="font-black text-[#111111] bg-transparent outline-none" />
@@ -246,7 +249,7 @@ export default function Attendance() {
                     <div key={member.id} className="bg-white rounded-2xl shadow-sm border border-shopSoft/60 p-3.5">
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-8 h-8 rounded-full bg-[#FFF8F2] text-shopCard border border-shopSoft flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                          <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                           <div className="min-w-0">
                             <p className="font-bold text-[#111111] text-sm truncate">{member.name}</p>
                             <p className="text-[11px] text-[#6B7280]">{member.role}</p>
@@ -300,7 +303,7 @@ export default function Attendance() {
                           <tr key={member.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
                             <td className="px-4 py-3">
                               <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-[#FFF8F2] text-shopCard border border-shopSoft flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
+                                <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 border border-pink-200 flex items-center justify-center font-black text-sm shrink-0 uppercase">{member.name.charAt(0)}</div>
                                 <span className="font-bold text-[#111111] text-sm">{member.name}</span>
                               </div>
                             </td>
@@ -355,7 +358,7 @@ export default function Attendance() {
         <div className="space-y-5">
           <div className="flex justify-end">
             <button onClick={() => { setEditingStaff(null); setForm({ name: '', role: '', phone: '', base_salary: '' }); setShowModal(true) }} disabled={dbError}
-              className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
+              className="h-10 bg-pink-600 border border-pink-600 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-pink-700 disabled:opacity-50">
               <Plus size={16} /> Add Staff
             </button>
           </div>
@@ -529,7 +532,7 @@ export default function Attendance() {
       )}
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-shopDeep/50 p-4 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-pink-600/50 p-4 backdrop-blur-sm">
           <div className="bg-white rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto hide-scrollbar p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-xl font-black text-[#111111]">{editingStaff ? 'Edit Staff' : 'Add Staff'}</h2>
@@ -554,7 +557,7 @@ export default function Attendance() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)} className="flex-1 bg-gray-100 p-3 rounded-xl font-bold text-sm hover:bg-gray-200">Cancel</button>
-                <button type="submit" disabled={submitting} className="flex-1 bg-shopDeep border border-white0 text-white p-3 rounded-xl font-bold text-sm hover:bg-shopCard disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
+                <button type="submit" disabled={submitting} className="flex-1 bg-pink-600 border border-pink-600 text-white p-3 rounded-xl font-bold text-sm hover:bg-pink-700 disabled:opacity-50">{submitting ? 'Saving...' : 'Save Staff'}</button>
               </div>
             </form>
           </div>
