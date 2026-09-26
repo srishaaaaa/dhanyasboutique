@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Users, Calendar, AlertTriangle, Plus, X, Edit2, LogIn, LogOut, Download } from 'lucide-react'
+import { Users, Calendar, AlertTriangle, Plus, X, Edit2, LogIn, LogOut, Download, Trash2 } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import { formatCurrency } from '../lib/retail'
 import { useBodyScrollLock } from '../components/ui/useBodyScrollLock'
@@ -131,6 +131,12 @@ export default function Attendance() {
 
   const toggleStaffActive = async (member: Staff) => {
     await supabase.from('staff').update({ is_active: !member.is_active }).eq('id', member.id)
+    void fetchData()
+  }
+
+  const deleteStaff = async (member: Staff) => {
+    if (!window.confirm(`Delete "${member.name}"?`)) return
+    await supabase.from('staff').delete().eq('id', member.id)
     void fetchData()
   }
 
@@ -364,10 +370,16 @@ export default function Attendance() {
                     <p className="font-bold text-[#111111] text-sm truncate">{member.name}</p>
                     <p className="text-[11px] text-[#6B7280]">{member.role}{member.phone ? ` · ${member.phone}` : ''}</p>
                   </div>
-                  <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
-                    className="shrink-0 h-9 w-9 flex items-center justify-center text-[#374151] hover:text-shopCard bg-gray-50 hover:bg-[#FFF8F2] rounded-lg border border-transparent hover:border-shopSoft transition-colors">
-                    <Edit2 size={14} />
-                  </button>
+                  <div className="flex gap-1.5 shrink-0">
+                    <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
+                      className="h-9 w-9 flex items-center justify-center text-[#374151] hover:text-shopCard bg-gray-50 hover:bg-[#FFF8F2] rounded-lg border border-transparent hover:border-shopSoft transition-colors">
+                      <Edit2 size={14} />
+                    </button>
+                    <button onClick={() => void deleteStaff(member)}
+                      className="h-9 w-9 flex items-center justify-center text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-lg border border-transparent hover:border-red-200 transition-colors">
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </div>
                 <div className="mt-2.5 flex items-center justify-between">
                   <span className="text-[12px] font-black text-[#111111]">{formatCurrency(member.base_salary)}</span>
@@ -410,10 +422,16 @@ export default function Attendance() {
                         </button>
                       </td>
                       <td className="px-4 py-3 text-right">
-                        <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
-                          className="text-[#374151] hover:text-shopCard p-1.5 bg-gray-50 hover:bg-[#FFF8F2] rounded-lg border border-transparent hover:border-shopSoft transition-colors">
-                          <Edit2 size={14} />
-                        </button>
+                        <div className="flex gap-1.5 justify-end">
+                          <button onClick={() => { setEditingStaff(member); setForm({ name: member.name, role: member.role, phone: member.phone || '', base_salary: String(member.base_salary) }); setShowModal(true) }}
+                            className="text-[#374151] hover:text-shopCard p-1.5 bg-gray-50 hover:bg-[#FFF8F2] rounded-lg border border-transparent hover:border-shopSoft transition-colors">
+                            <Edit2 size={14} />
+                          </button>
+                          <button onClick={() => void deleteStaff(member)}
+                            className="text-red-500 hover:text-red-700 p-1.5 bg-red-50 hover:bg-red-100 rounded-lg border border-transparent hover:border-red-200 transition-colors">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}
