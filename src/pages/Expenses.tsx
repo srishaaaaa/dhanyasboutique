@@ -252,72 +252,58 @@ export default function Expenses() {
           </div>
 
           {/* Filter bar */}
-          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm px-4 py-3 flex flex-wrap items-center gap-3">
-            {/* Category filter */}
-            <select
-              value={selectedCategory ?? ''}
-              onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
-              className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-            >
-              <option value="">All Categories</option>
-              {categories.filter(c => c.is_active).map(cat => (
-                <option key={cat.id} value={cat.id}>{cat.name}</option>
-              ))}
-            </select>
-
-            {/* Sort by */}
-            <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value as 'date'|'amount'|'category')}
-              className="border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
-            >
-              <option value="date">Sort by Date (Newest)</option>
-              <option value="amount">Sort by Amount (Highest)</option>
-              <option value="category">Sort by Category</option>
-            </select>
-
-            {/* FROM date */}
-            <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB]">
-              <span className="text-[11px] font-black uppercase text-[#6B7280]">From</span>
+          <div className="bg-white rounded-2xl border border-shopSoft/60 shadow-sm p-4 space-y-3">
+            {/* Search + Main filters row */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <input
-                type="date"
-                value={filterFrom}
-                onChange={e => { setFilterFrom(e.target.value); setDatePreset('all') }}
-                className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none"
+                type="text"
+                placeholder="Search description, category, staff, amount..."
+                className="flex-1 min-w-[200px] border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-[#F9FAFB] text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard placeholder:text-[#9CA3AF]"
               />
-            </div>
-            {/* TO date */}
-            <div className="flex items-center gap-2 border border-[#E5E7EB] rounded-xl px-3 py-2 bg-[#F9FAFB]">
-              <span className="text-[11px] font-black uppercase text-[#6B7280]">To</span>
-              <input
-                type="date"
-                value={filterTo}
-                onChange={e => { setFilterTo(e.target.value); setDatePreset('all') }}
-                className="text-[12px] font-semibold text-[#111111] bg-transparent outline-none"
-              />
-            </div>
-            {/* Period presets */}
-            <div className="flex items-center gap-1.5 overflow-x-auto hide-scrollbar">
-              <span className="shrink-0 text-[11px] font-black uppercase text-[#6B7280] mr-1">Period</span>
-              {([
-                { id: 'all' as const, label: 'All Time' },
-                { id: 'today' as const, label: 'Today' },
-                { id: 'week' as const, label: 'This Week' },
-                { id: 'month' as const, label: 'This Month' },
-                { id: 'year' as const, label: 'This Year' },
-              ]).map(p => (
-                <button key={p.id} onClick={() => applyPreset(p.id)}
-                  className={`shrink-0 h-9 px-3 rounded-lg text-[11px] font-black uppercase whitespace-nowrap transition-colors ${datePreset === p.id ? 'bg-shopDeep text-white' : 'text-[#6B7280] hover:text-[#111111] border border-[#E5E7EB] bg-white'}`}>
-                  {p.label}
-                </button>
-              ))}
-            </div>
-            {/* Spacer + Export CSV */}
-            <div className="ml-auto flex items-center gap-2">
-              <button onClick={handleExportCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors">
+
+              <select
+                value={selectedCategory ?? ''}
+                onChange={e => setSelectedCategory(e.target.value ? parseInt(e.target.value) : null)}
+                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+              >
+                <option value="">All Categories</option>
+                {categories.filter(c => c.is_active).map(cat => (
+                  <option key={cat.id} value={cat.id}>{cat.name}</option>
+                ))}
+              </select>
+
+              <select
+                value={datePreset}
+                onChange={e => applyPreset(e.target.value as typeof datePreset)}
+                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+              >
+                <option value="all">All Dates</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+              </select>
+
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value as 'date'|'amount'|'category')}
+                className="border border-[#E5E7EB] rounded-xl px-3 py-2.5 bg-white text-[12px] font-semibold text-[#111111] outline-none focus:border-shopCard"
+              >
+                <option value="">Filters</option>
+                <option value="date">Sort: Date (Newest)</option>
+                <option value="amount">Sort: Amount (Highest)</option>
+                <option value="category">Sort: Category</option>
+              </select>
+
+              <button onClick={() => void fetchData()} className="shrink-0 h-10 w-10 flex items-center justify-center border border-[#E5E7EB] bg-white rounded-xl text-[#374151] hover:bg-[#F9FAFB] transition-colors" title="Refresh">
+                <Receipt size={16} />
+              </button>
+
+              <button onClick={handleExportCSV} className="flex items-center gap-2 border border-[#E5E7EB] bg-white text-[#374151] px-3 py-2.5 rounded-xl text-[12px] font-black hover:bg-[#F9FAFB] transition-colors whitespace-nowrap">
                 <Download size={14} /> Export CSV
               </button>
-              <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50">
+
+              <button onClick={openAddExpense} disabled={dbError} className="h-10 bg-shopDeep border border-white0 text-white px-4 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-shopCard disabled:opacity-50 whitespace-nowrap">
                 <Plus size={16} /> Record Expense
               </button>
             </div>
@@ -334,7 +320,7 @@ export default function Expenses() {
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Date</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Category</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Description</th>
-                    <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Amount</th>
+                    <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] whitespace-nowrap">Amount (₹)</th>
                     <th className="px-4 py-3 text-[11px] font-black uppercase text-[#374151] text-right whitespace-nowrap">Actions</th>
                   </tr>
                 </thead>
@@ -343,7 +329,7 @@ export default function Expenses() {
                     <tr><td colSpan={5} className="text-center p-8 text-[#6B7280] font-bold">Loading...</td></tr>
                   ) : filteredExpenses.length === 0 ? (
                     <tr><td colSpan={5} className="text-center p-8 text-[#6B7280] font-bold">
-                      {expenses.length === 0 ? 'No expenses recorded yet.' : 'No expenses in the selected date range.'}
+                      No expense records found matching the filters.
                     </td></tr>
                   ) : filteredExpenses.map(exp => (
                     <tr key={exp.id} className="border-b border-shopSoft/30 hover:bg-[#FAFAFA]">
