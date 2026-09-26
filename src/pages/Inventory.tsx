@@ -413,7 +413,7 @@ export default function Inventory() {
 
   const downloadCSV = () => {
     const headers = ['ID', 'Product Name', 'Category', 'Stock Quantity', 'Low Stock Alert', 'Price (Rs.)', 'Purchase Price (Rs.)', 'Status', 'Last Updated Date', 'Last Updated Time']
-    const rows = activeProducts.map(p => {
+    const rows = productsOnly.map(p => {
       const status = p.stock_quantity <= 0 ? 'Out of Stock' : p.stock_quantity <= p.low_stock_alert ? 'Low Stock' : 'In Stock'
       const updated = new Date(p.updated_at)
       const updatedDate = updated.toLocaleDateString('en-IN')
@@ -491,7 +491,10 @@ export default function Inventory() {
   // duplicate shows up here looking identical to a real, sellable product.
   const activeProducts = products.filter(p => p.is_active !== false)
 
-  const filtered = activeProducts.filter(p => {
+  // Services are not tracked for stock, so exclude them from stock management
+  const productsOnly = activeProducts.filter(p => p.item_type !== 'service')
+
+  const filtered = productsOnly.filter(p => {
     const matchSearch = p.name.toLowerCase().includes(search.toLowerCase())
     const status = getStatus(p)
     if (filter === 'ok') return matchSearch && status === 'ok'
@@ -500,10 +503,10 @@ export default function Inventory() {
     return matchSearch
   })
 
-  const lowCount = activeProducts.filter(p => getStatus(p) === 'low').length
-  const outCount = activeProducts.filter(p => getStatus(p) === 'out').length
-  const inStockCount = activeProducts.length - lowCount - outCount
-  const stockValue = activeProducts.reduce((s, p) => s + (p.stock_quantity * p.price), 0)
+  const lowCount = productsOnly.filter(p => getStatus(p) === 'low').length
+  const outCount = productsOnly.filter(p => getStatus(p) === 'out').length
+  const inStockCount = productsOnly.length - lowCount - outCount
+  const stockValue = productsOnly.reduce((s, p) => s + (p.stock_quantity * p.price), 0)
 
   const openAdjust = (product: InventoryProduct) => {
     setAdjustModal({ product, qty: '1', adjustType: 'restock', note: '' })
@@ -758,7 +761,7 @@ export default function Inventory() {
             </div>
             <div className="flex flex-nowrap items-stretch gap-1.5 sm:gap-2.5">
               {([
-                ['all', `All (${activeProducts.length})`],
+                ['all', `All (${productsOnly.length})`],
                 ['ok', `In Stock (${inStockCount})`],
                 ['low', `Low Stock (${lowCount})`],
                 ['out', `Out of Stock (${outCount})`],
@@ -892,11 +895,13 @@ export default function Inventory() {
                     ))}
                   </select>
                 </div>
-                <div>
-                  <label className="block text-[10px] font-black uppercase tracking-wider text-[#374151] mb-1.5">Low Stock Alert</label>
-                  <input type="number" min="0" value={productForm.low_stock_alert} onChange={e => setProductForm(f => ({...f, low_stock_alert: e.target.value}))}
-                    className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" />
-                </div>
+                {productForm.item_type === 'product' && (
+                  <div>
+                    <label className="block text-[10px] font-black uppercase tracking-wider text-[#374151] mb-1.5">Low Stock Alert</label>
+                    <input type="number" min="0" value={productForm.low_stock_alert} onChange={e => setProductForm(f => ({...f, low_stock_alert: e.target.value}))}
+                      className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard" />
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -912,13 +917,15 @@ export default function Inventory() {
                     className="w-full border border-shopSoft/60 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-shopCard"
                     placeholder="0.00" />
                 </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <label className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-emerald-700 mb-1.5">
-                    <PackagePlus size={11} /> Current Stock
-                  </label>
-                  <input type="number" min="0" value={productForm.stock_quantity} onChange={e => setProductForm(f => ({...f, stock_quantity: e.target.value}))}
-                    className="w-full border border-emerald-300 bg-emerald-50/50 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-emerald-500" />
-                </div>
+                {productForm.item_type === 'product' && (
+                  <div className="col-span-2 sm:col-span-1">
+                    <label className="flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-emerald-700 mb-1.5">
+                      <PackagePlus size={11} /> Current Stock
+                    </label>
+                    <input type="number" min="0" value={productForm.stock_quantity} onChange={e => setProductForm(f => ({...f, stock_quantity: e.target.value}))}
+                      className="w-full border border-emerald-300 bg-emerald-50/50 p-2.5 rounded-xl text-sm font-bold outline-none focus:border-emerald-500" />
+                  </div>
+                )}
               </div>
               <p className="text-[10px] text-[#9CA3AF] -mt-2">Cost price is for your records only — not used in billing.</p>
 

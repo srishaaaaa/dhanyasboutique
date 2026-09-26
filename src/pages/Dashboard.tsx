@@ -1911,8 +1911,8 @@ export default function Dashboard() {
                         </div>
                         <div className={`w-8 h-8 rounded-full ${card.bg} flex items-center justify-center ${card.color}`}>{card.icon}</div>
                       </div>
-                      <p className="text-[22px] font-bold text-[#111111] leading-none mb-2 truncate">{card.value}</p>
-                      <p className="text-[12px] text-[#6B7280] truncate">{card.helper}</p>
+                      <p className="text-[22px] font-bold text-[#111111] leading-none mb-2 line-clamp-2">{card.value}</p>
+                      <p className="text-[12px] text-[#6B7280]">{card.helper}</p>
                     </div>
                   ))}
                 </div>
