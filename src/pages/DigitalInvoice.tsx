@@ -42,9 +42,9 @@ export default function DigitalInvoice() {
     setSoundWasEnabled(soundEnabled)
     setSoundEnabled(false)
     return () => {
-      setSoundEnabled(soundWasEnabled)
+      setSoundEnabled(soundEnabled)
     }
-  }, [])
+  }, [soundEnabled, setSoundEnabled])
 
   useEffect(() => {
     async function loadInvoice() {
