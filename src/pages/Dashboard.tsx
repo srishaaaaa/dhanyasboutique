@@ -1293,7 +1293,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main */}
-      <main className="flex-grow flex flex-col overflow-hidden">
+      <main className="flex-grow flex flex-col overflow-hidden overflow-y-auto">
         <div className="app-scroll-root flex-1 p-3 sm:p-6 lg:p-8 overflow-x-hidden overflow-y-auto hide-scrollbar">
         <div className="mx-auto w-full max-w-[1600px]">
 
